@@ -1,0 +1,919 @@
+﻿body {
+    overflow-y:hidden;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, 'Liberation Sans', 'DejaVu Sans', sans-serif;
+   
+}
+html,body { height:100%; width:100%}
+
+/*<<<<Main Flow Elements>>>>*/
+header {
+    height: 50px;
+    width: 100%;
+    background-color: #009f39;
+    border-bottom: 1px solid #808080;
+    
+}
+footer {
+    position:fixed;
+    bottom: -150px;
+    clear:left;
+    width: 100%;
+    height: 150px;
+    background-color: #ebebeb;
+}
+
+#element_to_pop_up { display:none; }
+/*<<<<Main Master>>>>*/
+/*.topNav {width: 200px;float: right;
+    margin: 0;
+    padding: 0;
+    border: 1px solid #808080;
+}*/
+#account {
+    float:right;
+    width: 160px;
+    height: 50px;
+    border-left: 1px solid #808080;
+    border-right: 1px solid #808080;
+    
+}
+    #account ul {
+        list-style-type: none;
+        padding: 0px;
+    }
+    #account ul li {
+        display:block;
+        text-align:center;
+      
+    }
+    
+    #account:active {
+    background-color:blue;
+    }
+
+    
+#accountList {
+    border: 1px solid #808080;
+    background-color:#fff;
+    margin-top:20px;
+    list-style-type: none;
+    display: none;
+    width:160px;
+    z-index:301;
+    position: absolute;
+    }
+
+    #accountList ul {
+    }
+
+    #accountList li {
+        padding: 5px;
+        margin: 0px 5px 0px 5px;
+        
+        text-align:center;
+        text-decoration:none;
+        border-bottom: 1px solid #666;
+    }
+
+/*<<<<Main Page Layout Elements>>>>*/
+#page {
+    height:100%;
+    min-width: 400px;
+
+}
+.content {
+    float: left;
+    width: 100%;
+    
+}
+p, h1, h2, h3 {
+    margin: 0;
+}
+.wrap {
+    padding: 15px 60px 15px 60px;
+    border-bottom: 1px solid #808080;
+    height: 30px;
+    
+
+
+}    
+.pageWrap {
+    width: 960px;
+    /*margin: 0 auto;
+    border-left: 1px solid #808080;
+    border-right: 1px solid #808080;*/
+    position:absolute;
+    left: 0; right: 0; top: 0; bottom:0;
+    margin-left:auto;
+    margin-right:auto;
+    background-color: #f2f2f2;
+}
+.scroll {
+    overflow-y: scroll;
+    top:112px; left:0px; bottom: 0px; right: 0px;
+    position: absolute;
+    z-index:300;
+    background-color: #f2f2f2;/**/
+}
+.pageHead {
+    width: 100%;
+    
+    padding: 15px 0px 15px 0px;
+    border-bottom: 1px solid #808080;
+    height: 30px;   
+
+}
+.center {
+    margin: 0 0px 0 200px;
+    padding: 0;
+    
+}
+
+.left {
+    float: left;
+    width: 200px; /*Width of left column*/
+    margin-left: -100%;
+    height: 100%;
+    /*border-right: 1px solid #808080;*/
+}
+.right {
+    float: left;
+    width: 200px; /*Width of right column*/
+    margin-left: -200px; /*Set left marginto -(RightColumnWidth)*/
+    background: #FDE95E;
+}
+/*<<<<Scorebook Page Navigation>>>>*/
+
+
+/*<<<<Atributes>>>>*/
+.floatLT {
+    float:left;
+}
+.floatRT {
+    float: right;
+}
+.dsplyNone {
+    display: none;
+}
+.dsplyShow {
+    display: Normal;
+}
+
+.centerLt {
+    float: left;
+    width: 400px;
+}
+.centerRt {
+    float:right;
+    width: 300px;
+    border-left: solid 1px black;
+}
+.centerSec {
+    border-top: solid 1px black;
+}
+.row-highlight {
+    background-color: yellow;
+}
+
+#tabs ul {
+        padding:0;
+        margin:0;
+    }
+    #tabs li {
+        padding: 0;
+        margin: 0;
+        list-style-type:none;
+        display:block;
+        text-decoration:none;
+    }
+    #tabs h1, h2, h3, h4, h5 {
+        padding: 0px; margin:0px;
+    }
+.tabWrap {
+    height: 40px;
+    padding: 15px 20px 15px 20px;
+    border-bottom: 1px solid #808080;
+}
+
+.tabHeader {
+    clear: both;
+    float: left;
+    width: 100%;
+    margin: 0; padding: 10px 0 10px 0;
+    border-bottom: 1px solid #808080;
+}
+#evtDetail {
+    height: 250px;
+    border-bottom: 1px solid #808080;
+}
+.mainList {
+    width: 100%;
+    padding: 5px 8px 5px 8px;
+    border-bottom: 1px solid #808080;
+}
+
+/*<<<<<Table>>>>>*/
+.mainTable {
+    border-collapse: collapse;
+    width: 100%;
+    border-spacing: 0;
+    padding-bottom: 10px;
+}    
+    .mainTable thead {
+        border-top: 1px solid red;
+        border-bottom: 1px solid red;
+    }
+    .mainTable th {
+        color: red;
+        text-align: left;
+        padding: 5px 8px 5px 8px;
+    }
+    .mainTable td{
+        padding: 5px 8px 5px 8px;
+        border-bottom: 1px solid #808080;
+    }
+
+.modalBackground {
+    background-color: rgba(255, 255, 255, 0.57);
+}
+.tmMember_Pnl {
+    background-color: #fff;
+    border: 1px solid #808080;
+    height: 250px;
+    
+}
+
+.tmEvent_Pnl {
+    background-color: #fff;
+    border: 1px solid #808080;
+    height: 400px;
+    width: 350px;
+}
+
+.settings_Pnl {
+    background-color: #fff;
+    border: 1px solid #808080;
+    height: 800px;
+    width: 600px;
+}
+
+.newMatch_Pnl {
+    width: 600px;
+    background-color: #fff;
+    border: 1px solid #808080;
+}
+.defaultModal {
+    background-color: #fff;
+    padding: 7px;
+    border: 4px solid #808080;
+    border-radius: 10px;
+}
+/*<<<<<<<<<< Home Page >>>>>>>>>>>>>*/
+.hpg_header {
+    height: 90px;
+    margin: 0;
+    padding: 8px 50px 8px 50px;
+    position: relative;
+    background-color:#009f39;
+}
+.hpg_nav {
+    width: 100%;
+    height: 40px;
+    position: absolute;
+    bottom: 0;
+}
+.hpg_wrap {
+    width: 960px;
+    position:relative;
+    margin-left:auto;
+    margin-right:auto;
+}
+.headWrap {
+    width:960px;
+    position:relative;
+    margin-left:auto;
+    margin-right:auto;
+}
+#regForm {
+    margin: 0px auto;
+    width:300px;
+}
+
+/*<<<<<<<<<< User Profile Page >>>>>>>>>>>>>*/
+.ppg_scroll {
+    overflow-y: scroll;
+    top:51px; left:0px; bottom: 0px; right: 0px;
+    position: absolute;
+}
+.ppg_left {
+    float: left;
+    width: 250px; /*Width of left column*/
+    margin-left: -100%;
+    height: 100%;
+    border-right: 1px solid black;
+}
+
+.ppg_center {
+    margin: 0 0px 0 250px;
+    padding: 0;
+}
+
+.userDetails {
+    width: 250px;
+    height: 200px;
+    border-bottom: 1px solid #808080;
+    
+}
+
+    .userDetails img {
+        margin: 5px;
+        background-color: navy;
+        height: 100px;
+        width: 80px;
+    }
+#editMyTeamsCont{
+    width: 100%;
+    min-height: 100px;
+    
+    float:left;
+    margin: 10px 0px 5px 0px;
+    border-bottom: 1px dashed black;
+
+}
+#perTeamMesCont {
+    border: 1px dashed #808080;
+    background-color: #FDE95E;
+    width: 450px;
+    margin: 12px 0px 12px 0px;
+}
+    #perTeamMesCont div {
+        padding: 3px 0px 3px 0px;
+    }
+    #perTeamMesCont img {
+        height: 30px; width: 30px;
+        border: 1px solid black;
+    }
+.teamSmDisplay {
+    background-color: #fff;
+    height: 57px;
+    width: 430px;
+    padding: 3px;
+    margin: 6px 0px 6px 0px;
+    border: 1px solid black;
+    border-radius: 4px;
+}
+    .teamSmDisplay img {
+        width:50px;
+        height: 50px;
+        border: 1px solid black;
+        margin-right: 30px;
+    }
+    .teamSmDisplay h4, h3, h5 {
+        padding: 0px;
+        margin: 0px;
+    }
+#ppg_nav {
+    float:left;
+    width: 100%;
+    clear: both;
+    border-bottom: 1px solid #808080;
+    margin: 5px 0px 12px 0px;
+}
+    #ppg_nav ul {
+        padding-left:10px;
+    }
+    #ppg_nav li {
+       height:40px; width: 160px;
+        list-style-type:none;
+        float: left;
+        display:block;
+        border-bottom: 1px solid #808080;
+        margin-bottom:-1px;
+    }
+    #ppg_nav li:hover {
+        border: 1px solid #808080;
+        border-bottom: 1px solid #f2f2f2;
+    }
+
+
+/*<<<<<<<<<< Team Statbook Pages >>>>>>>>>>>>>*/
+
+#team {
+    width: 192px;
+}
+.button {
+    padding: 6px;
+    background-color:#fff;
+    border: 1px solid #808080;
+    border-radius: 5px;
+
+}
+.spanLink {
+    color:blue;
+}
+.sbpg_adminPanel {
+    clear: both;
+    float: left;
+    width: 100%;
+    margin: 0; padding: 10px 0 10px 0px;
+}
+.sbpg_adminPanel h4, h3, h5 {
+        padding: 0px;
+        margin: 0px;
+    }
+#sbpg_memView {
+    float:left;
+    width: 100%;
+    clear: both;
+    border-bottom: 1px solid #808080;
+    margin: 5px 0px 12px 0px;
+}
+    #sbpg_memView ul {
+        padding-left:10px;
+    }
+    #sbpg_memView li {
+       height:40px; width: 160px;
+        list-style-type:none;
+        float: left;
+        display:block;
+        border-bottom: 1px solid #808080;
+        margin-bottom:-1px;
+    }
+    #sbpg_memView li:hover {
+        border: 1px solid #808080;
+        border-top: 4px solid blue;
+    }
+#tabNav li{
+    height:30px;
+    
+    list-style-type:none;
+    display: block;
+    text-decoration:none;
+    
+}
+#tabNav li:hover {
+    background-color:#808080;
+}
+
+/*<<<  Member Tab  >>>*/
+#memAthleteCont ul {
+    margin:5px;
+}
+#memAthleteCont li{
+    width: 220px;
+    height: 80px;
+    float: left;
+    display: block;
+    border: 1px solid black;
+    padding: 5px;
+    margin: 5px 5px 5px 10px;
+    background: #fff;border-radius: 2px;
+}
+#memAthleteCont li h4 {
+        padding: 0px;
+        margin: 0px;
+        float:left;
+    }
+#memAthleteCont li img{
+    height:80px;
+    width: 70px;
+    padding-right: 5px;
+    float: left;
+}
+#memberAdminCont li {
+    height: 52px; width: 500px;
+    float: left;
+    display: block;
+    background-color: #fff;
+    border-top: 1px solid #808080;
+    
+}
+    #memberAdminCont li h4 {
+            padding: 0px;
+            margin: 0px;
+            float:left;
+        }
+    #memberAdminCont li h4:hover {
+            padding: 0px;
+            margin: 0px;
+            float:left;
+            color: red;
+        }
+
+.sbpg_memDetTop {
+    clear: both;
+    float: left;
+    height: 114px;
+    width: 100%;
+    margin-top: 12px;
+    background-color: #fff;
+    border: 1px solid #808080;
+    padding: 12px 0px 12px 0px;
+}
+    .sbpg_memDetTop img {
+        float: left;
+        height:96px;
+        width:96px;
+        margin-left: 12px;
+        border:1px solid #808080;
+    }
+    .sbpg_memDetTop div {
+        float: left; 
+        margin-left: 12px;
+     }
+.admin {
+    display:none;
+
+}    
+.sbpg_memDetCenter {
+    font-family: Arial, 'Liberation Sans', 'DejaVu Sans', sans-serif;
+    width: 100%;
+    margin: 26px 0px 26px 0px;
+    border: 1px solid #808080;
+    padding: 12px 0px 12px 0px;
+    clear: both;
+    float: left;
+    background-color: #fff;
+    border-radius:6px;
+}
+
+.sbpg_memDetCenter .fieldSet {
+   margin: 0px 12px 0px 12px;
+   padding:12px;
+   float: left;
+   width:709px;
+   border-top: 1px solid #808080;
+    border-bottom: 1px solid #808080;
+}
+
+.fieldCont {
+    float: left;
+    margin: 12px;
+}
+    .fieldCont .sect {
+        width: 342px;
+        float: left;
+    }
+#getPerForm label {
+        margin: 12px 8px 8px 12px;
+        font-size: 13px;
+        font-weight:200;
+    }
+
+     
+/*.perlinkbox {
+    border: 1px solid #808080;
+    padding:5px;
+    margin-top: 8px;
+    width:200px;
+    float:left;
+}
+    .perlinkbox div {
+       margin-left: 10px;
+       float: left;
+    }
+    .perlinkbox img {
+       float: left;
+       height: 45px;
+       width: 45px;
+    }*/
+
+
+.perLinkAdd {
+    height: 56px; width: 300px;
+    float: left;
+    margin-left: 36px;
+    border: 2px solid #e33100;
+      border-radius: 5px;  
+    padding: 7px 0px 7px 0px;
+}
+.perLinkBox{
+    height: 56px; width: 300px;
+    float: left;
+    margin-left: 36px;
+    border: 1px solid #808080;    
+    padding: 7px 0px 7px 0px;
+    border-radius: 5px;
+}
+    .perLinkBox img {
+        float: left;
+        height: 40px; width: 40px;
+        border: 1px solid black;
+    }
+    .perLinkBox h3 {
+        height: 40px;
+        text-align: center;
+        float: left;
+        padding:0px;
+        margin:0px;
+    }
+    .perLinkBox input {
+        float: right;
+        margin-right: 12px;
+    }
+
+
+/*<<<<<<<<<< Utilites >>>>>>>>>>>>>*/
+
+/*Full Screen Dialog Box*/
+/*Dialog Box (Popup Box)*/
+
+#fulldialog-overlay {
+ 
+    /* set it to fill the whole screen */
+    width:100%; 
+    height:100%;
+     
+    /* transparency for different browsers */
+    filter:alpha(opacity=50); 
+    -moz-opacity:0.5; 
+    -khtml-opacity: 0.5; 
+    opacity: 0.5; 
+    background:#000; 
+ 
+    /* make sure it appear behind the dialog box but above everything else */
+    position: absolute;
+    top:0; left:0;
+    z-index: 3000;
+
+    /* hide it by default */
+    display: none;
+}
+
+#fulldialog-box {
+     
+    /* css3 drop shadow */
+    -webkit-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+     
+    /* css3 border radius */
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+     
+    background:#eee;
+    /* styling of the dialog box, i have a fixed dimension for this demo */
+    width:800px;
+    height:90%;
+    /* make sure it has the highest z-index */
+    position: absolute; 
+    z-index:5000; 
+	top: 50%;
+	left: 50%;
+	
+    /* hide it by default */
+    display:none;
+}
+ 
+#fulldialog-box .fulldialog-content {
+    /* style the content 
+        margin:13px;*/
+    text-align:left; 
+    padding:10px; 
+    
+    color:#666; 
+    font-family:arial;
+    font-size:11px; 
+}
+
+#fulldialog-title {
+	background-color: Gray;
+    color: white;
+	padding: 2px 2px 2px 6px;
+}
+#fulldialog-close {
+    /* styles for button
+    margin:10px auto 0 auto; */
+    text-align:center;
+    display: block;
+    width:60px;
+    padding: 5px 10px 6px;
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    line-height: 1;
+    position: absolute;
+    top: 5px; left:720px;
+    z-index:1;
+     
+    /* button color */
+    background-color: #e33100;
+     
+    /* css3 implementation :) */
+    /* rounded corner */
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+     
+    /* drop shadow */
+    -moz-box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+    -webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+     
+    /* text shaow */
+    text-shadow: 0 -1px 1px rgba(0,0,0,0.25);
+    border-bottom: 1px solid rgba(0,0,0,0.25);
+    
+    cursor: pointer;
+     
+}
+ 
+#fulldialog_close:hover {
+    background-color: #c33100;  
+}
+
+/*<<< Add Team Form >>>*/
+.noMarPad h4{
+    padding: 0px;
+    margin: 0px;    
+}
+.addTeamFormNav {
+    border-top: 1px solid black;
+    padding-top:10px;
+    position: absolute;
+    height: 20px;
+    width: 100%;
+    bottom:30px;
+}
+
+ 
+/*JQuery dialog box Popup Styles*/
+ #dialog-overlay {
+ 
+    /* set it to fill the whole screen */
+    width:100%; 
+    height:100%;
+     
+    /* transparency for different browsers */
+    filter:alpha(opacity=50); 
+    -moz-opacity:0.5; 
+    -khtml-opacity: 0.5; 
+    opacity: 0.5; 
+    background:#000; 
+ 
+    /* make sure it appear behind the dialog box but above everything else */
+    position: absolute;
+    top:0; left:0;
+    z-index: 3000;
+
+    /* hide it by default */
+    display: none;
+}
+
+#dialog-box {
+     
+    /* css3 drop shadow */
+    -webkit-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+     
+    /* css3 border radius */
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+     
+    background:#eee;
+    /* styling of the dialog box, i have a fixed dimension for this demo */
+    width:600px;
+    height: 500px;
+     
+    /* make sure it has the highest z-index */
+    position: absolute; 
+    z-index:5000; 
+	top: 50%;
+	left: 50%;
+	
+    /* hide it by default */
+    display:none;
+}
+ 
+#dialog-box .dialog-content {
+    /* style the content */
+    text-align:left; 
+    padding:10px; 
+    margin:13px;
+    color:#666; 
+    font-family:arial;
+    font-size:11px; 
+}
+
+#dialog-title {
+	background-color: Gray;
+    color: white;
+	padding: 2px 2px 2px 6px;
+}
+#closeBu {
+        /* styles for button
+    margin:10px auto 0 auto; */
+    text-align:center;
+    display: block;
+    width:60px;
+    padding: 5px 10px 6px;
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    line-height: 1;
+    position: absolute;
+    top: 5px; left:520px;
+    z-index:1;
+     
+    /* button color */
+    background-color: #e33100;
+     
+    /* css3 implementation :) */
+    /* rounded corner */
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+     
+    /* drop shadow */
+    -moz-box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+    -webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+     
+    /* text shaow */
+    text-shadow: 0 -1px 1px rgba(0,0,0,0.25);
+    border-bottom: 1px solid rgba(0,0,0,0.25);
+    
+    cursor: pointer;
+     
+}
+    /* styles for button 
+    margin:10px auto 0 auto;
+    text-align:center;
+    display: block;
+    width:60px;
+    padding: 5px 10px 6px;
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    line-height: 1;*/
+     
+    /* button color 
+    background-color: #e33100;*/
+     
+    /* css3 implementation :) */
+    /* rounded corner 
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;*/
+     
+    /* drop shadow
+    -moz-box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+    -webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+      */
+    /* text shaow 
+    text-shadow: 0 -1px 1px rgba(0,0,0,0.25);
+    border-bottom: 1px solid rgba(0,0,0,0.25);
+    position: relative;
+    cursor: pointer;
+     
+}*/
+ 
+#closeBu:hover {
+    background-color: #c33100;  
+}
+
+.dialog_bottomNav {
+    border-top: 1px solid #080808;
+    padding-top:10px;
+    position: absolute;
+    height: 20px;
+    width: 560px;
+    bottom:30px;
+} 
+
+/* extra styling */
+#dialog-box .dialog-content p {
+    font-weight:700; margin:0;
+}
+ 
+#dialog-box .dialog-content ul {
+    margin:10px 0 10px 20px; 
+    padding:0; 
+    height:50px;
+}
+
+
+
+.ui-tabs-custom { 
+    width: 960px;
+}
+    .ui-tabs-custom ul { 
+        padding: .2em .1em .2em .2em; 
+        float: left; width: 240px; }
+    .ui-tabs-custom li { 
+        clear: left; width: 100%; 
+        border-bottom-width: 1px !important; 
+        border-right-width: 0 !important; 
+        margin: 0 -1px .2em 0; }
+    .ui-tabs-custom li a { 
+        display:block; }
+    .ui-tabs-custom li.ui-tabs-active { 
+        padding-bottom: 0; 
+        -right: .1em; 
+        border-right-width: 1px; 
+        border-right-width: 1px; }
+    .ui-tabs-custom .ui-tabs-panel { 
+        padding: 5px; 
+        float: right; 
+        width: 660px;
+    }
+
+
+        
+        
