@@ -389,6 +389,49 @@ public partial class team_tmStatbook : System.Web.UI.Page
         }
     }
 
+    //Update Team Members
+
+    [WebMethod]
+    public static void saveTMBName(string tmm_fName, string tmm_lName, int tmMemberID)
+    {
+
+        string connectionString = ConfigurationManager.ConnectionStrings["statbookConnectionString"].ConnectionString;
+        using (SqlConnection connection = new SqlConnection(connectionString))
+        {
+            string sql = "UPDATE teamMembers SET fName = @fName, lName = @lName WHERE (teamMemberID = @teamMemberID);";
+
+            connection.Open();
+
+            SqlCommand command = new SqlCommand(sql, connection);
+            command.Parameters.AddWithValue("@fName", tmm_fName);
+            command.Parameters.AddWithValue("@lName", tmm_lName);
+            command.Parameters.AddWithValue("@teamMemberID", tmMemberID);
+
+            command.ExecuteNonQuery();
+        }
+    }
+
+    [WebMethod]
+    public static void saveTMBRole(string isAthlete, string isCoach, int tmMemberID)
+    {
+
+        string connectionString = ConfigurationManager.ConnectionStrings["statbookConnectionString"].ConnectionString;
+        using (SqlConnection connection = new SqlConnection(connectionString))
+        {
+            string sql = "UPDATE teamMembers SET tmb_isAthlete = @athlete, tmb_isCoach = @coach WHERE (teamMemberID = @teamMemberID);";
+
+            connection.Open();
+
+            SqlCommand command = new SqlCommand(sql, connection);
+            command.Parameters.AddWithValue("@athlete", isAthlete);
+            command.Parameters.AddWithValue("@coach", isCoach);
+            command.Parameters.AddWithValue("@teamMemberID", tmMemberID);
+
+            command.ExecuteNonQuery();
+        }
+    }
+
+
 //<<<<<<<<<< Team Events >>>>>>>>>>
     
     public class tmEvent

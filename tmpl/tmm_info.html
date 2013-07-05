@@ -1,43 +1,47 @@
-﻿<article class="sbpg_adminPanel">
-    <input id="memAdminBack" class="button" type="button" value="Back" />
-</article>
-
-
-<div class="sbpg_memDetTop"><img src="#" alt="" />' +
+﻿ <div class="sbpg_memDetTop">
+    <img src="#" alt="" />
     <div id="basicInfo">
-        <p id="memName">test</p><h2><input id="tmMemName" type="text" value="'mem.fName + ' ' + mem.lName'"/></h2>
+        <p id="memName">test</p>
+        <h2>
+            <input id="tmMemName" type="text" value= "' + mem.fName + ' ' + mem.lName + '" /></h2>
+        <div>
+            <input id="isAthleteCB" type="checkbox" value="Y" title="athlete" /><label for="isAthleteCB">Athlete</label><input id="isCoachCB" type="checkbox" value="Y" /><label for="isCoachCB">Coach</label></div>
+    </div>
+</div>
 
-    </div></div>
+<!--team member admin content-->
 <div class="sbpg_memDetCenter">
-    <fieldset id="memberRole">
-        <legend>Connection</legend>
-        <div id="perConnect">
-            linkStatus 
+    <div class="fieldSet">
+        <h4>Connection</h4>
+        <div id="tmmLinkCont" class="fieldCont">
+            linkCont +
         </div>
-        <div id="getPerForm">
-            Search for a site member: or Send an EMail.<br />
-            <input id="memSearch" type="text" /><input id="findPerson" type="button" value="Find It" /><br />
-            <div id="pickMember">
-                <br />
-                <label for="selPerson">Please select a member from the drop-down below. </label>
-                <br />
-                <select id="selPerson"></select>
-                <input id="selPerAccept" type="button" value="Accept" /><br />
+        <div id="Div1" class="fieldCont">
+            <div>
+                <p>What is the email of the person you want to connect with?</p>
+                <label>Email:</label><input id="Text1" type="text" />
+                <input id="Button1" class="floatRT" type="button" value="Submit" />
+            </div>
+            <div id="Div2">
             </div>
         </div>
-        <div id="acceptPerCont"></div>
-        <br />
-    </fieldset>
+    </div>
 
-     //'Person Connection: ' + mem.personID + ' <br />
-    <fieldset id="memContact">
-        <legend>Contact Information</legend>
-        Phone:
-        <input id="tmMemPhone" type="text" value="' + mem.tmb_phone + '" />
-        <br />
-        Emergency Contact:
-        <input id="emName" type="text" value="' + mem.em_name + '" /><br />
-        Emergency Phone:<input id="emPhone" type="text" value="' + mem.em_phone + '" />
-    </fieldset>
-    <fieldset id="memNotes"><legend>Notes</legend>
-        <input id="Text1" type="text" /></fieldset></div>
+    <div class="fieldSet">
+        <h4>Contact</h4>
+        <table>
+            <tr>
+                <td>Phone:</td>
+                <td><input id="tmMemPhone" type="text" value="mem.tmb_phone" /></td>
+            </tr>
+        </table>
+    </div>
+
+
+    <br />
+
+    <div class="fieldSet">
+        <h4>Notes</h4>
+        <input id="Text2" type="text" />
+    </div>
+</div>

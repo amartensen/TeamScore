@@ -628,21 +628,7 @@
 
                                     $(data.d).each(function (i, mem) {
                                         //alert(item.fName + " " + item.lName);
-                                        var athlete
-                                        if (mem.tmb_isAthlete != "") {
-                                            athlete = "Athlete"
-                                        }
-                                        else {
-                                            athlete = ""
-                                        }
-
-                                        var coach
-                                        if (mem.tmb_isCoach != "") {
-                                            coach = "Coach"
-                                        }
-                                        else {
-                                            coach = ""
-                                        }
+                                        
 
                                         var linkCont
                                         if (mem.tmb_link_status == "A") {
@@ -673,8 +659,8 @@
                                         //team member info header
                                         '<div class="sbpg_memDetTop"><img src="#" alt="" />' +
                                             '<div id="basicInfo">' +
-                                                '<p id="memName">test</p><h2><input id="tmMemName" type="text" value="' + mem.fName + ' ' + mem.lName + '"/></h2>' +
-                                                '<div><input id="isAthleteCB" type="checkbox" value="Y" title="athlete"/><label for="isAthleteCB">Athlete</label><input id="isCoachCB" type="checkbox" value="Y"/><label for="isCoachCB">Coach</label></div>' +
+                                                '<h2 class="editableTB">'+ mem.fName + ' ' + mem.lName+'</h2>' + //<input id="tmMemName"  type="text" value="' +  + '"/>
+                                                '<div><input id="isAthleteCB" type="checkbox" title="athlete"/><label for="isAthleteCB">Athlete</label><input id="isCoachCB" type="checkbox" /><label for="isCoachCB">Coach</label></div>' +
                                             '</div></div>' +
 
                                         //team member admin content
@@ -702,13 +688,67 @@
                                              //'Person Connection: ' + mem.personID + ' <br />
 
                                             '<div class="fieldSet"><h4>Notes</h4>' +
-                                                '<input id="Text1" type="text" /></div></div>')
+                                                '<input id="Text1" type="text" /></div></div>'
+                                                )
+                                        var athlete
+                                        if (mem.tmb_isAthlete != "") {
+                                            $("#isAthleteCB").prop('checked', true);
+                                        }
 
+                                        var coach
+                                        if (mem.tmb_isCoach != "") {
+                                            $("#isCoachCB").prop('checked', true);
+                                        }
 
                                     });
 
                                     var tmmLinkCont = tmMemInfo.find('#tmmLinkCont')
-                                    
+
+                                    $('.editableTB').editable(function (value, settings) {
+                                        console.log(this);
+                                        var name = value.split(' ')
+                                        $.ajax({
+                                            type: "POST",
+                                            url: "tmStatbook.aspx/saveTMBName",
+                                            data: "{'tmMemberID':'" + tmMemberID + "', 'tmm_fName':'" + name[0] + "', 'tmm_lName':'"+name[1]+"'}",
+                                            contentType: "application/json; charset=utf-8",
+                                            dataType: "json",
+                                            success: function (data) {  }
+                                        });
+                                        return (value);
+                                    }, {
+                                        onblur: 'submit',
+                                        type: 'text',
+                                    });
+
+                                    $("#isAthleteCB").change(saveTMBrole);
+                                    $("#isCoachCB").change(saveTMBrole);
+
+                                    function saveTMBrole() {
+                                        //alert('hi');
+                                        var isAthlete
+                                        if ($("#isAthleteCB").is(':checked')) {
+                                            isAthlete = "Y"
+                                        } else { 
+                                            isAthlete = ""
+                                        }
+
+                                        var isCoach
+                                        if ($("#isCoachCB").is(':checked')) {
+                                            isCoach = "Y"
+                                        } else {
+                                            isCoach = ""
+                                        }
+
+                                        $.ajax({
+                                            type: "POST",
+                                            url: "tmStatbook.aspx/saveTMBRole",
+                                            data: "{'tmMemberID':'" + tmMemberID + "', 'isAthlete':'" + isAthlete + "', 'isCoach':'" + isCoach + "'}",
+                                            contentType: "application/json; charset=utf-8",
+                                            dataType: "json",
+                                            success: function (data) {  }
+                                        });
+                                    }
 
                                     //<<< Member Admin View - Connection >>>
                                     function reloadConnect() {
@@ -759,6 +799,7 @@
                                         $('#tmMemInfo').hide();
 
                                         $('#tmMemInfo').empty();
+                                        getAllMembers();
                                         $('#adminPanel').show();
                                     });
 

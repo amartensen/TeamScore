@@ -56,7 +56,7 @@
                         <section  id="adminPanel">
                             <article id="memberAdminCont">
 
-                                <article class="sbpg_adminPanel">
+                                <%--<article class="sbpg_adminPanel">
                                     <input id="memAdminBack" class="button" type="button" value="Back" />
                                 </article>
 
@@ -66,7 +66,7 @@
                                     <div id="basicInfo">
                                         <p id="memName">test</p>
                                         <h2>
-                                            <input id="tmMemName" type="text" value="' + mem.fName + ' ' + mem.lName + '" /></h2>
+                                            <input id="tmMemName" type="text" value= "${fName}" /></h2>
                                         <div>
                                             <input id="isAthleteCB" type="checkbox" value="Y" title="athlete" /><label for="isAthleteCB">Athlete</label><input id="isCoachCB" type="checkbox" value="Y" /><label for="isCoachCB">Coach</label></div>
                                     </div>
@@ -101,14 +101,13 @@
                                     </div>
 
 
-                                    //'Person Connection: ' + mem.personID + '
                                     <br />
 
                                     <div class="fieldSet">
                                         <h4>Notes</h4>
                                         <input id="Text2" type="text" />
                                     </div>
-                                </div>
+                                </div>--%>
 
                             </article>
                             <aside><input id="newMemberBu" class="floatRt button" type="button" value="New Member" /></aside>
@@ -607,8 +606,12 @@
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     success: function (data) {
-                        $(data.d).each(function (i, item) {
 
+                        
+                        
+                        
+
+                        $(data.d).each(function (i, item) {
                             var athlete
                             if (item.tmb_isAthlete != "") {
                                 athlete = "Athlete"
@@ -657,7 +660,7 @@
 
                         var li = $('#memberAdminCont li');
                         li.click(function memAdminView() {
-
+                            
                             tmMemberID = $(this).find('a').attr('href');
 
                             var tmMemInfo = $('#tmMemInfo')
@@ -673,7 +676,10 @@
                                 contentType: "application/json; charset=utf-8",
                                 dataType: "json",
                                 success: function (data) {
-
+//$.get("../tmpl/tmm_info.html", function(data){
+   // tmMemInfo.html(data);
+                                    //  });
+                                    tmMemInfo.load("../tmpl/tmm_info.html", data);
                                     $(data.d).each(function (i, mem) {
                                         //alert(item.fName + " " + item.lName);
                                         var athlete
@@ -712,48 +718,48 @@
 
 
 
-                                        $(tmMemInfo).append(
+                                        //$(tmMemInfo).append(
 
-                                        '<article class="sbpg_adminPanel">' +
-                                            '<input id="memAdminBack" class="button" type="button" value="Back" />' +
-                                        '</article>' +
+                                       // '<article class="sbpg_adminPanel">' +
+                                       //     '<input id="memAdminBack" class="button" type="button" value="Back" />' +
+                                       // '</article>' +
 
                                         //team member info header
-                                        '<div class="sbpg_memDetTop"><img src="#" alt="" />' +
-                                            '<div id="basicInfo">' +
-                                                '<p id="memName">test</p><h2><input id="tmMemName" type="text" value="' + mem.fName + ' ' + mem.lName + '"/></h2>' +
-                                                '<div><input id="isAthleteCB" type="checkbox" value="Y" title="athlete"/><label for="isAthleteCB">Athlete</label><input id="isCoachCB" type="checkbox" value="Y"/><label for="isCoachCB">Coach</label></div>' +
-                                            '</div></div>' +
+                                       // '<div class="sbpg_memDetTop"><img src="#" alt="" />' +
+                                         //   '<div id="basicInfo">' +
+                                         //       '<p id="memName">test</p><h2><input id="tmMemName" type="text" value="' + mem.fName + ' ' + mem.lName + '"/></h2>' +
+                                          //      '<div><input id="isAthleteCB" type="checkbox" value="Y" title="athlete"/><label for="isAthleteCB">Athlete</label><input id="isCoachCB" type="checkbox" value="Y"/><label for="isCoachCB">Coach</label></div>' +
+                                         //   '</div></div>' +
 
                                         //team member admin content
-                                        '<div class="sbpg_memDetCenter">' +
-                                            '<div class="fieldSet"><h4>Connection</h4>' +
-                                                '<div id="tmmLinkCont" class="fieldCont">' +
-                                                    linkCont +
-                                                '</div>' +
-                                                '<div id="getPerForm" class="fieldCont">' +
-                                                    '<div><p>What is the email of the person you want to connect with?</p>' +
-                                                    '<label>Email:</label><input id="memSearch" type="text" />' +
-                                                    '<input id="findPerson" class="floatRT" type="button" value="Submit" /></div>' +
-                                                    '<div id="pickMember">' +
+                                        //'<div class="sbpg_memDetCenter">' +
+                                       //     '<div class="fieldSet"><h4>Connection</h4>' +
+                                        //        '<div id="tmmLinkCont" class="fieldCont">' +
+                                       //             linkCont +
+                                       //         '</div>' +
+                                       //         '<div id="getPerForm" class="fieldCont">' +
+                                      //              '<div><p>What is the email of the person you want to connect with?</p>' +
+                                      //              '<label>Email:</label><input id="memSearch" type="text" />' +
+                                      //              '<input id="findPerson" class="floatRT" type="button" value="Submit" /></div>' +
+                                       //             '<div id="pickMember">' +
 
-                                                    '</div>' +
-                                                '</div>' +
-                                            '</div>' +
+                                        //            '</div>' +
+                                       //         '</div>' +
+                                        //    '</div>' +
 
-                                            '<div class="fieldSet"><h4>Contact</h4>' +
-                                                '<table><tr><td>Phone:</td><td><input id="tmMemPhone" type="text" value="' + mem.tmb_phone + '" /></td></tr>' +
-                                                '</table>' +
-                                            '</div>' +
+                                       //     '<div class="fieldSet"><h4>Contact</h4>' +
+                                       //         '<table><tr><td>Phone:</td><td><input id="tmMemPhone" type="text" value="' + mem.tmb_phone + '" /></td></tr>' +
+                                       //         '</table>' +
+                                       //     '</div>' +
 
 
                                              //'Person Connection: ' + mem.personID + ' <br />
 
-                                            '<div class="fieldSet"><h4>Notes</h4>' +
-                                                '<input id="Text1" type="text" /></div></div>')
+                                         //   '<div class="fieldSet"><h4>Notes</h4>' +
+                                          //      '<input id="Text1" type="text" /></div></div>')
+                                        //
 
-
-                                    });
+                                  });
 
                                     var tmmLinkCont = tmMemInfo.find('#tmmLinkCont')
                                     
