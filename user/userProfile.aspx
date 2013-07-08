@@ -427,15 +427,23 @@
                 dataType: "json",
                 success: function (data) {
                     $(data.d).each(function (i, item) {
-                        $('#perTeamMesCont').append('<div><img src="" alt="" /><p>'+item.tm_name+' has invited you to join the team</p><span>Accept / Decline</span></div>')
+                        $('#perTeamMesCont').append('<div><img src="" alt="" /><p>'+item.tm_name+' has invited you to join the team</p><a href="'+item.teamID+'" /><span class="accept">Accept</span> / <span class="decline">Decline</span></div>')
                     });
 
                     var div = $('#perTeamMesCont').find('div');
                     div.bind('click', function () {
                         var teamid = $(this).find('a').attr('href');
-                        window.localStorage.setItem('team_id', teamid)
+                    
+                        $(this).find('.decline').bind('click', function () {
+                        alert('NO' + teamid);
+                        });
+                        $(this).find('.accept').bind('click', function () {
+                            alert('yes' + teamid);
+                        });
+
+                        //window.localStorage.setItem('team_id', teamid)
                         //alert(localStorage.event_id);
-                        window.location = "../team/tmStatbook.aspx"
+                       // window.location = "../team/tmStatbook.aspx"
 
                     });
                 }

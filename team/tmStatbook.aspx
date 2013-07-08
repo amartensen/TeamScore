@@ -42,32 +42,100 @@
                                 </tbody>
                             </table>
                         </aside>
-
+                        
                     </div>
 
                     <!-- member tab -->
                     <div id="tab-3" class="center">
-                        <article id="sbpg_memView">
+                        <article id="tsb_mem_topNav">
                             <ul>
                                 <li><a href="#mem_athlete"><h2>Athetes</h2></a></li>
                                 <li><a href="#mem_admin"><h2>Admin Panel</h2></a></li>
                             </ul>
+                            <input id="newMemberBu" class="floatRt button" type="button" value="New Member" />
                         </article>
-                        <section  id="adminPanel">
-                            <article id="memberAdminCont">
+                        
+                        <article id="tsb_mem_container"></article>
 
+                    <script id="tsb_mem_athleteViewTmpl" type="text/x-jquery-tmpl">
+                            <div id="memAthleteView">
+                                <div><a href="${tmMemberID}"></a><img src="" alt="" /><h4>${fName} ${lName}</h4><br />' + linked + "</div>
+                            </div>
+                        </script>
+                        
 
-
-
-
-
-
+                        <script id="tsb_mem_athleteTmpl" type="text/x-jquery-tmpl">
+                            <article  class="tsb_mem_toolbar">
+                                <input id="memBackBu" class="button" type="button" value="Back" />
+                                
                             </article>
-                            <aside><input id="newMemberBu" class="floatRt button" type="button" value="New Member" /></aside>
+                            <div class="mem_topContent">
+                                <img src="#" alt="" />
+                                <div>
+                                    <h2>${fName} ${lName}</h2>
+                                    <label>${isAthlete}</label><label> ${isCoachCB}</label>
+                                </div>
+                            </div>
+                            <div class="mem_mainContent">
+                                    Matches
+                            </div>
+                        </script>
 
-                        </section>
-                        <ul id="memAthleteCont"></ul>
-                        <ul id="tmMemInfo"></ul>
+
+                        <script id="tsb_mem_adminTmpl" type="text/x-jquery-tmpl">
+                            <article  class="tsb_mem_toolbar">
+                                <input id="memAdminBack" class="button" type="button" value="Back" />
+                                
+                            </article>
+                            <div class="mem_topContent">
+                                <img src="#" alt="" />
+                                <div id="basicInfo">
+                                    <h2 id="notNewName" class="editableTB">${fName} ${lName}</h2>
+                                    <input id="newMemName" type="text" />
+                                    <input id="isAthleteCB" type="checkbox" title="athlete" /><label for="isAthleteCB">Athlete</label><input id="isCoachCB" type="checkbox" /><label for="isCoachCB">Coach</label>
+                                </div>
+                                
+                            </div>
+
+                            <!--team member admin content-->
+                            <div class="mem_mainContent">
+                                <div class="area">
+                                    <h4>Connection</h4>
+                                    <div id="tsb_mem_linkCont" class="fieldCont"></div>
+                                </div>
+
+                                <div class="area">
+                                    <h4>Contact</h4>
+                                    <table>
+                                        <tr>
+                                            <td>Phone:</td>
+                                            <td>
+                                                <input id="tmMemPhone" type="text" value="mem.tmb_phone" /></td>
+                                        </tr>
+                                    </table>
+                                </div> <br />
+
+                                <div class="area">
+                                    <h4>Notes</h4>
+                                    <input id="Text2" type="text" />
+                                </div>
+                            </div>
+
+
+                        </script>
+
+
+                        
+
+                        <script id="tsb_mem_adminViewTmpl" type="text/x-jquery-tmpl">
+                            <div id="memAdminView">
+                                <div> <a href="${tmMemberID}"></a><img src="" alt="" /><h4>${fName} ${lName}</h4><span id="athlete"></span> <span id="coach"></span><span id="admin"></span><span id="linkStatus"></span> </div>
+                                
+                            </div>
+                        </script>
+                              
+                        
+                        
                         <ul id="memDetCont"></ul>
                         <aside >
                             <!--jtemplate for tmMember list-->
@@ -104,7 +172,7 @@
     </div>    
     <div id="dialog-overlay"></div>
     <div id="dialog-box">
-        <div class="dialog-content">
+<%--        <div class="dialog-content">
             <div id="dialog-title"></div>
             <div id="dialog-message"></div>
             
@@ -367,7 +435,7 @@
                 </p>
             </script>
             <input id="closeBu"  type="button" value="Close" />
-        </div>
+        </div>--%>
     </div>
   
  
@@ -426,132 +494,115 @@
             }
 
 
-
+            //Declare Global Page Variables
+            var mem_container = $('#tsb_mem_container')
+            
             
             //Load team members
             function getAthletes() {
-                $('#memAthleteCont').empty();
                 $.ajax({
                     type: "POST",
                     url: "tmStatbook.aspx/getTeamAthletes",
                     data: teamID,
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
-                    success: tmSuccess
-                });
-            }
-            getAthletes(); 
-            function tmSuccess(data) {
-                //alert(data.d);
-                //var pickSchool = $('#dialog-message').find('#pickSchool')
-                //var tmCont = $('#tab-3').find('#memAthleteCont')
-                //$("#tmMemberTemp").tmpl(data.d).appendTo($('#memAthleteCont'));
-                $(data.d).each(function (i, item) {
+                    success: function (data) {
 
-                    var linked
-                    if (item.personID != "") {
-                        linked = "Linked"
-                    }
-                    else {
-                        linked = "Not Linked"
-                    }
-
-                    $('#memAthleteCont').append(
-                         '<li> <a href="' + item.tmMemberID + '"></a><img src="" alt="" /><h4>' + item.fName + " " + item.lName + '</h4><br />' + linked + "</li>")
-
-                });
-            
-        
-                memSelect();
-                       
-            
-                function memSelect() {
-
-                    var li = $('#memAthleteCont li');
-                    li.bind('mouseover', function (event) {
-                        li.removeClass('row-highlight');
-                        $(this).addClass('row-highlight');
-                    });
-                    li.bind('mouseout', function (event) {
-                        li.removeClass('row-highlight');
-                    });
-
-                    li.click(function () {
+                        mem_container.empty();
+                        $("#tsb_mem_athleteViewTmpl").tmpl(data.d).appendTo(mem_container);
                         
-                        tmMemberID = $(this).find('a').attr('href');
+                        $(data.d).each(function (i, item) {
 
-                        var memDetCont = $('#memDetCont')
-                        $(memDetCont).empty();
-                        $('#memAthleteCont').hide();
-                        $(memDetCont).show();
-                        
-                        //var currentTab = $('#tab-5')
-                        //$('#tabs div').hide();
-
-                        
-
-
-                        
-
-
-                        //ORIGINAL
-                        var teamMember = "{'tmMemberID':'" + tmMemberID + "', 'teamID':'" + localStorage.team_id + "'}"
-                        $.ajax({
-                            type: "POST",
-                            url: "tmStatbook.aspx/getTeamMember",
-                            data: teamMember,
-                            contentType: "application/json; charset=utf-8",
-                            dataType: "json",
-                            success: function (data) {
-
-                                $(data.d).each(function (i, mem) {
-                                    //alert(currentTab);
-                                    //alert(item.fName + " " + item.lName);
-                                    var athlete
-                                    if (mem.tmb_isAthlete != "") {
-                                        athlete = "Athlete"
-                                    }
-                                    else {
-                                        athlete = ""
-                                    }
-
-                                    var coach
-                                    if (mem.tmb_isCoach != "") {
-                                        coach = "Coach"
-                                    }
-                                    else {
-                                        coach = ""
-                                    }
-                                    memDetCont.append(
-                                        '<li><article class="sbpg_adminPanel"><input id="memDetBack" class="button" type="button" value="Back" /></article>'+
-                                        ' <div class="member"><div class="sbpg_memDetTop"><img src="#" alt="" />' +
-                                        '<div><h2>' + mem.fName + " " + mem.lName + "</h2>" + athlete + ' ' + coach + "</div></div>" +
-                                        ' <div class="sbpg_memDetCenter">Matches' +
-                                        '</div></div></li>')
-
-                                });
-
-                                $('#memDetBack').click(function () {
-                                    $(memDetCont).empty();                                    
-                                    $('#memAthleteCont').show();
-                                });
-                                
-                                $('memDetCont').find('#memName').editInPlace({
-                                    callback: function (unused, enteredText) { return enteredText; },
-                                    //url: "tmStatbook.aspx/getTeamMember",
-                                    //params: "name=david"
-                                    bg_over: "#080808"
-                                });
+                            var linked
+                            if (item.personID != "") {
+                                linked = "Linked"
+                            }
+                            else {
+                                linked = "Not Linked"
                             }
                         });
 
-                    });
-                };
-            
-             };
 
-            function getAllMembers() {
-                $('#memberAdminCont').empty();
+                        var div = $('#memAthleteView div');
+                            //highlight row on hover
+                            div.bind('mouseover', function (event) {
+                                div.removeClass('row-highlight');
+                                $(this).addClass('row-highlight');
+                            });
+                            div.bind('mouseout', function (event) {
+                                div.removeClass('row-highlight');
+                            });
+
+                            div.click(function () {
+                                mem_container.empty();
+                                tmMemberID = $(this).find('a').attr('href');
+
+                                //ORIGINAL
+                                var teamMember = "{'tmMemberID':'" + tmMemberID + "', 'teamID':'" + localStorage.team_id + "'}"
+                                $.ajax({
+                                    type: "POST",
+                                    url: "tmStatbook.aspx/getTeamMember",
+                                    data: teamMember,
+                                    contentType: "application/json; charset=utf-8",
+                                    dataType: "json",
+                                    success: function (data) {
+
+                                        $("#tsb_mem_athleteTmpl").tmpl(data.d).appendTo(mem_container);
+                                        $(data.d).each(function (i, mem) {
+                                            //alert(currentTab);
+                                            //alert(item.fName + " " + item.lName);
+                                            var athlete
+                                            if (mem.tmb_isAthlete != "") {
+                                                athlete = "Athlete"
+                                            }
+                                            else {
+                                                athlete = ""
+                                            }
+
+                                            var coach
+                                            if (mem.tmb_isCoach != "") {
+                                                coach = "Coach"
+                                            }
+                                            else {
+                                                coach = ""
+                                            }
+                                        //    memDetCont.append(
+                                        //        '<li><article class="sbpg_adminPanel"><input id="memDetBack" class="button" type="button" value="Back" /></article>' +
+                                        //        ' <div class="member"><div class="sbpg_memDetTop"><img src="#" alt="" />' +
+                                        //        '<div><h2>' + mem.fName + " " + mem.lName + "</h2>" + athlete + ' ' + coach + "</div></div>" +
+                                        //        ' <div class="sbpg_memDetCenter">Matches' +
+                                        //        '</div></div></li>')
+
+                                        });
+
+                                        $('#memBackBu').click(function () {
+                                            mem_container.empty();
+                                            getAthletes();
+                                        });
+
+                                        $('memDetCont').find('#memName').editInPlace({
+                                            callback: function (unused, enteredText) { return enteredText; },
+                                            //url: "tmStatbook.aspx/getTeamMember",
+                                            //params: "name=david"
+                                            bg_over: "#080808"
+                                        });
+                                    }
+                                });
+
+
+                            });
+
+
+                    }
+                });
+            };
+            getAthletes(); 
+
+                       
+
+
+            //Load the Admin team members page
+            function getAdminMembers() {
                 $.ajax({
                     type: "POST",
                     url: "tmStatbook.aspx/getTeamMembers",
@@ -559,389 +610,362 @@
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     success: function (data) {
+
                         $(data.d).each(function (i, item) {
+                            mem_container.empty();
+                            $("#tsb_mem_adminViewTmpl").tmpl(data.d).appendTo(mem_container);
 
-                            var athlete
+                            var athlete = $('#athlete')
                             if (item.tmb_isAthlete != "") {
-                                athlete = "Athlete"
+                                athlete.append( "Athlete")
                             }
                             else {
-                                athlete = ""
+                                athlete.append( "")
                             }
 
-                            var coach
+                            var coach = $('#coach')
                             if (item.tmb_isCoach != "") {
-                                coach = "Coach"
+                                coach.append("Coach")
                             }
                             else {
-                                coach = ""
+                                coach.append("")
                             }
 
-                            var admin
+                            var admin = $('#admin')
                             if (item.tmb_adminRole == "A") {
-                                admin = "Team Admin"
+                                admin.append("Team Admin")
                             }
                             else if (item.tmb_adminRole == "M") {
-                                admin = "Scorebook Manager"
+                                admin.append("Scorebook Manager")
                             }
                             else {
-                                admin = ""
+                                admin.append("")
                             }
 
-                            var linkStatus
+                            var linkStatus = $('#linkStatus')
                             if (item.tmb_link_status == "A") {
-                                linkStatus = "Linked"
+                                linkStatus.append("Linked")
                             }
                             else if (item.tmb_link_status == "P") {
-                                linkStatus = "Pending..."
+                                linkStatus.append("Pending...")
                             }
                             else if (item.tmb_link_status == "D") {
-                                linkStatus = "Declined"
+                                linkStatus.append("Declined")
                             }
                             else {
-                                linkStatus = ""
+                                linkStatus.append("")
                             }
 
-                            $('#memberAdminCont').append(
-                                 '<li> <a href="' + item.tmMemberID + '"></a><img src="" alt="" /><h4>' + item.fName + " " + item.lName + "</h4> " + athlete + ', ' + coach + '     ' + admin + "   " + linkStatus + " </li>")
-                        });
+                           });
 
+                           var div = $('#memAdminView div');
+                           div.click(function () {
+                               tmMemberID = $(this).find('a').attr('href');
+                               loadAdminView(tmMemberID);
+                           }); //memAdminView click - end tag
 
-                        var li = $('#memberAdminCont li');
-                        li.click(function memAdminView() {
-
-                            tmMemberID = $(this).find('a').attr('href');
-
-                            var tmMemInfo = $('#tmMemInfo')
-
-                            $('#adminPanel').hide();
-                            $(tmMemInfo).show();
-
-                            var teamMember = "{'tmMemberID':'" + tmMemberID + "', 'teamID':'" + localStorage.team_id + "'}"
-                            $.ajax({
-                                type: "POST",
-                                url: "tmStatbook.aspx/getTeamMember",
-                                data: teamMember,
-                                contentType: "application/json; charset=utf-8",
-                                dataType: "json",
-                                success: function (data) {
-
-                                    $(data.d).each(function (i, mem) {
-                                        //alert(item.fName + " " + item.lName);
-                                        
-
-                                        var linkCont
-                                        if (mem.tmb_link_status == "A") {
-                                            linkCont = '<p class="sect">Give people access to view your statbook by connecting them to a team member. [Learn More] </p><div class="sect" ><div class="perLinkBox"><img src="" alt="" />' + mem.per_fname + ' ' + mem.per_lname + '<br />' + mem.per_state +
-                                            '<span id="linkRemove" class="floatRT">(Remove)</span></div> </div>'
-                                        }
-                                        else if (mem.tmb_link_status == "P") {
-                                            linkCont = '<p class="sect">Give people access to view your statbook by connecting them to a team member. [Learn More] </p><div class="sect" ><div class="perLinkBox"><img src="" alt="" />' + mem.per_fname + ' ' + mem.per_lname + '<br /><a href="' + mem.personID +'"/>'+
-                                            '<span class="floatRT">Pending...</span> <br /><span id="linkCancel" class="floatRT">(Cancel)</span></div> </div>'
-
-                                        }
-                                        else if (mem.tmb_link_status == "D") {
-                                            linkCont = mem.personID + '<h4> has declined your invite.</h4>'
-                                        }
-                                        else {
-                                            linkCont = '<p class="sect">Give people access to view your statbook by connecting them to a team member. [Learn More] </p><div class="sect" ><input id="invMember" class="perLinkAdd" type="button" value="+ Add Connection" />' +
-                                                ' </div>'
-                                        }
-
-
-
-                                        $(tmMemInfo).append(
-
-                                        '<article class="sbpg_adminPanel">' +
-                                            '<input id="memAdminBack" class="button" type="button" value="Back" />' +
-                                        '</article>' +
-
-                                        //team member info header
-                                        '<div class="sbpg_memDetTop"><img src="#" alt="" />' +
-                                            '<div id="basicInfo">' +
-                                                '<h2 class="editableTB">'+ mem.fName + ' ' + mem.lName+'</h2>' + //<input id="tmMemName"  type="text" value="' +  + '"/>
-                                                '<div><input id="isAthleteCB" type="checkbox" title="athlete"/><label for="isAthleteCB">Athlete</label><input id="isCoachCB" type="checkbox" /><label for="isCoachCB">Coach</label></div>' +
-                                            '</div></div>' +
-
-                                        //team member admin content
-                                        '<div class="sbpg_memDetCenter">' +
-                                            '<div class="fieldSet"><h4>Connection</h4>' +
-                                                '<div id="tmmLinkCont" class="fieldCont">' +
-                                                    linkCont +
-                                                '</div>' +
-                                                '<div id="getPerForm" class="fieldCont">' +
-                                                    '<div><p>What is the email of the person you want to connect with?</p>' +
-                                                    '<label>Email:</label><input id="memSearch" type="text" />' +
-                                                    '<input id="findPerson" class="floatRT" type="button" value="Submit" /></div>' +
-                                                    '<div id="pickMember">' +
-
-                                                    '</div>' +
-                                                '</div>' +
-                                            '</div>' +
-
-                                            '<div class="fieldSet"><h4>Contact</h4>' +
-                                                '<table><tr><td>Phone:</td><td><input id="tmMemPhone" type="text" value="' + mem.tmb_phone + '" /></td></tr>' +
-                                                '</table>' +
-                                            '</div>' +
-
-
-                                             //'Person Connection: ' + mem.personID + ' <br />
-
-                                            '<div class="fieldSet"><h4>Notes</h4>' +
-                                                '<input id="Text1" type="text" /></div></div>'
-                                                )
-                                        var athlete
-                                        if (mem.tmb_isAthlete != "") {
-                                            $("#isAthleteCB").prop('checked', true);
-                                        }
-
-                                        var coach
-                                        if (mem.tmb_isCoach != "") {
-                                            $("#isCoachCB").prop('checked', true);
-                                        }
-
-                                    });
-
-                                    var tmmLinkCont = tmMemInfo.find('#tmmLinkCont')
-
-                                    $('.editableTB').editable(function (value, settings) {
-                                        console.log(this);
-                                        var name = value.split(' ')
-                                        $.ajax({
-                                            type: "POST",
-                                            url: "tmStatbook.aspx/saveTMBName",
-                                            data: "{'tmMemberID':'" + tmMemberID + "', 'tmm_fName':'" + name[0] + "', 'tmm_lName':'"+name[1]+"'}",
-                                            contentType: "application/json; charset=utf-8",
-                                            dataType: "json",
-                                            success: function (data) {  }
-                                        });
-                                        return (value);
-                                    }, {
-                                        onblur: 'submit',
-                                        type: 'text',
-                                    });
-
-                                    $("#isAthleteCB").change(saveTMBrole);
-                                    $("#isCoachCB").change(saveTMBrole);
-
-                                    function saveTMBrole() {
-                                        //alert('hi');
-                                        var isAthlete
-                                        if ($("#isAthleteCB").is(':checked')) {
-                                            isAthlete = "Y"
-                                        } else { 
-                                            isAthlete = ""
-                                        }
-
-                                        var isCoach
-                                        if ($("#isCoachCB").is(':checked')) {
-                                            isCoach = "Y"
-                                        } else {
-                                            isCoach = ""
-                                        }
-
-                                        $.ajax({
-                                            type: "POST",
-                                            url: "tmStatbook.aspx/saveTMBRole",
-                                            data: "{'tmMemberID':'" + tmMemberID + "', 'isAthlete':'" + isAthlete + "', 'isCoach':'" + isCoach + "'}",
-                                            contentType: "application/json; charset=utf-8",
-                                            dataType: "json",
-                                            success: function (data) {  }
-                                        });
-                                    }
-
-                                    //<<< Member Admin View - Connection >>>
-                                    function reloadConnect() {
-                                        
-                                        var teamMember = "{'tmMemberID':'" + tmMemberID + "', 'teamID':'" + localStorage.team_id + "'}"
-                                        $.ajax({
-                                            type: "POST",
-                                            url: "tmStatbook.aspx/getTMConnection",
-                                            data: teamMember,
-                                            contentType: "application/json; charset=utf-8",
-                                            dataType: "json",
-                                            success: function (data) {
-                                                $(data.d).each(function (i, mem) {
-                                                    var PerCont
-                                                    if (mem.tmb_link_status == "A") {
-                                                        PerCont = '<p class="sect">Give people access to view your statbook by connecting them to a team member. [Learn More] </p><div class="sect" ><div class="perLinkBox"><img src="" alt="" />' + mem.per_fname + ' ' + mem.per_lname + '<br />' + mem.per_state +
-                                                        '<span id="linkRemove" class="floatRT">(Remove)</span></div> </div>'
-                                                    }
-                                                    else if (mem.tmb_link_status == "P") {
-                                                        PerCont = '<p class="sect">Give people access to view your statbook by connecting them to a team member. [Learn More] </p><div class="sect" ><div class="perLinkBox"><img src="" alt="" />' + mem.per_fname + ' ' + mem.per_lname + '<br /><a href="' + mem.personID + '"/>' +
-                                                        '<span class="floatRT">Pending...</span> <br /><span id="linkCancel" class="floatRT">(Cancel)</span></div> </div>'
-
-                                                    }
-                                                    else if (mem.tmb_link_status == "D") {
-                                                        PerCont = mem.personID + '<h4> has declined your invite.</h4>'
-                                                    }
-                                                    else {
-                                                        PerCont = '<p class="sect">Give people access to view your statbook by connecting them to a team member. [Learn More] </p><div class="sect" ><input id="invMember" class="perLinkAdd" type="button" value="+ Add Connection" />' +
-                                                            ' </div>'
-                                                    }
-                                                
-                                                alert('k');
-                                                tmmLinkCont.empty();
-                                                tmmLinkCont.append(PerCont);
-                                                });
-                                                loadAddConn_click();
-                                            }
-                                        });
-                                    }//reloadConnection - Ending Tag
-
-
-
-                                    $('#tmMemInfo').find('#getPerForm').hide();
-
-                                    $('#memAdminBack').click(function () {
-
-                                        $('#memAthleteCont').hide();
-                                        $('#tmMemInfo').hide();
-
-                                        $('#tmMemInfo').empty();
-                                        getAllMembers();
-                                        $('#adminPanel').show();
-                                    });
-
-                                    $('#linkRemove').click(function () {
-                                        alert('Are you sure you want to remove this link?');
-                                    });
-                                    $('#linkCancel').click(function () {
-                                        alert(tmMemberID);
-                                        var invite = "{'tmMemberID':'" + tmMemberID + "'}"
-                                        $.ajax({
-                                            type: "POST",
-                                            url: "tmStatbook.aspx/cancelPerInvite",
-                                            data: invite,
-                                            contentType: "application/json; charset=utf-8",
-                                            dataType: "json",
-                                            success: function (data) {
-                                                reloadConnect();
-                                            }
-                                        });
-                                    });
-
-                                    loadAddConn_click();
-                                    function loadAddConn_click() {
-                                        $('#invMember').click(function () {
-                                            var tmmLinkCont = tmMemInfo.find('#tmmLinkCont')
-                                            tmmLinkCont.hide();
-                                            var pickMember = tmMemInfo.find('#pickMember')
-                                            pickMember.hide();
-                                            var getPerForm = tmMemInfo.find('#getPerForm')
-                                            getPerForm.show();
-                                            var serPerEmail = getPerForm.find('#memSearch').text();
-
-                                            //Member Connection
-                                            var findPerson = tmMemInfo.find('#findPerson')
-                                            findPerson.bind('click', function () {
-                                                var findPersons = "{'per_email':'" + $('#memSearch').val() + "'}"//, 'per_lname':'" + $('#memberSearch').val()+"'
-                                                $.ajax({
-                                                    type: "POST",
-                                                    url: "tmStatbook.aspx/getPersons",
-                                                    data: findPersons,
-                                                    contentType: "application/json; charset=utf-8",
-                                                    dataType: "json",
-                                                    success: function (data) {
-
-                                                        $('#selPerson').empty();
-
-                                                        if (data.d == '') {
-                                                            tmmLinkCont.empty();
-                                                            alert(serPerEmail);
-                                                            tmmLinkCont.append('<p>We couldnt find ' + serPerEmail + ' in our system. Would you like to invite this person by email?<br /><span id="emailLookup" class="spanLink">Change Email?</span></p><input id="perEmailInv" class="button" value="Invite By Email" />');
-                                                            getPerForm.hide();
-                                                            tmmLinkCont.show();
-                                                        } else {
-                                                            $(data.d).each(function (i, item) {
-                                                                tmmLinkCont.hide();
-                                                                tmmLinkCont.empty();
-                                                                tmmLinkCont.append('<div><p class="floatLT">Choose to invite the person below or <span id="emailLookup" class="spanLink">try a different email</span>. </p><br />' +
-                                                                    '</div><div class="perLinkBox"><img src="" alt="" /><h3>' + item.fname + " " + item.lname + '</h3><a href="' + item.userID + '">' + item.userID + '</a>' +
-                                                                   '<input id="linkButton" class="button" type="button" value="Invite" /></div>');
-                                                                getPerForm.hide();
-                                                                tmmLinkCont.show();
-                                                            });
-
-                                                        }
-
-
-                                                        $('#emailLookup').click(function () {
-                                                            tmmLinkCont.hide();
-                                                            getPerForm.show();
-                                                        });
-                                                        $('#perEmailInv').click(function () {
-                                                            alert('Email sent');
-                                                        });
-
-
-                                                        var invitePerson = tmmLinkCont.find('#linkButton')
-                                                        invitePerson.bind('click', function () {
-
-                                                            getPerForm.hide();
-                                                            var invite = "{'personID':'" + $(this).parent().find('a').attr('href') + "', 'tmMemberID':'" + tmMemberID + "'}"
-                                                            $.ajax({
-                                                                type: "POST",
-                                                                url: "tmStatbook.aspx/invitePerson",
-                                                                data: invite,
-                                                                contentType: "application/json; charset=utf-8",
-                                                                dataType: "json",
-                                                                success: function (data) {
-                                                                    alert('linked');
-                                                                }
-                                                            });
-
-                                                            var perQuery = "{'userID':'" + $(this).parent().find('a').attr('href') + "'}"
-                                                            $.ajax({
-                                                                type: "POST",
-                                                                url: "tmStatbook.aspx/getPerson",
-                                                                data: perQuery,
-                                                                contentType: "application/json; charset=utf-8",
-                                                                dataType: "json",
-                                                                success: function (data) {
-
-                                                                    $(data.d).each(function (i, per) {
-                                                                        tmmLinkCont.html(
-                                                                            '<p class="sect">Give people access to view your statbook by connecting them to a team member. [Learn More] </p><div class="sect" ><div class="perLinkBox"><img src="" alt="" />' + per.fname + ' ' + per.lname + '<br /><a href="' + per.userID + '">' +
-                                                                            '<span class="floatRT">Pending...<span> <br /><span id="linkCancel" class="floatRT">(Cancel)</span></div> </div>'
-                                                                       );
-                                                                        acceptPerCont.show();
-                                                                    });
-                                                                }
-
-                                                            });
-                                                        });
-                                                    }
-                                                });
-
-                                            });
-                                        });
-                                    }
-                                }
-                            });
-                        }); //memAdminView - end tag
+                           
+                        
                     }
                 });
             }
+
+            function loadAdminView(_tmbid) {
+                if (_tmbid == 'new') {
+                    $("#tsb_mem_adminTmpl").tmpl().appendTo(mem_container);
+                    loadTmbNameForm('new');
+                    loadPerLinkForm('new');
+
+                } else {
+                    tmMemberID = _tmbid
+                    var teamMember = "{'tmMemberID':'" + tmMemberID + "', 'teamID':'" + localStorage.team_id + "'}"
+                    $.ajax({
+                        type: "POST",
+                        url: "tmStatbook.aspx/getTeamMember",
+                        data: teamMember,
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (data) {
+                            mem_container.empty();
+                            $("#tsb_mem_adminTmpl").tmpl(data.d).appendTo(mem_container);
+
+
+
+                            $('#memAdminBack').click(function () {
+                                mem_container.empty();
+                                getAdminMembers();
+                            });
+
+
+                            $(data.d).each(function (i, mem) {
+                                //alert(item.fName + " " + item.lName);
+
+                                loadTmbNameForm(tmMemberID);
+                                
+                                
+                                var athlete
+                                if (mem.tmb_isAthlete != "") {
+                                    $("#isAthleteCB").prop('checked', true);
+                                }
+
+                                var coach
+                                if (mem.tmb_isCoach != "") {
+                                    $("#isCoachCB").prop('checked', true);
+                                }
+
+                                loadTmbRoleForm(tmMemberID);
+                                loadPerLinkForm(tmMemberID);
+                            });
+
+                        }
+                    });
+
+                }
+
             
-            $('#sbpg_memView ul li').click(function () {
-                memView = $(this).find('a').attr('href');
+
+            function loadTmbNameForm(_tmbid) {
+                if (_tmbid == "new") {
+                    $('#notNewName').hide();
+                    $('#newMemName').show();
+                    $('#newMemName').focus();
+                    $('#newMemName').blur(function () {
+
+                        var value = $('#newMemName').val();
+                        var name = value.split(' ')
                 
+                        $.ajax({
+                            type: "POST",
+                            url: "tmStatbook.aspx/newTeamMember",
+                            data: "{'teamID':'" + localStorage.team_id + "', 'tmm_fName':'" + name[0] + "', 'tmm_lName':'" + name[1] + "'}",
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            success: function (data) {
+
+                                tmMemberID = data.d;
+                                    
+                                $('#newMemName').hide();
+                                $('#notNewName').text(value);
+                                $('#notNewName').show();
+                                loadTmbNameForm(tmMemberID);
+                            }
+                        });
+                    });
+                } else {
+
+                    
+                    tmMemberID = _tmbid 
+                    //Edit team member name in place
+                    $('.editableTB').editable(function (value, settings) {
+                        console.log(this);
+                        var name = value.split(' ')
+                        $.ajax({
+                            type: "POST",
+                            url: "tmStatbook.aspx/saveTMBName",
+                            data: "{'tmMemberID':'" + tmMemberID + "', 'tmm_fName':'" + name[0] + "', 'tmm_lName':'" + name[1] + "'}",
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            success: function (data) { }
+                        });
+                        return (value);
+                    }, {
+                        onblur: 'submit',
+                        type: 'text',
+                    });
+                            
+                    loadTmbRoleForm(tmMemberID);
+           
+                }
+            }
+            function loadTmbRoleForm(_tmbid) {
+                    
+                    //update change in team member role
+                    $("#isAthleteCB").change(saveTMBrole);
+                    $("#isCoachCB").change(saveTMBrole);
+
+                    function saveTMBrole() {
+                        //alert('hi');
+                        var isAthlete
+                        if ($("#isAthleteCB").is(':checked')) {
+                            isAthlete = "Y"
+                        } else {
+                            isAthlete = ""
+                        }
+
+                        var isCoach
+                        if ($("#isCoachCB").is(':checked')) {
+                            isCoach = "Y"
+                        } else {
+                            isCoach = ""
+                        }
+
+                        $.ajax({
+                            type: "POST",
+                            url: "tmStatbook.aspx/saveTMBRole",
+                            data: "{'tmMemberID':'" + tmMemberID + "', 'isAthlete':'" + isAthlete + "', 'isCoach':'" + isCoach + "'}",
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            success: function (data) { }
+                        });
+                    }
+
+                }
+
+                function loadPerLinkForm(_tmbid) {
+                    var linkCont = $("#tsb_mem_linkCont")
+                    linkCont.empty();
+
+                    if (_tmbid == 'new') {
+                        linkCont.append('<p class="sect">Give people access to view your statbook by connecting them to a team member. [Learn More] </p><div class="sect" ><input id="invMember" class="perLinkAdd" type="button" value="+ Add Connection" />' +
+                                        ' </div>');
+                    } else {
+                        var teamMember = "{'tmMemberID':'" + tmMemberID + "', 'teamID':'" + localStorage.team_id + "'}"
+                        $.ajax({
+                            type: "POST",
+                            url: "tmStatbook.aspx/getTMConnection",
+                            data: teamMember,
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            success: function (data) {
+                                $(data.d).each(function (i, mem) {
+
+
+                                    if (mem.tmb_link_status == "A") {
+                                        linkCont.append('<p class="sect">Give people access to view your statbook by connecting them to a team member. [Learn More] </p><div class="sect" ><div class="perLinkBox"><img src="" alt="" />' + mem.per_fname + ' ' + mem.per_lname + '<br />' + mem.per_state +
+                                        '<span id="linkRemove" class="floatRT">(Remove)</span></div> </div>')
+                                    }
+                                    else if (mem.tmb_link_status == "P") {
+                                        linkCont.append('<p class="sect">Give people access to view your statbook by connecting them to a team member. [Learn More] </p><div class="sect" ><div class="perLinkBox"><img src="" alt="" />' + mem.per_fname + ' ' + mem.per_lname + '<br /><a href="' + mem.personID + '"/>' +
+                                        '<span class="floatRT">Pending...</span> <br /><span id="linkCancel" class="floatRT">(Cancel)</span></div> </div>')
+
+                                    }
+                                    else if (mem.tmb_link_status == "D") {
+                                        linkCont.append(mem.personID + '<h4> has declined your invite.</h4>')
+                                    }
+                                    else {
+                                        linkCont.append('<p class="sect">Give people access to view your statbook by connecting them to a team member. [Learn More] </p><input id="Button1" type="button" value="button" /><div class="sect" ><input id="invMember" class="perLinkAdd" type="button" value="+ Add Connection" />' +
+                                            ' </div>');
+                                    }
+
+                                });
+                    $('Button1').click(function () {
+                        alert('hi');
+                    });
+                            } //getTMConnection - end tag
+                        });
+                    }
+                
+                    $('#invMember').click(function () {
+                        emailLookup();
+                        function emailLookup() {
+                            linkCont.empty();
+                            linkCont.append('<div>' +
+                                                '<p>What is the email of the person you want to connect with?</p>' +
+                                                '<label>Email:</label><input id="memSearch" type="text" />' +
+                                                '<input id="findPerson" class="floatRT" type="button" value="Submit" />' +
+                                            '</div>')
+
+
+                            $('#findPerson').click(function () {
+
+                                var serPerEmail = $('#memSearch').val();
+
+                                var findPersons = "{'per_email':'" + $('#memSearch').val() + "'}"//, 'per_lname':'" + $('#memberSearch').val()+"'
+                                $.ajax({
+                                    type: "POST",
+                                    url: "tmStatbook.aspx/getPersons",
+                                    data: findPersons,
+                                    contentType: "application/json; charset=utf-8",
+                                    dataType: "json",
+                                    success: function (data) {
+
+                                        if (data.d == '') {
+                                            linkCont.empty();
+                                            linkCont.append('<p>We couldnt find ' + serPerEmail + ' in our system. Would you like to invite this person by email?<br /><span id="changeEmail" class="spanLink">Change Email?</span></p><input id="perEmailInv" class="button" value="Invite By Email" />');
+                                        } else {
+                                            $(data.d).each(function (i, item) {
+                                                linkCont.empty();
+                                                linkCont.append('<div><p class="floatLT">Choose to invite the person below or <span id="changeEmail" class="spanLink">try a different email</span>. </p></div><br />' +
+                                                    '<div class="perLinkBox"><img src="" alt="" /><h3>' + item.fname + " " + item.lname + '</h3><a href="' + item.userID + '"/>' +
+                                                    '<input id="linkButton" class="button" type="button" value="Invite" /></div>');
+
+
+                                                $('#linkButton').click(function () {
+
+                                                    var invite = "{'personID':'" + $(this).parent().find('a').attr('href') + "', 'tmMemberID':'" + tmMemberID + "'}"
+                                                    $.ajax({
+                                                        type: "POST",
+                                                        url: "tmStatbook.aspx/invitePerson",
+                                                        data: invite,
+                                                        contentType: "application/json; charset=utf-8",
+                                                        dataType: "json",
+                                                        success: function (data) {
+                                                            alert('linked');
+                                                            loadPerLinkForm(tmMemberID);
+                                                        }
+                                                    });
+
+                                                });
+                                            });
+
+                                        }
+                                        $('#changeEmail').click(function () {
+                                            emailLookup();
+                                        });
+                                        $('#perEmailInv').click(function () {
+                                            alert('Email sent');
+                                        });
+                                    }
+                                });
+                            }); //findPerson click - end tag
+                        }//changeEmail function - end tag
+                    });
+
+                    $('#linkRemove').click(function () {
+                        alert('Are you sure you want to remove this link?');
+                    });
+                    $('#linkCancel').click(function () {
+                        alert(tmMemberID);
+                        var invite = "{'tmMemberID':'" + tmMemberID + "'}"
+                        $.ajax({
+                            type: "POST",
+                            url: "tmStatbook.aspx/cancelPerInvite",
+                            data: invite,
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            success: function (data) {
+                                loadPerLinkForm(tmMemberID);
+                            }
+                        });
+                    });
+
+
+                                    
+                }//loadPerLinkForm - Ending Tag
+            
+}//loadAdminView - ending tag
+
+            $('#newMemberBu').click(function () {
+                loadAdminView('new');
+                
+            });
+            
+
+
+            $('#tsb_mem_topNav ul li').click(function () {
+                memView = $(this).find('a').attr('href');
+
                 if (memView == "#mem_athlete") {
-                    $('#memAthleteCont').show();
-                    $('#adminPanel').hide();
-                    $('#tmMemInfo').hide();
-                    $(memDetCont).hide();
+                    mem_container.empty();
+                    getAthletes();
 
                 } else if (memView == "#mem_admin") {
-                    $('#memAthleteCont').hide();
-                    $('#tmMemInfo').hide();
-                    $(memDetCont).hide();
-                    getAllMembers();
-                    $('#adminPanel').show();
+                    mem_container.empty();
+                    getAdminMembers();
                 }
             });
             
+           
             
             $('#adminView').click(function () {
                 $('.member').hide();
@@ -1260,8 +1284,6 @@
             $('#dialog-box').css({ "margin-top": dialogTop, "margin-left": dialogLeft }).show();
         }
         });// Document closing tag
-    </script>    
-    <!-- Popup box template -->
-      
+    </script>   
 </asp:Content>
 

@@ -412,6 +412,27 @@ public partial class team_tmStatbook : System.Web.UI.Page
     }
 
     [WebMethod]
+    public static string newTeamMember(string tmm_fName, string tmm_lName, int teamID)
+    {
+
+        string connectionString = ConfigurationManager.ConnectionStrings["statbookConnectionString"].ConnectionString;
+        using (SqlConnection connection = new SqlConnection(connectionString))
+        {
+            string sql = "Insert INTO teamMembers (fName, lName, teamID) VALUES (@fName, @lName, @teamID) Select SCOPE_IDENTITY();";
+
+            connection.Open();
+
+            SqlCommand command = new SqlCommand(sql, connection);
+            command.Parameters.AddWithValue("@fName", tmm_fName);
+            command.Parameters.AddWithValue("@lName", tmm_lName);
+            command.Parameters.AddWithValue("@teamID", teamID);
+
+            string teamMemberID = command.ExecuteScalar().ToString();
+            return teamMemberID;
+        }
+    }
+
+    [WebMethod]
     public static void saveTMBRole(string isAthlete, string isCoach, int tmMemberID)
     {
 

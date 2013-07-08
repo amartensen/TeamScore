@@ -423,17 +423,17 @@ p, h1, h2, h3 {
         padding: 0px;
         margin: 0px;
     }
-#sbpg_memView {
+#tsb_mem_topNav {
     float:left;
     width: 100%;
     clear: both;
     border-bottom: 1px solid #808080;
     margin: 5px 0px 12px 0px;
 }
-    #sbpg_memView ul {
+    #tsb_mem_topNav ul {
         padding-left:10px;
     }
-    #sbpg_memView li {
+    #tsb_mem_topNav li {
        height:40px; width: 160px;
         list-style-type:none;
         float: left;
@@ -441,7 +441,7 @@ p, h1, h2, h3 {
         border-bottom: 1px solid #808080;
         margin-bottom:-1px;
     }
-    #sbpg_memView li:hover {
+    #tsb_mem_topNav li:hover {
         border: 1px solid #808080;
         border-top: 4px solid blue;
     }
@@ -458,10 +458,10 @@ p, h1, h2, h3 {
 }
 
 /*<<<  Member Tab  >>>*/
-#memAthleteCont ul {
+#memAthleteView {
     margin:5px;
 }
-#memAthleteCont li{
+#memAthleteView div{
     width: 220px;
     height: 80px;
     float: left;
@@ -471,18 +471,19 @@ p, h1, h2, h3 {
     margin: 5px 5px 5px 10px;
     background: #fff;border-radius: 2px;
 }
-#memAthleteCont li h4 {
-        padding: 0px;
-        margin: 0px;
-        float:left;
+    #memAthleteView div h4 {
+            padding: 0px;
+            margin: 0px;
+            float:left;
+        }
+    #memAthleteView div img{
+        height:80px;
+        width: 70px;
+        padding-right: 5px;
+        float: left;
     }
-#memAthleteCont li img{
-    height:80px;
-    width: 70px;
-    padding-right: 5px;
-    float: left;
-}
-#memberAdminCont li {
+
+#memAdminView div {
     height: 52px; width: 500px;
     float: left;
     display: block;
@@ -490,17 +491,68 @@ p, h1, h2, h3 {
     border-top: 1px solid #808080;
     
 }
-    #memberAdminCont li h4 {
+    #memAdminView div h4 {
             padding: 0px;
             margin: 0px;
             float:left;
         }
-    #memberAdminCont li h4:hover {
+    #memAdminView div h4:hover {
             padding: 0px;
             margin: 0px;
             float:left;
             color: red;
         }
+.mem_topContent {
+    clear: both;
+    float: left;
+    height: 114px;
+    width: 100%;
+    margin-top: 12px;
+    background-color: #fff;
+    border: 1px solid #808080;
+    padding: 12px 0px 12px 0px;
+}
+    .mem_topContent img {
+        float: left;
+        height:96px;
+        width:96px;
+        margin-left: 12px;
+        border:1px solid #808080;
+    }
+    .mem_topContent div {
+        float: left; 
+        margin-left: 12px;
+     }
+
+#newMemName {
+    display: none;
+    
+}
+.mem_mainContent {
+    font-family: Arial, 'Liberation Sans', 'DejaVu Sans', sans-serif;
+    width: 100%;
+    margin: 26px 0px 26px 0px;
+    border: 1px solid #808080;
+    padding: 12px 0px 12px 0px;
+    clear: both;
+    float: left;
+    background-color: #fff;
+    border-radius:6px;
+}
+
+    .mem_mainContent .area {
+       margin: 0px 12px 0px 12px;
+       padding:12px;
+       float: left;
+       width:709px;
+       border-top: 1px solid #808080;
+        border-bottom: 1px solid #808080;
+    }
+#tsb_mem_linkForm label {
+        margin: 12px 8px 8px 12px;
+        font-size: 13px;
+        font-weight:200;
+    }
 
 .sbpg_memDetTop {
     clear: both;
