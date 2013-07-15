@@ -178,7 +178,7 @@
         var eventID = "{'eventID':'" + localStorage.event_id + "'}"
         $.ajax({
             type: "POST",
-            url: "statEventView.aspx/getEvtDetails",
+            url: "statEventView.aspx/getEventDetails",
             data: eventID,
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -195,13 +195,11 @@
             data: eventID,
             contentType: "application/json; charset=utf-8",
             dataType: "json",
-            success: evtSuccess
+            success: function (data, status) {
+                //alert('event matches');
+                $("#evtMatchTemp").tmpl(data.d).appendTo("#evtMatchContainer");
+            }
         });
-
-        function evtSuccess(data, status) {
-            //alert('event matches');
-            $("#evtMatchTemp").tmpl(data.d).appendTo("#evtMatchContainer");
-        }
 
             $.ajax({
                 type: "POST",

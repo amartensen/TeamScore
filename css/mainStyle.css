@@ -456,8 +456,137 @@ p, h1, h2, h3 {
 #tabNav li:hover {
     background-color:#808080;
 }
+/*<<< TSB: Events Tab >>>*/
+.evt_listItem {
+    height: 60px; width: 100%;
+    float: left;
+    display: block;
+    background-color: #fff;
+    border-top: 1px solid #808080;
+    
+}
+    .evt_listItem .sect {
+        height:59px;
+        float: left;
+    }
 
-/*<<<  Member Tab  >>>*/
+#evt_contentNav {
+    float:left;
+    width: 100%;
+    clear: both;
+    border-bottom: 1px solid #808080;
+    margin: 5px 0px 12px 0px;
+}
+    #evt_contentNav ul {
+        padding-left:10px;
+    }
+    #evt_contentNav li {
+       height:40px; width: 160px;
+        list-style-type:none;
+        float: left;
+        display:block;
+        border-bottom: 1px solid #808080;
+        margin-bottom:-1px;
+    }
+
+#evt_topContent {
+    clear: both;
+    float: left;
+    height: 134px;
+    width: 100%;
+    margin-top: 12px;
+    background-color: #fff;
+    border: 1px solid #808080;
+    padding: 4px 0px 12px 0px;
+}
+    #evt_topContent section {
+        float:left;
+        height: 100%; width: 360px;
+        padding-left: 10px;
+    }
+    #evt_topContent h3 {
+        padding: 12px 0px 2px 0px;
+    }
+#evt_mainContent {
+    font-family: Arial, 'Liberation Sans', 'DejaVu Sans', sans-serif;
+    width: 100%;
+    margin: 2px 0px 26px 0px;
+    border: 1px solid #808080;
+    padding: 12px 0px 12px 0px;
+    clear: both;
+    float: left;
+    background-color: #fff;
+    border-radius:6px;
+}
+
+    #evt_mainContent .listItem {
+       margin: 0px 12px 0px 12px;
+       padding:12px;
+       float: left;
+       width:709px;
+       border-top: 1px solid #808080;
+        border-bottom: 1px solid #808080;
+    }
+        #evt_mainContent .listItem div {
+            float: left;
+        }
+#evt_newContent {
+    float: left;
+    background-color: #fff;
+    width:100%;
+    border:1px solid #808080;
+    border-radius: 6px;
+}
+#evt_newContent .area {
+       margin: 0px 12px 0px 12px;
+       padding:12px;
+       float: left;
+       width:709px;
+       border-top: 1px solid #808080;
+        border-bottom: 1px solid #808080;
+        background-color: green;
+    }
+    #evt_newContent .mi {
+        width: 85%;
+        float:left;
+        padding-left: 15%;
+        margin-top: 3px;
+    }
+    #evt_newContent .ls {
+        width: 30%;
+        float:left;
+        padding-left: 20%;
+    }
+    #evt_newContent .rs {
+        width: 50%;
+        float:left;
+    }
+    #evt_newContent .lt {
+        float:left;
+    }
+.input {
+    height:20px;
+    border: 1px solid #808080;
+    border-radius: 3px;
+}
+.addr {
+    height:20px; width: 520px;
+    border: 1px solid #808080;
+    border-radius: 3px;
+}
+.select {
+    height:24px;
+    border: 1px solid #808080;
+    margin-right:3px;
+    border-radius: 3px;
+}
+.dateTime {
+    height:20px; width: 100px;
+    border: 1px solid #808080;
+    border-radius: 3px;
+}
+
+/*<<< TSB: Member Tab  >>>*/
 #memAthleteView {
     margin:5px;
 }
@@ -615,24 +744,6 @@ p, h1, h2, h3 {
     }
 
      
-/*.perlinkbox {
-    border: 1px solid #808080;
-    padding:5px;
-    margin-top: 8px;
-    width:200px;
-    float:left;
-}
-    .perlinkbox div {
-       margin-left: 10px;
-       float: left;
-    }
-    .perlinkbox img {
-       float: left;
-       height: 45px;
-       width: 45px;
-    }*/
-
-
 .perLinkAdd {
     height: 56px; width: 300px;
     float: left;
@@ -645,9 +756,8 @@ p, h1, h2, h3 {
     height: 56px; width: 300px;
     float: left;
     margin-left: 36px;
-    border: 1px solid #808080;    
-    padding: 7px 0px 7px 0px;
-    border-radius: 5px;
+    border-top:1px solid #080808;
+    border-bottom:1px solid #080808;
 }
     .perLinkBox img {
         float: left;
@@ -665,6 +775,9 @@ p, h1, h2, h3 {
         float: right;
         margin-right: 12px;
     }
+.adminRoleBox {
+    float:left;
+}
 
 
 /*<<<<<<<<<< Utilites >>>>>>>>>>>>>*/

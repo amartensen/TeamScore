@@ -3,71 +3,387 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+    <!-- Statbook Header -->
     <article class="pageHead">
         <div class="headWrap">
             <h3 id="team" class="floatLT"></h3>
             <input id="backBu" class="floatLT" type="button" value="back" />
         </div>
-                                
-                            
     </article>
+    
     <div class="scroll">
         <div class="pageWrap">
             
             <div class="content">
                 <div id="tabs">
+
+                    <!--<<< DASHBOARD TAB >>>-->
                     <div id="tab-1" class="center">
                         hey
                     </div>
 
-                    <!-- event tab -->
+                    <!--<<< EVENT TAB >>>-->
                     <div id="tab-2" class="center">
-                       <article class="sbpg_adminPanel">
-                           <input id="newEventBu" type="button" value="New Event" />
+                        <article class="sbpg_adminPanel">
+                            <input id="newEventBu" type="button" value="New Event" />
                             
-                       </article>
-                        <aside>
-                            <table class="mainTable">
-                                <tbody id="tmEventContainer">
-                                    <!--jtemplate for the athlete list-->
-                                    <script id="tmEventTemp" type="text/x-jquery-tmpl">
-                                        <tr>
-                                            <td>${date}</td>
-                                            
-                                            <td>${eventName}<a href="${eventID}"></a> <br /> ${city}, ${state}</td>
-                                            <td>${styleID}<br /> ${levelID}</td>
-                                            <td>${startTime}</td>
-                                        </tr>
-                                    </script>
-                                </tbody>
-                            </table>
-                        </aside>
+                        </article>
+
+                        <!--Event Tab Main Content Container-->
+                        <article id="tmb_evt_container"> </article>
                         
+                        <!--jtemplate for the event list-->
+                        <script id="tsb_evt_listViewTmpl" type="text/x-jquery-tmpl">
+                            <div class="evt_listItem">
+                                <span class="sect">${date}</span>
+                                <div class="sect"><h4>${eventName}<a href="${eventID}" /></h4>
+                                    ${city}, ${state}</div>
+                                <div class="sect">${styleID}
+                                    ${levelID}
+                                <span>${startTime}</span></div>
+                            </div>
+                        </script>
+
+                        <!-- Event detailed -->
+                        <script id="tsb_evt_detailTmpl" type="text/x-jquery-tmpl">
+                            <article class="tsb_mem_toolbar">
+                                <input id="evt_backBu" class="button" type="button" value="Back" />
+                                <input id="evt_settingsBu" class="button" type="button" value="Settings" />
+                            </article>
+                            <article id="evt_topContent">
+                                <span id="evt_date"></span><br />
+                                <section>
+                                <h3>${eventName}</h3>
+                                <p>${address}, ${city}, ${state}</p>
+                                
+                                <div id="evt_details">
+                                ${styleID}<br />
+                                ${levelID}<br />
+                                </div>
+                                </section>
+
+                                <section>
+                                Start:<span id="evt_stTime"></span><br />
+                                </section>
+                                
+
+                                
+                            </article>
+                            
+
+                            <article id="evt_contentNav">
+                                <ul>
+                                    <li><a href="#evt_matches"/><h2>Matches</h2></li>
+                                    <li><a href="#evt_teams"/><h2>Teams</h2></li>
+                                    <li><a href="#evt_athletes"/><h2>Athletes</h2></li>
+                                </ul>
+                            </article>
+
+                            <article id="evt_mainContent"></article>
+                        </script>
+
+
                     </div>
 
-                    <!-- member tab -->
+                    <!--New Event -->
+                    <script id="tsb_evt_settingsTmpl" type="text/x-jquery-tmpl">
+                        <article id="evt_newContent">
+                            <div class="floatLT"><h4>New Event</h4>
+
+                            </div>
+                            <div id="newEvtStep1">
+                                <br />
+                                <div class="area">
+                                    <div class="ls">Event Name:</div>
+                                    <div class="rs">
+                                        <input id="evtName_TB" type="text" />${eventName}</div>
+                                </div>            
+                                
+                                <br />
+                                <div class="area">
+                                    <h4>Location</h4>
+                                    
+                                <div id="locSchool">
+                                    
+                                    <br />
+                                    <div class="ls"><label for="schoolName">School Name: </label></div>  
+                                    <div class="rs"><input id="schoolName" type="text" /></div>
+                                          
+                                    <div class="ls"><label for="selState">State:</label></div>
+                                    <div class="rs"><select id="selState">
+                                                    <option />
+                                                    <option value="AL">Alabama</option>
+                                                    <option value="AK">Alaska</option>
+                                                    <option value="AS">American Samoa</option>
+                                                    <option value="AZ">Arizona</option>
+                                                    <option value="AR">Arkansas</option>
+                                                    <option value="AE">Armed Forces</option>
+                                                    <option value="AA">Armed Forces Americas</option>
+                                                    <option value="AP">Armed Forces Pacific</option>
+                                                    <option value="CA">California</option>
+                                                    <option value="CZ">Canal Zone</option>
+                                                    <option value="CO">Colorado</option>
+                                                    <option value="CT">Connecticut</option>
+                                                    <option value="DE">Delaware</option>
+                                                    <option value="DC">District Of Columbia</option>
+                                                    <option value="FM">Federated States of Micronesia</option>
+                                                    <option value="FL">Florida</option>
+                                                    <option value="GA">Georgia</option>
+                                                    <option value="GU">Guam</option>
+                                                    <option value="HI">Hawaii</option>
+                                                    <option value="ID">Idaho</option>
+                                                    <option value="IL">Illinois</option>
+                                                    <option value="IN">Indiana</option>
+                                                    <option value="IA">Iowa</option>
+                                                    <option value="KS">Kansas</option>
+                                                    <option value="KY">Kentucky</option>
+                                                    <option value="LA">Louisiana</option>
+                                                    <option value="ME">Maine</option>
+                                                    <option value="MH">Marshall Islands</option>
+                                                    <option value="MD">Maryland</option>
+                                                    <option value="MA">Massachusetts</option>
+                                                    <option value="MI">Michigan</option>
+                                                    <option value="MN">Minnesota</option>
+                                                    <option value="MS">Mississippi</option>
+                                                    <option value="MO">Missouri</option>
+                                                    <option value="MT">Montana</option>
+                                                    <option value="NE">Nebraska</option>
+                                                    <option value="NV">Nevada</option>
+                                                    <option value="NH">New Hampshire</option>
+                                                    <option value="NJ">New Jersey</option>
+                                                    <option value="NM">New Mexico</option>
+                                                    <option value="NY">New York</option>
+                                                    <option value="NC">North Carolina</option>
+                                                    <option value="ND">North Dakota</option>
+                                                    <option value="MP">Northern Mariana Islands</option>
+                                                    <option value="OH">Ohio</option>
+                                                    <option value="OK">Oklahoma</option>
+                                                    <option value="OR">Oregon</option>
+                                                    <option value="PW">Palau</option>
+                                                    <option value="PA">Pennsylvania</option>
+                                                    <option value="QC">Province of Quebec</option>
+                                                    <option value="PR">Puerto Rico</option>
+                                                    <option value="RI">Rhode Island</option>
+                                                    <option value="SC">South Carolina</option>
+                                                    <option value="SD">South Dakota</option>
+                                                    <option value="TN">Tennessee</option>
+                                                    <option value="TX">Texas</option>
+                                                    <option value="UT">Utah</option>
+                                                    <option value="VT">Vermont</option>
+                                                    <option value="VI">Virgin Islands</option>
+                                                    <option value="VA">Virginia</option>
+                                                    <option value="WA">Washington</option>
+                                                    <option value="WV">West Virginia</option>
+                                                    <option value="WI">Wisconsin</option>
+                                                    <option value="WY">Wyoming</option>
+
+                                                </select></div>
+                                    <div class="ls"><input id="findSchool" type="button" value="Find It" /></div>
+                                            
+                                                
+                                            
+
+                                    <div id="pickSchool">
+                                        <div class="mi"><label  for="selSchool">Please select a school from the drop-down below. </label></div>
+                                        <br />
+                                        <div class="ls"><select id="selSchool" ></select></div>
+                                        <div class="rs"><input id="acceptSchool" type="button" value="Accept" /></div>
+                                        <div id="schAddressCont"></div>
+
+                                    </div>
+                                </div>
+                                    <div id="evtVenue">
+                                        <div id="schLookupBu">Lookup a School?</div>
+                                        <br />
+                                            <div class="mi"><label  for="venName">Venue Name:</label><br /><input id="venName" class="addr" type="text" /></div>
+                                            
+                                                <div class="mi"><label for="venAddress">Address:</label><br /><input id="venAddress" class="addr" type="text" /></div>
+                                                
+                                            
+                                                <div class="mi">
+                                                    <div class="lt"><label for="venCity">City:</label><br /><input id="venCity" class="input" type="text" /></div>
+                                                    <div class="lt"><label for="venState">State:</label><br /><select id="venState" class="select" >
+                                                    <option />
+                                                    <option value="AL">Alabama</option>
+                                                    <option value="AK">Alaska</option>
+                                                    <option value="AS">American Samoa</option>
+                                                    <option value="AZ">Arizona</option>
+                                                    <option value="AR">Arkansas</option>
+                                                    <option value="AE">Armed Forces</option>
+                                                    <option value="AA">Armed Forces Americas</option>
+                                                    <option value="AP">Armed Forces Pacific</option>
+                                                    <option value="CA">California</option>
+                                                    <option value="CZ">Canal Zone</option>
+                                                    <option value="CO">Colorado</option>
+                                                    <option value="CT">Connecticut</option>
+                                                    <option value="DE">Delaware</option>
+                                                    <option value="DC">District Of Columbia</option>
+                                                    <option value="FM">Federated States of Micronesia</option>
+                                                    <option value="FL">Florida</option>
+                                                    <option value="GA">Georgia</option>
+                                                    <option value="GU">Guam</option>
+                                                    <option value="HI">Hawaii</option>
+                                                    <option value="ID">Idaho</option>
+                                                    <option value="IL">Illinois</option>
+                                                    <option value="IN">Indiana</option>
+                                                    <option value="IA">Iowa</option>
+                                                    <option value="KS">Kansas</option>
+                                                    <option value="KY">Kentucky</option>
+                                                    <option value="LA">Louisiana</option>
+                                                    <option value="ME">Maine</option>
+                                                    <option value="MH">Marshall Islands</option>
+                                                    <option value="MD">Maryland</option>
+                                                    <option value="MA">Massachusetts</option>
+                                                    <option value="MI">Michigan</option>
+                                                    <option value="MN">Minnesota</option>
+                                                    <option value="MS">Mississippi</option>
+                                                    <option value="MO">Missouri</option>
+                                                    <option value="MT">Montana</option>
+                                                    <option value="NE">Nebraska</option>
+                                                    <option value="NV">Nevada</option>
+                                                    <option value="NH">New Hampshire</option>
+                                                    <option value="NJ">New Jersey</option>
+                                                    <option value="NM">New Mexico</option>
+                                                    <option value="NY">New York</option>
+                                                    <option value="NC">North Carolina</option>
+                                                    <option value="ND">North Dakota</option>
+                                                    <option value="MP">Northern Mariana Islands</option>
+                                                    <option value="OH">Ohio</option>
+                                                    <option value="OK">Oklahoma</option>
+                                                    <option value="OR">Oregon</option>
+                                                    <option value="PW">Palau</option>
+                                                    <option value="PA">Pennsylvania</option>
+                                                    <option value="QC">Province of Quebec</option>
+                                                    <option value="PR">Puerto Rico</option>
+                                                    <option value="RI">Rhode Island</option>
+                                                    <option value="SC">South Carolina</option>
+                                                    <option value="SD">South Dakota</option>
+                                                    <option value="TN">Tennessee</option>
+                                                    <option value="TX">Texas</option>
+                                                    <option value="UT">Utah</option>
+                                                    <option value="VT">Vermont</option>
+                                                    <option value="VI">Virgin Islands</option>
+                                                    <option value="VA">Virginia</option>
+                                                    <option value="WA">Washington</option>
+                                                    <option value="WV">West Virginia</option>
+                                                    <option value="WI">Wisconsin</option>
+                                                    <option value="WY">Wyoming</option>
+
+                                                </select></div>
+                                                    <div class="lt"><label for="venZip">Zip:</label><br /><input id="venZip" class="input" type="text" /></div>
+                                                </div>
+                                            
+                                    </div>
+                                </div>
+                                <br />
+                                <h4>Date and Time</h4>
+                                <hr />
+                                <ul id="dateTime">
+                                    <li class="mi">
+                                        <div class="lt">
+                                            <label>Type:</label><br />
+                                            <select id="Select1" class="select">
+                                                <option>Session</option>
+                                                <option>Weigh-In</option>
+                                            </select>
+
+                                        </div>
+                                        <div class="lt"><label>Date:</label><br /><input class="dateTime" type="text" /></div>
+                                        <div class="lt"><label>Time:</label><br /><input class="dateTime" type="text" /></div>
+                                        <div class="lt"><label>Title:</label><br /><input class="input" type="text" /></div>
+                                        <div class="lt"><br />X</div>
+                                    </li>
+
+                                </ul>
+                                <div id="addDate" class="mi">Add Session?</div>
+                                
+
+                                <input id="ToStep2" type="button" value="Continue" />
+
+                            </div>
+                            
+
+                            <div id="newEvtStep2">
+                                <label for="selCompLvl">Competition Level:</label>
+                                <select id="selCompLvl">
+                                    <option>Select One</option>
+                                    <option value="hs">High School</option>
+                                    <option value="col">College</option>
+                                    <option value="open">Youth/Open</option>
+                                </select><br />
+
+                                <label for="selStyle">Wrestling Style:</label>
+                                <select id="selStyle">
+                                    <option>Select One</option>
+                                    <option value="folk">Folstyle</option>
+                                    <option value="free">Freestyle</option>
+                                    <option value="greco">Greco</option>
+                                </select><br />
+
+                                <label for="selType">Event Type:</label>
+                                <select id="selType">
+                                    <option>Select One</option>
+                                    <option>Individual Tournament</option>
+                                    <option>Dual Meet</option>
+                                    <option>Dual Tournament</option>
+                                </select><br />
+
+                                <input id="BackStep1" type="button" value="Back" />
+                                <input id="ToStep3" type="button" value="Continue" />
+                            </div>
+                            <div id="newEvtStep3">
+                                <input id="BackStep2" type="button" value="Back" />
+                                <input id="addEvent" type="button" value="Create Event" />
+                            </div>
+                        </article>
+                    </script>
+                    <script id="Script1" type="text/x-jquery-tmpl">
+                        <p>
+                            Event Location:
+                    ${venName}<br />
+                            ${venAddr}<br />
+                            ${venCity}, ${venState} ${venZip}
+                        </p>
+                    </script>
+        
+                        
+
+                    <!--<<< MEMBER TAB >>> -->
                     <div id="tab-3" class="center">
+
+                        <!--Member/Admin View Toggle-->
                         <article id="tsb_mem_topNav">
                             <ul>
-                                <li><a href="#mem_athlete"><h2>Athetes</h2></a></li>
-                                <li><a href="#mem_admin"><h2>Admin Panel</h2></a></li>
+                                <li><a href="#mem_athlete">
+                                    <h2>Athetes</h2>
+                                </a></li>
+                                <li><a href="#mem_admin">
+                                    <h2>Admin Panel</h2>
+                                </a></li>
                             </ul>
                             <input id="newMemberBu" class="floatRt button" type="button" value="New Member" />
                         </article>
-                        
+
+                        <!--Member Tab Main Content Container-->
                         <article id="tsb_mem_container"></article>
 
-                    <script id="tsb_mem_athleteViewTmpl" type="text/x-jquery-tmpl">
+                        <!--Athlete List-->
+                        <script id="tsb_mem_athleteViewTmpl" type="text/x-jquery-tmpl">
                             <div id="memAthleteView">
-                                <div><a href="${tmMemberID}"></a><img src="" alt="" /><h4>${fName} ${lName}</h4><br />' + linked + "</div>
+                                <div>
+                                    <a href="${tmMemberID}"></a>
+                                    <img src="" alt="" /><h4>${fName} ${lName}</h4>
+                                    <br />
+                                    ' + linked + "
+                                </div>
                             </div>
                         </script>
-                        
 
+                        <!--Athlete Detailed-->
                         <script id="tsb_mem_athleteTmpl" type="text/x-jquery-tmpl">
-                            <article  class="tsb_mem_toolbar">
+                            <article class="tsb_mem_toolbar">
                                 <input id="memBackBu" class="button" type="button" value="Back" />
-                                
+
                             </article>
                             <div class="mem_topContent">
                                 <img src="#" alt="" />
@@ -77,15 +393,15 @@
                                 </div>
                             </div>
                             <div class="mem_mainContent">
-                                    Matches
+                                Matches
                             </div>
                         </script>
 
-
+                        <!--Admin Member Detailed-->
                         <script id="tsb_mem_adminTmpl" type="text/x-jquery-tmpl">
-                            <article  class="tsb_mem_toolbar">
+                            <article class="tsb_mem_toolbar">
                                 <input id="memAdminBack" class="button" type="button" value="Back" />
-                                
+
                             </article>
                             <div class="mem_topContent">
                                 <img src="#" alt="" />
@@ -94,10 +410,10 @@
                                     <input id="newMemName" type="text" />
                                     <input id="isAthleteCB" type="checkbox" title="athlete" /><label for="isAthleteCB">Athlete</label><input id="isCoachCB" type="checkbox" /><label for="isCoachCB">Coach</label>
                                 </div>
-                                
+
                             </div>
 
-                            <!--team member admin content-->
+                            <!--Admin content-->
                             <div class="mem_mainContent">
                                 <div class="area">
                                     <h4>Connection</h4>
@@ -113,7 +429,8 @@
                                                 <input id="tmMemPhone" type="text" value="mem.tmb_phone" /></td>
                                         </tr>
                                     </table>
-                                </div> <br />
+                                </div>
+                                <br />
 
                                 <div class="area">
                                     <h4>Notes</h4>
@@ -124,55 +441,45 @@
 
                         </script>
 
-
-                        
-
+                        <!--Admin List-->
                         <script id="tsb_mem_adminViewTmpl" type="text/x-jquery-tmpl">
                             <div id="memAdminView">
-                                <div> <a href="${tmMemberID}"></a><img src="" alt="" /><h4>${fName} ${lName}</h4><span id="athlete"></span> <span id="coach"></span><span id="admin"></span><span id="linkStatus"></span> </div>
-                                
+                                <div>
+                                    <a href="${tmMemberID}"></a>
+                                    <img src="" alt="" /><h4>${fName} ${lName}</h4>
+                                    <span id="athlete"></span><span id="coach"></span><span id="admin"></span><span id="linkStatus"></span>
+                                </div>
+
                             </div>
                         </script>
-                              
-                        
-                        
-                        <ul id="memDetCont"></ul>
-                        <aside >
-                            <!--jtemplate for tmMember list-->
-                            
-                            <script id="tmMemberTemp" type="text/x-jquery-tmpl">
-                                
-                                    ${fName} ${lName} ${grade}
-                                
-                            </script>
-                        </aside>
                     </div>
-                    
-                    <!--4 tab-->
+
+                    <!--<<< ARCHIVES TAB >>>-->
                     <div id="tab-4" class="center">
+
                     </div>
-                </div>
+                
+                </div> <!--tabs - ending tag-->
+            </div> <!-- content div - ending tag-->
 
-            
-            </div> <!-- end content div -->
-
+            <!-- Statbook Left Navigation-->
             <div id="tabNav" class="left">
                 <nav>
-                    
                     <ul>
                         <li><a href="#tab-1">Dashboard</a></li>
                         <li><a href="#tab-2">Events</a></li>
                         <li><a href="#tab-3">Members</a></li>
                         <li><a href="#tab-4">Archives</a></li>
                     </ul>
-                    
                 </nav>
             </div>
-        </div>
-    </div>    
+
+        </div><!-- pageWrap - ending tag -->
+    </div> <!-- scroll - ending tag -->
+      
     <div id="dialog-overlay"></div>
     <div id="dialog-box">
-<%--        <div class="dialog-content">
+        <div class="dialog-content">
             <div id="dialog-title"></div>
             <div id="dialog-message"></div>
             
@@ -219,7 +526,7 @@
                 </div>
             </script>
 
-            <script id="newEvtTemp" type="text/x-jquery-tmpl">
+        <%--     <script id="newEvtTemp" type="text/x-jquery-tmpl">
 
                 <div id="newEvtStep1">
                     <br />
@@ -424,7 +731,7 @@
                     <input id="BackStep2" type="button" value="Back" />
                     <input id="addEvent" type="button" value="Create Event" />
                 </div>
-            </script>
+            </script>--%>
 
             <script id="schAddressTemp" type="text/x-jquery-tmpl">
                 <p>
@@ -435,12 +742,12 @@
                 </p>
             </script>
             <input id="closeBu"  type="button" value="Close" />
-        </div>--%>
+        </div>
     </div>
   
  
     
-    <!-- Scripts -->
+    <!--<<< Scripts >>>-->
     <script type="text/javascript">
         $(document).ready(function () {
             
@@ -479,6 +786,13 @@
                 $('#tabNav ul li').removeClass('active');
                 $(this).parent().addClass('active');
                 var currentTab = $(this).attr('href');
+                if (currentTab == "#tab-1") {
+                } else if (currentTab == "#tab-2") {
+                    getTeamEvents()
+                } else if (currentTab == "#tab-3") {
+                    getAthletes()
+                } else if (currentTab == "#tab-4") {
+                }
                 $('#tabs div').hide();
                 $(currentTab).show();
                 
@@ -494,10 +808,28 @@
             }
 
 
+            //<<<<< Member Tab Functions >>>>>
+
             //Declare Global Page Variables
             var mem_container = $('#tsb_mem_container')
             
+            //Member-Admin View Toggle 
+            $('#tsb_mem_topNav ul li').click(function () {
+                var memView = $(this).find('a').attr('href');
+
+                if (memView == "#mem_athlete") {
+                    getAthletes();
+
+                } else if (memView == "#mem_admin") {
+                    getAdminMembers();
+                }
+            });
             
+            $('#newMemberBu').click(function () {
+                mem_container.empty();
+                loadAdminView('new');
+            });
+
             //Load team members
             function getAthletes() {
                 $.ajax({
@@ -596,10 +928,6 @@
                     }
                 });
             };
-            getAthletes(); 
-
-                       
-
 
             //Load the Admin team members page
             function getAdminMembers() {
@@ -722,95 +1050,92 @@
 
                 }
 
-            
+                function loadTmbNameForm(_tmbid) {
+                    if (_tmbid == "new") {
+                        $('#notNewName').hide();
+                        $('#newMemName').show();
+                        $('#newMemName').focus();
+                        $('#newMemName').blur(function () {
 
-            function loadTmbNameForm(_tmbid) {
-                if (_tmbid == "new") {
-                    $('#notNewName').hide();
-                    $('#newMemName').show();
-                    $('#newMemName').focus();
-                    $('#newMemName').blur(function () {
-
-                        var value = $('#newMemName').val();
-                        var name = value.split(' ')
+                            var value = $('#newMemName').val();
+                            var name = value.split(' ')
                 
-                        $.ajax({
-                            type: "POST",
-                            url: "tmStatbook.aspx/newTeamMember",
-                            data: "{'teamID':'" + localStorage.team_id + "', 'tmm_fName':'" + name[0] + "', 'tmm_lName':'" + name[1] + "'}",
-                            contentType: "application/json; charset=utf-8",
-                            dataType: "json",
-                            success: function (data) {
+                            $.ajax({
+                                type: "POST",
+                                url: "tmStatbook.aspx/newTeamMember",
+                                data: "{'teamID':'" + localStorage.team_id + "', 'tmm_fName':'" + name[0] + "', 'tmm_lName':'" + name[1] + "'}",
+                                contentType: "application/json; charset=utf-8",
+                                dataType: "json",
+                                success: function (data) {
 
-                                tmMemberID = data.d;
+                                    tmMemberID = data.d;
                                     
-                                $('#newMemName').hide();
-                                $('#notNewName').text(value);
-                                $('#notNewName').show();
-                                loadTmbNameForm(tmMemberID);
-                            }
+                                    $('#newMemName').hide();
+                                    $('#notNewName').text(value);
+                                    $('#notNewName').show();
+                                    loadTmbNameForm(tmMemberID);
+                                }
+                            });
                         });
-                    });
-                } else {
+                    } else {
 
                     
-                    tmMemberID = _tmbid 
-                    //Edit team member name in place
-                    $('.editableTB').editable(function (value, settings) {
-                        console.log(this);
-                        var name = value.split(' ')
-                        $.ajax({
-                            type: "POST",
-                            url: "tmStatbook.aspx/saveTMBName",
-                            data: "{'tmMemberID':'" + tmMemberID + "', 'tmm_fName':'" + name[0] + "', 'tmm_lName':'" + name[1] + "'}",
-                            contentType: "application/json; charset=utf-8",
-                            dataType: "json",
-                            success: function (data) { }
+                        tmMemberID = _tmbid 
+                        //Edit team member name in place
+                        $('.editableTB').editable(function (value, settings) {
+                            console.log(this);
+                            var name = value.split(' ')
+                            $.ajax({
+                                type: "POST",
+                                url: "tmStatbook.aspx/saveTMBName",
+                                data: "{'tmMemberID':'" + tmMemberID + "', 'tmm_fName':'" + name[0] + "', 'tmm_lName':'" + name[1] + "'}",
+                                contentType: "application/json; charset=utf-8",
+                                dataType: "json",
+                                success: function (data) { }
+                            });
+                            return (value);
+                        }, {
+                            onblur: 'submit',
+                            type: 'text',
                         });
-                        return (value);
-                    }, {
-                        onblur: 'submit',
-                        type: 'text',
-                    });
                             
-                    loadTmbRoleForm(tmMemberID);
+                        loadTmbRoleForm(tmMemberID);
            
-                }
-            }
-            function loadTmbRoleForm(_tmbid) {
-                    
-                    //update change in team member role
-                    $("#isAthleteCB").change(saveTMBrole);
-                    $("#isCoachCB").change(saveTMBrole);
-
-                    function saveTMBrole() {
-                        //alert('hi');
-                        var isAthlete
-                        if ($("#isAthleteCB").is(':checked')) {
-                            isAthlete = "Y"
-                        } else {
-                            isAthlete = ""
-                        }
-
-                        var isCoach
-                        if ($("#isCoachCB").is(':checked')) {
-                            isCoach = "Y"
-                        } else {
-                            isCoach = ""
-                        }
-
-                        $.ajax({
-                            type: "POST",
-                            url: "tmStatbook.aspx/saveTMBRole",
-                            data: "{'tmMemberID':'" + tmMemberID + "', 'isAthlete':'" + isAthlete + "', 'isCoach':'" + isCoach + "'}",
-                            contentType: "application/json; charset=utf-8",
-                            dataType: "json",
-                            success: function (data) { }
-                        });
                     }
-
                 }
+                function loadTmbRoleForm(_tmbid) {
+                    
+                        //update change in team member role
+                        $("#isAthleteCB").change(saveTMBrole);
+                        $("#isCoachCB").change(saveTMBrole);
 
+                        function saveTMBrole() {
+                            //alert('hi');
+                            var isAthlete
+                            if ($("#isAthleteCB").is(':checked')) {
+                                isAthlete = "Y"
+                            } else {
+                                isAthlete = ""
+                            }
+
+                            var isCoach
+                            if ($("#isCoachCB").is(':checked')) {
+                                isCoach = "Y"
+                            } else {
+                                isCoach = ""
+                            }
+
+                            $.ajax({
+                                type: "POST",
+                                url: "tmStatbook.aspx/saveTMBRole",
+                                data: "{'tmMemberID':'" + tmMemberID + "', 'isAthlete':'" + isAthlete + "', 'isCoach':'" + isCoach + "'}",
+                                contentType: "application/json; charset=utf-8",
+                                dataType: "json",
+                                success: function (data) { }
+                            });
+                        }
+
+                    }
                 function loadPerLinkForm(_tmbid) {
                     var linkCont = $("#tsb_mem_linkCont")
                     linkCont.empty();
@@ -818,6 +1143,7 @@
                     if (_tmbid == 'new') {
                         linkCont.append('<p class="sect">Give people access to view your statbook by connecting them to a team member. [Learn More] </p><div class="sect" ><input id="invMember" class="perLinkAdd" type="button" value="+ Add Connection" />' +
                                         ' </div>');
+                        memLinkFunct()
                     } else {
                         var teamMember = "{'tmMemberID':'" + tmMemberID + "', 'teamID':'" + localStorage.team_id + "'}"
                         $.ajax({
@@ -827,7 +1153,14 @@
                             contentType: "application/json; charset=utf-8",
                             dataType: "json",
                             success: function (data) {
+                            
                                 $(data.d).each(function (i, mem) {
+                                    var roleOption = 'selected'
+                                    if (mem.tmb_adminRole == "A") {
+                                        roleOption
+                                    } else if (mem.tmb_adminRole == "SM") {
+                                        roleOption
+                                    } else if (mem.tmb_adminRole == ""|"N") { roleOption }
 
 
                                     if (mem.tmb_link_status == "A") {
@@ -836,136 +1169,134 @@
                                     }
                                     else if (mem.tmb_link_status == "P") {
                                         linkCont.append('<p class="sect">Give people access to view your statbook by connecting them to a team member. [Learn More] </p><div class="sect" ><div class="perLinkBox"><img src="" alt="" />' + mem.per_fname + ' ' + mem.per_lname + '<br /><a href="' + mem.personID + '"/>' +
-                                        '<span class="floatRT">Pending...</span> <br /><span id="linkCancel" class="floatRT">(Cancel)</span></div> </div>')
+                                        '<span class="floatRT">Pending...</span> <br /><span id="linkCancel" class="floatRT">(Cancel)</span></div> </div>'+
+                                        '<div class="sect"><p>What admin access will this person have? [Learn More]</p>'+
+                                        '<div class="adminRoleBox"><select id="perIsAdmin"><option value="N" ' + roleOption + '>Not an Admin</option><option value="A" ' + roleOption + '>Team Admin</option><option value="SM" ' + roleOption + '>Statbook Manager</option></select></div></div>')
 
                                     }
                                     else if (mem.tmb_link_status == "D") {
                                         linkCont.append(mem.personID + '<h4> has declined your invite.</h4>')
                                     }
                                     else {
-                                        linkCont.append('<p class="sect">Give people access to view your statbook by connecting them to a team member. [Learn More] </p><input id="Button1" type="button" value="button" /><div class="sect" ><input id="invMember" class="perLinkAdd" type="button" value="+ Add Connection" />' +
+                                        linkCont.append('<p class="sect">Give people access to view your statbook by connecting them to a team member. [Learn More] </p><div class="sect" ><input id="invMember" class="perLinkAdd" type="button" value="+ Add Connection" />' +
                                             ' </div>');
                                     }
 
                                 });
-                    $('Button1').click(function () {
-                        alert('hi');
-                    });
+                                memLinkFunct()
                             } //getTMConnection - end tag
-                        });
-                    }
+                        });   
+                    
                 
-                    $('#invMember').click(function () {
-                        emailLookup();
-                        function emailLookup() {
-                            linkCont.empty();
-                            linkCont.append('<div>' +
-                                                '<p>What is the email of the person you want to connect with?</p>' +
-                                                '<label>Email:</label><input id="memSearch" type="text" />' +
-                                                '<input id="findPerson" class="floatRT" type="button" value="Submit" />' +
-                                            '</div>')
+                    }
+             
+                    
+                    function memLinkFunct() { 
+                        $('#invMember').click(function () {
+                            emailLookup();
+                            function emailLookup() {
+                                linkCont.empty();
+                                linkCont.append('<div>' +
+                                                    '<p>What is the email of the person you want to connect with?</p>' +
+                                                    '<label>Email:</label><input id="memSearch" type="text" />' +
+                                                    '<input id="findPerson" class="floatRT" type="button" value="Submit" />' +
+                                                '</div>')
 
 
-                            $('#findPerson').click(function () {
+                                $('#findPerson').click(function () {
 
-                                var serPerEmail = $('#memSearch').val();
+                                    var serPerEmail = $('#memSearch').val();
 
-                                var findPersons = "{'per_email':'" + $('#memSearch').val() + "'}"//, 'per_lname':'" + $('#memberSearch').val()+"'
-                                $.ajax({
-                                    type: "POST",
-                                    url: "tmStatbook.aspx/getPersons",
-                                    data: findPersons,
-                                    contentType: "application/json; charset=utf-8",
-                                    dataType: "json",
-                                    success: function (data) {
+                                    var findPersons = "{'per_email':'" + $('#memSearch').val() + "'}"//, 'per_lname':'" + $('#memberSearch').val()+"'
+                                    $.ajax({
+                                        type: "POST",
+                                        url: "tmStatbook.aspx/getPersons",
+                                        data: findPersons,
+                                        contentType: "application/json; charset=utf-8",
+                                        dataType: "json",
+                                        success: function (data) {
 
-                                        if (data.d == '') {
-                                            linkCont.empty();
-                                            linkCont.append('<p>We couldnt find ' + serPerEmail + ' in our system. Would you like to invite this person by email?<br /><span id="changeEmail" class="spanLink">Change Email?</span></p><input id="perEmailInv" class="button" value="Invite By Email" />');
-                                        } else {
-                                            $(data.d).each(function (i, item) {
+                                            if (data.d == '') {
                                                 linkCont.empty();
-                                                linkCont.append('<div><p class="floatLT">Choose to invite the person below or <span id="changeEmail" class="spanLink">try a different email</span>. </p></div><br />' +
-                                                    '<div class="perLinkBox"><img src="" alt="" /><h3>' + item.fname + " " + item.lname + '</h3><a href="' + item.userID + '"/>' +
-                                                    '<input id="linkButton" class="button" type="button" value="Invite" /></div>');
+                                                linkCont.append('<p>We couldnt find ' + serPerEmail + ' in our system. Would you like to invite this person by email?<br /><span id="changeEmail" class="spanLink">Change Email?</span></p><input id="perEmailInv" class="button" value="Invite By Email" />');
+                                            } else {
+                                                $(data.d).each(function (i, item) {
+                                                
+                                                    linkCont.empty();
+                                                    linkCont.append('<div><p class="floatLT">Choose to invite the person below or <span id="changeEmail" class="spanLink">try a different email</span>. </p></div><br />' +
+                                                        '<div class="perLinkBox"><img src="" alt="" /><h3>' + item.fname + " " + item.lname + '</h3><a href="' + item.userID + '"/>' +
+                                                        '<input id="linkButton" class="button" type="button" value="Invite" /></div>');
 
 
-                                                $('#linkButton').click(function () {
+                                                    $('#linkButton').click(function () {
 
-                                                    var invite = "{'personID':'" + $(this).parent().find('a').attr('href') + "', 'tmMemberID':'" + tmMemberID + "'}"
-                                                    $.ajax({
-                                                        type: "POST",
-                                                        url: "tmStatbook.aspx/invitePerson",
-                                                        data: invite,
-                                                        contentType: "application/json; charset=utf-8",
-                                                        dataType: "json",
-                                                        success: function (data) {
-                                                            alert('linked');
-                                                            loadPerLinkForm(tmMemberID);
-                                                        }
+                                                        var invite = "{'personID':'" + $(this).parent().find('a').attr('href') + "', 'tmMemberID':'" + tmMemberID + "'}"
+                                                        $.ajax({
+                                                            type: "POST",
+                                                            url: "tmStatbook.aspx/invitePerson",
+                                                            data: invite,
+                                                            contentType: "application/json; charset=utf-8",
+                                                            dataType: "json",
+                                                            success: function (data) {
+                                                                alert('linked');
+                                                                loadPerLinkForm(tmMemberID);
+                                                            }
+                                                        });
+
                                                     });
-
                                                 });
+
+                                            }
+                                            $('#changeEmail').click(function () {
+                                                emailLookup();
                                             });
-
+                                            $('#perEmailInv').click(function () {
+                                                alert('Email sent');
+                                            });
                                         }
-                                        $('#changeEmail').click(function () {
-                                            emailLookup();
-                                        });
-                                        $('#perEmailInv').click(function () {
-                                            alert('Email sent');
-                                        });
-                                    }
-                                });
-                            }); //findPerson click - end tag
-                        }//changeEmail function - end tag
-                    });
-
-                    $('#linkRemove').click(function () {
-                        alert('Are you sure you want to remove this link?');
-                    });
-                    $('#linkCancel').click(function () {
-                        alert(tmMemberID);
-                        var invite = "{'tmMemberID':'" + tmMemberID + "'}"
-                        $.ajax({
-                            type: "POST",
-                            url: "tmStatbook.aspx/cancelPerInvite",
-                            data: invite,
-                            contentType: "application/json; charset=utf-8",
-                            dataType: "json",
-                            success: function (data) {
-                                loadPerLinkForm(tmMemberID);
-                            }
+                                    });
+                                }); //findPerson click - end tag
+                            }//changeEmail function - end tag
                         });
-                    });
 
+                        $('#linkRemove').click(function () {
+                            alert('Are you sure you want to remove this link?');
+                        });
+                        $('#linkCancel').click(function () {
+                            alert(tmMemberID);
+                            var invite = "{'tmMemberID':'" + tmMemberID + "'}"
+                            $.ajax({
+                                type: "POST",
+                                url: "tmStatbook.aspx/cancelPerInvite",
+                                data: invite,
+                                contentType: "application/json; charset=utf-8",
+                                dataType: "json",
+                                success: function (data) {
+                                    loadPerLinkForm(tmMemberID);
+                                }
+                            });
+                        });
+                        $('#perIsAdmin').change(function () {
+                            //alert(tmMemberID);
+                            var isAdmin = "{'tmMemberID':'"+tmMemberID+"', 'roleID':'" + $('#perIsAdmin option:selected').val() + "'}"
+                            $.ajax({
+                                type: "POST",
+                                url: "tmStatbook.aspx/addTmbAdminRole",
+                                data: isAdmin,
+                                contentType: "application/json; charset=utf-8",
+                                dataType: "json",
+                                success: function (data) {
+                                }
+                            });
+                        });
+                    
+                    }
 
                                     
-                }//loadPerLinkForm - Ending Tag
+                    }//loadPerLinkForm - Ending Tag
             
-}//loadAdminView - ending tag
+            }//loadAdminView - ending tag
 
-            $('#newMemberBu').click(function () {
-                loadAdminView('new');
-                
-            });
-            
-
-
-            $('#tsb_mem_topNav ul li').click(function () {
-                memView = $(this).find('a').attr('href');
-
-                if (memView == "#mem_athlete") {
-                    mem_container.empty();
-                    getAthletes();
-
-                } else if (memView == "#mem_admin") {
-                    mem_container.empty();
-                    getAdminMembers();
-                }
-            });
-            
-           
             
             $('#adminView').click(function () {
                 $('.member').hide();
@@ -973,43 +1304,387 @@
             });
 
             
+            //<<<<< EVENTS Tab Functions >>>>>
             
-            //Load team events
-            $.ajax({
-                type: "POST",
-                url: "tmStatbook.aspx/getTeamEvents",
-                data: teamID,
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: evtSuccess
-            });
+            //Declare Global Variables
+            var eventID = ""
+            var evt_container = $('#tmb_evt_container')
+            var evt_mainContent
 
-            function evtSuccess(data, status) {
-                //alert(data.d);
-                $("#tmEventTemp").tmpl(data.d).appendTo("#tmEventContainer");
+            
+            $('#newEventBu').click(
+                getEventSettings('new')
+                );
+
+            function getTeamEvents() { 
+                $.ajax({
+                    type: "POST",
+                    url: "tmStatbook.aspx/getTeamEvents",
+                    data: teamID,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (data, status) {
+                        //alert(data.d);
+                        evt_container.empty();
+                        $("#tsb_evt_listViewTmpl").tmpl(data.d).appendTo(evt_container);
                 
-                //Get the selected event
-                $(function () {
-                    var div = $('#tmEventContainer').find('tr');
-                    div.bind('mouseover', function (event) {
-                        div.removeClass('row-highlight');
-                        $(this).addClass('row-highlight');
-                    });
+                        //Get the selected event
+                        
+                        var div = evt_container.find('.evt_listItem');
+                        div.bind('mouseover', function (event) {
+                            div.removeClass('row-highlight');
+                            $(this).addClass('row-highlight');
+                        });
 
-                    div.bind('click', function () {
-                        var id = $(this).find('a').attr('href');
-                        window.localStorage.setItem('event_id', id)
-                        //alert(localStorage.event_id);
-                        window.location = "./statEventView.aspx"
+                        div.bind('click', function () {
+                            eventID = $(this).find('a').attr('href');
+                            window.localStorage.setItem('event_id', eventID)
+                            evt_container.empty();
+                            //alert(eventID);
+                            loadEventDetails(eventID)
+                            
+                        });
 
-                    });
-
+                        
+                    }
                 });
+
+                
+
+                function loadEventDetails(_eventid) {
+                    
+                    //Load the event details tells for the selected event
+                    var EventDetails = "{'eventID':'" + _eventid + "'}"
+                    $.ajax({
+                        type: "POST",
+                        url: "tmStatbook.aspx/getEventDetails",
+                        data: EventDetails,
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (data) {
+                            $("#tsb_evt_detailTmpl").tmpl(data.d).appendTo(evt_container);
+
+                            //Event Content Nav 
+                            $('#evt_backBu').click(function () {
+                                evt_container.empty();
+                                getTeamEvents();
+                            });
+                            $('#evt_settingsBu').click(function () {
+                                getEventSettings(_eventid)
+                            });
+
+
+                            $(data.d).each(function (i, item) {
+                                $('#evt_date').text(Date.parse(item.startDate).toString("dddd, MMMM dd, yyyy"))
+                                $('#evt_stTime').text(Date.parse(item.startTime).toString("h:mm"))
+                            });
+
+                            $('#evt_contentNav ul li').click(function () {
+                                var activeEvtNav = $(this).find('a').attr('href');
+
+                                if (activeEvtNav == "#evt_matches") {
+                                    getEventMatches(eventID);
+                                } else if (activeEvtNav == "#evt_teams") {
+                                    getEventTeams(eventID);
+                                } else if (activeEvtNav == "#evt_athletes") {
+                                    getEventAthletes(eventID);
+                                }
+
+                            });
+                        }
+                    });
+
+                    
+                    function getEventMatches(eventID) {
+                        //Load all matches for the selected event
+                        $.ajax({
+                            type: "POST",
+                            url: "tmStatbook.aspx/getEventMatches",
+                            data: "{'eventID':'" + eventID + "'}",
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            success: function (data, status) {
+                                var evt_mainContent = $('#evt_mainContent')
+                                evt_mainContent.empty()
+                                $(data.d).each(function (i, item) {
+                                evt_mainContent.append(
+                                    
+                                        '<div class="listItem">'+
+                                            '<div class="sect">'+ item.weight+'</div><div class="sect">'+ item.hfName+' '+ item.hlName+', '+ item.hgrade+'<br />'+ item.afName+' '+ item.alName+', '+ item.agrade+'</div>'+
+                                                                                    '<div class="sect">'+ item.hwinner+' '+ item.hwinType+' '+ item.hfallTime+'<br />'+ item.awinner+ ' '+ item.awinType+' '+ item.afallTime+'</div>'+
+                                        '</div>')
+                                    });
+                            }
+                        });
+                    }
+
+                    function getEventTeams(eventID) {
+                        //Load all the Teams participating in the selected event
+                        $.ajax({
+                            type: "POST",
+                            url: "tmStatbook.aspx/getEventTeams",
+                            data: "{'eventID':'" + eventID + "'}",
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            success: function (data) {
+                                evt_mainContent.empty()
+                                alert(evt_container)
+                                $(data.d).each(function (i, item) {
+                                    evt_mainContent.append(
+                                        '<table id="evtTeamTemp">' +
+                                            '<tr>' +
+                                                '<td><input type="checkbox" /></td>' +
+                                                '<td>' + item.tm_name + '</td>' +
+                                                '<td>'+ item.tm_name_abrv +'</td>' +
+                                                '<td>' + item.tm_city+'</td>' +
+                                                '<td>' + item.tm_state +'</td>' +
+                                                '<td>' +item.eventTeamID+ '</td>' +
+                                            '</tr>' +
+                                        '</table>')
+                                });
+                            }
+                        });
+                    }
+
+                    function getEventAthletes(eventID) {
+                        //Load all the Teams participating in the selected event
+                        $.ajax({
+                            type: "POST",
+                            url: "tmStatbook.aspx/getEventAthletes",
+                            data: "{'eventID':'" + eventID + "'}",
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            success: function (data) {var evt_mainContent = $('#evt_mainContent')
+                                evt_mainContent.empty()
+
+                                $(data.d).each(function (i, mem) {
+                                    evt_mainContent.append(
+                                        '<article><input type="checkbox" />'+ mem.fName+' '+ mem.lName+ mem.grade+ mem.amount+ mem.teamName+'</article>')
+                                });
+                                }
+                        });
+                    }
+                }
+
+
             }
 
-            
+            function getEventSettings(_eventid) {
+                evt_container.empty();
+                alert(_eventid)
+                if (_eventid == 'new') {
+                } else {
+                    $("#tsb_evt_settingsTmpl").tmpl().appendTo(evt_container);
+                }
+
+                
+                
+                
+                //declare variables that configures the inital new event popup
+                var newEvtStep1 = evt_container.find('#newEvtStep1')
+                var newEvtStep2 = $('#newEvtStep2')
+                newEvtStep2.hide();
+                var newEvtStep3 = $('#newEvtStep3')
+                newEvtStep3.hide();
+                var pickSchool = $('#pickSchool')
+                pickSchool.hide();
+                var evtVenue = $('#evtVenue')
+                evtVenue.show();
+                var schLookupForm = $('#locSchool')
+                    schLookupForm.hide()
+                var evtDay = $('#evtDay')
+                evtDay.datepicker();
+
+
+
+
+                //Save new team event
+                evt_container.find('#addEvent').bind('click', function () {
+
+                    var newEvent = "{'teamID':'" + localStorage.team_id + "', 'eventName':'" + $('#evtName_TB').val() + "', 'startDate':'" + $('#evtStDate_TB').val() + "', 'startTime':'" + $('#evtStTime_TB').val() + "', 'eventType':'1'," +
+                                     "'address':'" + $('#evtAddr_TB').val() + "', 'city':'" + $('#evtCity_TB').val() + "', 'state':'" + $('#evtState_TB').val() + "', 'styleID':'folk', 'levelID':'hs'}"
+                    $.ajax({
+                        type: "POST",
+                        url: "tmStatbook.aspx/newTeamMembers",
+                        data: newEvent,
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (data) {
+                            //alert(data.d);
+                            alert("added!")
+
+                            getMembers();
+                            $("#dialog-overlay, #dialog-box").hide();
+                        }
+                    });
+                });
+
+                //location school
+                var findSchool = evt_container.find('#findSchool')
+                findSchool.bind('click', function () {
+
+                    var findSchool = "{'sch_name':'" + $('#schoolName').val() + "', 'sch_loc_state':'" + $('#selState option:selected').val() + "'}"
+                    $.ajax({
+                        type: "POST",
+                        url: "tmStatbook.aspx/getSchools",
+                        data: findSchool,
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (data) {
+                            $('#selSchool').empty();
+                            $(data.d).each(function (i, item) {
+                                $('#selSchool').append(
+
+                                    $('<option/>', {
+                                        value: item.schoolID,
+                                        text: item.sch_name + " (" + item.sch_loc_city + ")"
+                                    })
+                                    );
+                                $("#tmMemberContainer").empty().append().html(
+                                    item.sch_loc_addr
+                               );
+
+                                //var tmpIdx = $("#selSchool").selectedIndex;
+                                //$('#dialog-message').find('#seloption').append(data.d).selectedIndex = tmpIdx;
+
+                            });
+                        }
+                    });
+
+                    pickSchool.show();
+                });
+
+                var acceptSchool = $('#acceptSchool')
+                acceptSchool.bind('click', function () {
+
+                    var acceptSchool = "{'schoolID':'" + $('#selSchool option:selected').val() + "'}"
+                    $.ajax({
+                        type: "POST",
+                        url: "tmStatbook.aspx/getSchool",
+                        data: acceptSchool,
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (data) {
+
+                            $(data.d).each(function (i, item) {
+                                
+
+                               // tmAddrCont.html(
+                               //     '<label id="schname">' + item.sch_name + '</label><br />' +
+                               //     '<label id="tmlocaddr">' + item.sch_loc_addr + '</label><br />' +
+                               //     '<label id="tmloccity">' + item.sch_loc_city + '</label>' + ", " + '<label id="tmlocstate">' + item.sch_loc_state + '</label><br />' +
+                               //     '<label id="tmloczip">' + item.sch_loc_zip + '</label><br /><br /> ' +
+
+                               //     '<h3>Team Name and League Association</h3>' +
+                               //     'Team Name: <label id="tmname">' + item.sch_tm_name + '</label> <label> (' + item.sch_tm_abrv + ') </label><br />' +
+                               //     'League: <label id="tmLeague">' + item.sch_lge_name + '</label> ' +
+                               //     '<a id="selSchoolID" href="' + item.schoolID + '"></a>'
+                               //);
+                                evtVenue.find('#venName').val(item.sch_name);
+                                evtVenue.find('#venAddress').val(item.sch_loc_addr);
+                                evtVenue.find('#venCity').val(item.sch_loc_city);
+                                evtVenue.find('#venState').val(item.sch_loc_state);
+                                evtVenue.find('#venZip').val(item.sch_loc_zip);
+
+                                //newTmStep3.find('#ovtmname').text(item.sch_tm_name);
+                                //newTmStep3.find('#ovtmabrv').text(item.sch_tm_abrv);
+                                //newTmStep3.find('#ovlocname').text(item.sch_name);
+                                //newTmStep3.find('#ovlocaddr').text(item.sch_loc_addr);
+                                //newTmStep3.find('#ovloccity').text(item.sch_loc_city);
+                                //newTmStep3.find('#ovlocstate').text(" " + item.sch_loc_state);
+                                //newTmStep3.find('#ovloczip').text(item.sch_loc_zip);
+                                //newTmStep3.find('#ovschoolID').text(item.schoolID);
+                                //newTmStep3.find('#ovlgename').text(item.sch_lge_name);
+                                //newTmStep3.find('#ovlgeorg').text(item.sch_lge_org);
+                                schLookupForm.hide()
+                                evtVenue.show();
+                            });
+                        }
+                    });
+                }); //acceptSchool click - end tag
+                //custom location checkbox click
+               var noSchoolCB = $('#schLookupBu') 
+                noSchoolCB.bind('click', function () {
+                        schLookupForm.toggle();
+                        evtVenue.toggle();
+                        //$(evtVenue).find('#venAddress').empty();
+                    
+                });
+
+                $('#dialog-message').find('#ToStep2').bind('click', function () {
+                    newEvtStep1.hide();
+                    newEvtStep2.show();
+                });
+                $('#dialog-message').find('#ToStep3').bind('click', function () {
+                    newEvtStep2.hide();
+                    newEvtStep3.show();
+                });
+                $('#dialog-message').find('#BackStep1').bind('click', function () {
+                    newEvtStep2.hide();
+                    newEvtStep1.show();
+                });
+                $('#dialog-message').find('#BackStep2').bind('click', function () {
+                    newEvtStep3.hide();
+                    newEvtStep2.show();
+                });
+
+
+                function getEventDates() {
+                    var addDate = evt_container.find('#addDate')
+                    var dateTime = evt_container.find('#dateTime')
+                    $.ajax({
+                        type: "POST",
+                        url: "tmStatbook.aspx/getEventDates",
+                        data: eventID,
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (data, status) {
+                            if (data.d == '') {
+                                
+                            } else {
+                                $(data.d).each(function (i, item) {
+                                    dateTime.append(
+                                        '<li class="mi">' +
+                                            '<div class="lt"><select id="Select1" class="select">' +
+                                                    '<option>Session</option>' +
+                                                    '<option>Weigh-In</option>' +
+                                                '</select>' +
+
+                                            '</div>' +
+                                            '<div class="lt"><input class="dateTime" type="text" />'+item.evt_date+'</div>' +
+                                            '<div class="lt"><input class="dateTime" type="text" />' + item.evt_time + '</div>' +
+                                            '<div class="lt"><input class="input" type="text" />' + item.evt_title + '</div>' +
+                                            '<div class="lt">X</div>' +
+                                        '</li>')
+                                });
+                            }
+                        }
+                    });
+
+                    
+                    addDate.click(function () {
+                        dateTime.append(
+                        '<li class="mi">' +
+                            '<div class="lt"><select id="Select1" class="select">' +
+                                    '<option>Session</option>' +
+                                    '<option>Weigh-In</option>' +
+                                '</select>' +
+
+                            '</div>' +
+                            '<div class="lt"><input class="dateTime" type="text" /></div>' +
+                            '<div class="lt"><input class="dateTime" type="text" /></div>' +
+                            '<div class="lt"><input class="input" type="text" /></div>' +
+                            '<div class="lt">X</div>' +
+                        '</li>')
+                    });
+                }
+        } //newEventBU click - end tag
+
+            //Load team statbook events
             
 
+            <%--
+         
             //Handles the new member button
             //$("#newMemberBu").click(function(e) {
                 
@@ -1138,118 +1813,8 @@
 //            });
             
 
-            $("#newEventBu").click(function (e) {
-                
-                // display the message
-                $('#dialog-title').html('<h2>Create An Event</h2>');
-                $('#dialog-message').empty();
-                //load template
-                $('#newEvtTemp').tmpl().appendTo("#dialog-message");
-                //declare variables that configures the inital new event popup
-                var newEvtStep1 = $('#dialog-message').find('#newEvtStep1')
-                var newEvtStep2 = $('#dialog-message').find('#newEvtStep2')
-                    newEvtStep2.hide();
-                var newEvtStep3 = $('#dialog-message').find('#newEvtStep3')
-                    newEvtStep3.hide();
-                var pickSchool = $('#dialog-message').find('#pickSchool')
-                    pickSchool.hide();
-                var custVenue = $('#dialog-message').find('#custVenue')
-                    custVenue.hide();
-                var evtDay = $('#dialog-message').find('#evtDay')
-                    evtDay.datepicker();
-                popup();
 
-                //Save new team event
-                $('#dialog-message').find('#addEvent').bind('click', function () {
-
-                    var newEvent = "{'teamID':'" + localStorage.team_id + "', 'eventName':'" + $('#evtName_TB').val() + "', 'startDate':'" + $('#evtStDate_TB').val() + "', 'startTime':'" + $('#evtStTime_TB').val() + "', 'eventType':'1'," +
-                                     "'address':'" + $('#evtAddr_TB').val() + "', 'city':'" + $('#evtCity_TB').val() + "', 'state':'" + $('#evtState_TB').val() + "', 'styleID':'folk', 'levelID':'hs'}"
-                    $.ajax({
-                        type: "POST",
-                        url: "tmStatbook.aspx/newTeamMembers",
-                        data: newEvent,
-                        contentType: "application/json; charset=utf-8",
-                        dataType: "json",
-                        success: function (data) {
-                            //alert(data.d);
-                            alert("added!")
-
-                            getMembers();
-                            $("#dialog-overlay, #dialog-box").hide();
-                        }
-                    });
-                });
-                
-                
-                var findSchool = $('#dialog-message').find('#findSchool')
-                findSchool.bind('click', function () {
-
-                    var findSchool = "{'sch_name':'" + $('#schoolName').val() + "', 'sch_loc_state':'" + $('#selState option:selected').val()+ "'}"
-                    $.ajax({
-                        type: "POST",
-                        url: "tmStatbook.aspx/getSchools",
-                        data: findSchool,
-                        contentType: "application/json; charset=utf-8",
-                        dataType: "json",
-                        success: function (data) {
-                            $('#selSchool').empty();
-                            $(data.d).each(function (i, item) {
-                                $('#selSchool').append(
-                                    
-                                    $('<option/>', {
-                                        value: item.schoolID,
-                                        text: item.sch_name + " ("+ item.sch_loc_city + ")"
-                                    })
-                                    );
-                                $("#tmMemberContainer").empty().append().html(
-                                    item.sch_loc_addr
-                               );
-
-                                //var tmpIdx = $("#selSchool").selectedIndex;
-                                //$('#dialog-message').find('#seloption').append(data.d).selectedIndex = tmpIdx;
-                            
-                            });
-                        }
-                });
-
-                    pickSchool.show();
-                });
-
-                //handles the custom location checkbox click
-                var noSchoolCB = $('#dialog-message').find('#noSchoolCB')
-                noSchoolCB.bind('click', function () {
-                    if (noSchoolCB.is(':checked')) {
-                        $('#dialog-message').find('#selSchool').empty();
-                        pickSchool.hide();
-                        findSchool.prop('disabled', true);
-                        custVenue.show();
-                    } else {
-                        findSchool.prop('disabled', false);
-                        custVenue.hide();
-                        //$(custVenue).find('#venAddress').empty();
-                    }
-                });
-
-                $('#dialog-message').find('#ToStep2').bind('click', function () {
-                    newEvtStep1.hide();
-                    newEvtStep2.show();
-                });
-                $('#dialog-message').find('#ToStep3').bind('click', function () {
-                    newEvtStep2.hide();
-                    newEvtStep3.show();
-                });
-                $('#dialog-message').find('#BackStep1').bind('click', function () {
-                    newEvtStep2.hide();
-                    newEvtStep1.show();
-                });
-                $('#dialog-message').find('#BackStep2').bind('click', function () {
-                    newEvtStep3.hide();
-                    newEvtStep2.show();
-                });
-
-
-            });
-
+--%>
 
 
 
