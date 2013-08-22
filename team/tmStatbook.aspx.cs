@@ -163,7 +163,12 @@ public partial class team_tmStatbook : System.Web.UI.Page
         string connectionString = ConfigurationManager.ConnectionStrings["statbookConnectionString"].ConnectionString;
         using (SqlConnection connection = new SqlConnection(connectionString))
         {
-            string sql = "SELECT teamMemberID, fName, lName, grade, teamID, personID, tmb_isAthlete, tmb_isCoach, tmb_adminRole, tmb_link_status FROM teamMembers WHERE teamID = @teamID";
+            string sql = "SELECT tmMem.teamMemberID, tmMem.fName, tmMem.lName, tmMem.personID, tmMem.tmb_adminRole, tmMem.tmb_isAthlete, tmMem.tmb_isCoach, " +
+                                "tmMem.tmb_link_status, tmMem.grade, tmSeas.teamID " +
+                         "FROM teamMembers AS tmMem INNER JOIN " +
+                                "tmMemSeasons AS tmMemSea ON tmMem.teamMemberID = tmMemSea.teamMemberID INNER JOIN " +
+                                "teamSeasons AS tmSeas ON tmMemSea.teamSeasonID = tmSeas.teamSeasonID " +
+                         "WHERE (tmSeas.tms_name = 'CUR') AND (tmSeas.teamID = 1);";
 
             connection.Open();
 
@@ -204,7 +209,12 @@ public partial class team_tmStatbook : System.Web.UI.Page
         string connectionString = ConfigurationManager.ConnectionStrings["statbookConnectionString"].ConnectionString;
         using (SqlConnection connection = new SqlConnection(connectionString))
         {
-            string sql = "SELECT teamMemberID, fName, lName, grade, teamID, personID FROM teamMembers WHERE teamID = @teamID AND tmb_isAthlete = 'Y'";
+            string sql = "SELECT tmMem.teamMemberID, tmMem.fName, tmMem.lName, tmMem.personID, tmMem.tmb_adminRole, tmMem.tmb_isAthlete, tmMem.tmb_isCoach, " +
+                                "tmMem.tmb_link_status, tmMem.grade, tmSeas.teamID " +
+                         "FROM teamMembers AS tmMem INNER JOIN " +
+                                "tmMemSeasons AS tmMemSea ON tmMem.teamMemberID = tmMemSea.teamMemberID INNER JOIN " +
+                                "teamSeasons AS tmSeas ON tmMemSea.teamSeasonID = tmSeas.teamSeasonID " +
+                         "WHERE (tmSeas.tms_name = 'CUR') AND (tmSeas.teamID = 1) AND (tmMem.tmb_isAthlete = 'Y');";
 
             connection.Open();
 
@@ -471,26 +481,282 @@ public partial class team_tmStatbook : System.Web.UI.Page
 
 //<<<<<<<<<< Team Events >>>>>>>>>>
     
-    public class tmEvent
+    public class events
     {
-        public string date { get; set; }
-        public string eventName { get; set; }
-        public string startTime { get; set; }
-        public string city { get; set; }
-        public string state { get; set; }
         public string eventID { get; set; }
+        public string evt_name { get; set; }
+        public string evt_ven_name { get; set; }
+        public string evt_addr { get; set; }
+        public string evt_city { get; set; }
+        public string evt_state { get; set; }
+        public string evt_zip { get; set; }
+        public string startDate { get; set; }
+        public string startTime { get; set; }
+        public string evt_type { get; set; }
         public string styleID { get; set; }
         public string levelID { get; set; }
     }
-    
+    //Event Details
     [WebMethod]
-    public static List<tmEvent> getTeamEvents(int teamID)
+    public static events[] getEventDetails(int eventID)
     {
 
         string connectionString = ConfigurationManager.ConnectionStrings["statbookConnectionString"].ConnectionString;
         using (SqlConnection connection = new SqlConnection(connectionString))
         {
-            string sql = "SELECT CONVERT (varchar(10), startDate, 101) AS date, eventName, CONVERT (varchar(10), startTime, 108) AS startTime, city, state, levelID, styleID, eventID FROM events " +
+            string sql = "SELECT evt_name, startDate, startTime, evt_type, evt_ven_name, evt_addr, evt_city, evt_state, evt_zip, levelID, styleID, eventID FROM dbo.events WHERE eventID = @eventID;";
+
+            connection.Open();
+
+            SqlCommand command = new SqlCommand(sql, connection);
+            command.Parameters.AddWithValue("@eventID", eventID);
+            SqlDataReader reader = command.ExecuteReader();
+
+            var _events = new List<events>();
+            while (reader.Read())
+            {
+                var evt = new events();
+                evt.startDate = reader["startDate"].ToString();
+                evt.evt_name = reader["evt_name"].ToString();
+                evt.evt_ven_name = reader["evt_ven_name"].ToString();
+                evt.evt_addr = reader["evt_addr"].ToString();
+                evt.evt_city = reader["evt_city"].ToString();
+                evt.evt_state = reader["evt_state"].ToString();
+                evt.evt_zip = reader["evt_zip"].ToString();
+                evt.startTime = reader["startTime"].ToString();
+                evt.evt_type = reader["evt_type"].ToString();
+                evt.eventID = reader["eventID"].ToString();
+                evt.styleID = reader["styleID"].ToString();
+                evt.levelID = reader["levelID"].ToString();
+                _events.Add(evt);
+            }
+
+
+            //Close connections
+            reader.Close();
+            connection.Close();
+
+            return _events.ToArray();
+        }
+    }
+
+   //Event Sessions
+    public class session
+    {
+        public string eventDateID { get; set; }
+        public string edt_type { get; set; }
+        public string edt_date { get; set; }
+        public string edt_time { get; set; }
+        public string edt_title { get; set; }
+        public string eventID { get; set; }
+    }
+
+ 
+    [WebMethod]
+    public static session[] getEventSessions(int eventID)
+    {
+
+        string connectionString = ConfigurationManager.ConnectionStrings["statbookConnectionString"].ConnectionString;
+        using (SqlConnection connection = new SqlConnection(connectionString))
+        {
+            string sql = "SELECT eventDateID, edt_type, edt_date, edt_time, edt_title, eventID FROM eventDates WHERE eventID = @eventID;";
+
+            connection.Open();
+
+            SqlCommand command = new SqlCommand(sql, connection);
+            command.Parameters.AddWithValue("@eventID", eventID);
+            SqlDataReader reader = command.ExecuteReader();
+
+            var _session = new List<session>();
+            while (reader.Read())
+            {
+                var div = new session();
+                div.eventDateID = reader["eventDateID"].ToString();
+                div.edt_type = reader["edt_type"].ToString();
+                div.edt_date = reader["edt_date"].ToString();
+                div.edt_time = reader["edt_time"].ToString();
+                div.edt_title = reader["edt_title"].ToString();
+                _session.Add(div);
+            }
+
+
+            //Close connections
+            reader.Close();
+            connection.Close();
+
+            return _session.ToArray();
+        }
+    }
+
+    [WebMethod]
+    public static void addNewSession(string eventID)
+    {
+
+        string connectionString = ConfigurationManager.ConnectionStrings["statbookConnectionString"].ConnectionString;
+        using (SqlConnection connection = new SqlConnection(connectionString))
+        {
+            string sql = "Insert INTO eventDates (eventID) VALUES (@eventID);";
+
+            connection.Open();
+
+            SqlCommand command = new SqlCommand(sql, connection);
+            command.Parameters.AddWithValue("@eventID", eventID);
+            command.ExecuteNonQuery();
+        }
+    }
+
+    [WebMethod]
+    public static void saveEventSession(string eventDateID, string edt_title, string edt_date, string edt_time, string edt_type)
+    {
+
+        string connectionString = ConfigurationManager.ConnectionStrings["statbookConnectionString"].ConnectionString;
+        using (SqlConnection connection = new SqlConnection(connectionString))
+        {
+            string sql = "UPDATE eventDates SET edt_type = @edt_type, edt_time = @edt_time, edt_date = @edt_date, edt_title = @edt_title WHERE (eventDateID = @eventDateID);";
+
+            connection.Open();
+
+            SqlCommand command = new SqlCommand(sql, connection);
+            command.Parameters.AddWithValue("@edt_type", edt_type);
+            command.Parameters.AddWithValue("@edt_time", edt_time);
+            command.Parameters.AddWithValue("@edt_date", edt_date);
+            command.Parameters.AddWithValue("@edt_title", edt_title);
+            command.Parameters.AddWithValue("@eventDateID", eventDateID);
+
+            command.ExecuteNonQuery();
+        }
+    }
+
+
+    public class divisions
+    {
+        public string divisionsID { get; set; }
+        public string div_name { get; set; }
+    }
+
+    //Event Divisions
+    [WebMethod]
+    public static divisions[] getEventDivisions(int eventID)
+    {
+
+        string connectionString = ConfigurationManager.ConnectionStrings["statbookConnectionString"].ConnectionString;
+        using (SqlConnection connection = new SqlConnection(connectionString))
+        {
+            string sql = "SELECT div_name, divisionsID FROM divisions WHERE eventID = @eventID;";
+
+            connection.Open();
+
+            SqlCommand command = new SqlCommand(sql, connection);
+            command.Parameters.AddWithValue("@eventID", eventID);
+            SqlDataReader reader = command.ExecuteReader();
+
+            var _divisions = new List<divisions>();
+            while (reader.Read())
+            {
+                var div = new divisions();
+                div.div_name = reader["div_name"].ToString();
+                div.divisionsID = reader["divisionID"].ToString();
+                _divisions.Add(div);
+            }
+
+
+            //Close connections
+            reader.Close();
+            connection.Close();
+
+            return _divisions.ToArray();
+        }
+    }
+
+    public class divisionClasses
+    {
+        public string eventGroupID { get; set; }
+        public string evtg_name { get; set; }
+    }
+
+    //Event Groups
+    [WebMethod]
+    public static divisionClasses[] getEventClasses(int divisionID)
+    {
+
+        string connectionString = ConfigurationManager.ConnectionStrings["statbookConnectionString"].ConnectionString;
+        using (SqlConnection connection = new SqlConnection(connectionString))
+        {
+            string sql = "SELECT evtg_name, eventGroupID FROM divisionClasses WHERE eventDivisionID = @divisionID;";
+
+            connection.Open();
+
+            SqlCommand command = new SqlCommand(sql, connection);
+            command.Parameters.AddWithValue("@divisionID", divisionID);
+            SqlDataReader reader = command.ExecuteReader();
+
+            var _groups = new List<divisionClasses>();
+            while (reader.Read())
+            {
+                var div = new divisionClasses();
+                div.evtg_name = reader["evtg_name"].ToString();
+                div.eventGroupID = reader["eventGroupID"].ToString();
+                _groups.Add(div);
+            }
+
+
+            //Close connections
+            reader.Close();
+            connection.Close();
+
+            return _groups.ToArray();
+        }
+    }
+
+    public class brackets
+    {
+        public string bracketID { get; set; }
+        public string bracketName { get; set; }
+    }
+
+    //Event brackets
+    [WebMethod]
+    public static brackets[] getEventBrackets(int eventID, int divisionID)
+    {
+
+        string connectionString = ConfigurationManager.ConnectionStrings["statbookConnectionString"].ConnectionString;
+        using (SqlConnection connection = new SqlConnection(connectionString))
+        {
+            string sql = "SELECT bracketName, bracketID FROM brackets WHERE (eventID = @eventID) AND (divisionID = @divisionID);";
+
+            connection.Open();
+
+            SqlCommand command = new SqlCommand(sql, connection);
+            command.Parameters.AddWithValue("@eventID", eventID);
+            command.Parameters.AddWithValue("@divisionID", divisionID);
+            SqlDataReader reader = command.ExecuteReader();
+
+            var _brackets = new List<brackets>();
+            while (reader.Read())
+            {
+                var bkt = new brackets();
+                bkt.bracketName = reader["bracketName"].ToString();
+                bkt.bracketID = reader["bracketID"].ToString();
+                _brackets.Add(bkt);
+            }
+
+
+            //Close connections
+            reader.Close();
+            connection.Close();
+
+            return _brackets.ToArray();
+        }
+    }
+
+    [WebMethod]
+    public static List<events> getTeamEvents(int teamID)
+    {
+
+        string connectionString = ConfigurationManager.ConnectionStrings["statbookConnectionString"].ConnectionString;
+        using (SqlConnection connection = new SqlConnection(connectionString))
+        {
+            string sql = "SELECT CONVERT (varchar(10), startDate, 101) AS date, evt_name, CONVERT (varchar(10), startTime, 108) AS startTime, evt_ven_name, evt_addr, evt_city, evt_state, evt_zip, evt_type, levelID, styleID, eventID FROM events " +
                         "WHERE (eventID IN (SELECT eventID FROM tmEvents WHERE (teamID = @teamID))) ORDER BY date" ;
 
             connection.Open();
@@ -499,16 +765,18 @@ public partial class team_tmStatbook : System.Web.UI.Page
             command.Parameters.AddWithValue("@teamID", teamID);
             SqlDataReader reader = command.ExecuteReader();
 
-            List<tmEvent> _events = new List<tmEvent>();
+            List<events> _events = new List<events>();
             while (reader.Read())
             {
-                _events.Add(new tmEvent()
+                _events.Add(new events()
                 {
-                    date = reader["date"].ToString(),
-                    eventName = reader["eventName"].ToString(),
+                    startDate = reader["date"].ToString(),
+                    evt_name = reader["evt_name"].ToString(),
                     startTime = reader["startTime"].ToString(),
-                    city = reader["city"].ToString(),
-                    state = reader["state"].ToString(),
+                    evt_addr = reader["evt_addr"].ToString(),
+                    evt_city = reader["evt_city"].ToString(),
+                    evt_state = reader["evt_state"].ToString(),
+                    evt_zip = reader["evt_zip"].ToString(),
                     eventID = reader["eventID"].ToString(),
                     styleID = reader["styleID"].ToString(),
                     levelID = reader["levelID"].ToString()
@@ -522,9 +790,51 @@ public partial class team_tmStatbook : System.Web.UI.Page
             return _events;
         }
     }
+    //<<<<<< EVENT SETTINGS >>>>>>>>>>
+    [WebMethod]
+    public static void saveEventName(string evt_name, string eventID)
+    {
+
+        string connectionString = ConfigurationManager.ConnectionStrings["statbookConnectionString"].ConnectionString;
+        using (SqlConnection connection = new SqlConnection(connectionString))
+        {
+            string sql = "UPDATE events SET evt_name = @name WHERE (eventID = @eventID);";
+
+            connection.Open();
+
+            SqlCommand command = new SqlCommand(sql, connection);
+            command.Parameters.AddWithValue("@name", evt_name);
+            command.Parameters.AddWithValue("@eventID", eventID);
+
+            command.ExecuteNonQuery();
+        }
+    }
 
     [WebMethod]
-    public static void newTeamEvents(int teamID, string eventName, DateTime startDate, DateTime startTime, int eventType, string address, string city, string state, string styleID, string levelID)
+    public static void saveEventVenue(string evt_ven_name, string eventID, string evt_addr, string evt_city, string evt_state, string evt_zip)
+    {
+
+        string connectionString = ConfigurationManager.ConnectionStrings["statbookConnectionString"].ConnectionString;
+        using (SqlConnection connection = new SqlConnection(connectionString))
+        {
+            string sql = "UPDATE events SET evt_ven_name = @ven_name, evt_addr = @evt_addr, evt_city = @evt_city, evt_state = @evt_state, evt_zip = @evt_zip WHERE (eventID = @eventID);";
+
+            connection.Open();
+
+            SqlCommand command = new SqlCommand(sql, connection);
+            command.Parameters.AddWithValue("@ven_name", evt_ven_name);
+            command.Parameters.AddWithValue("@evt_addr", evt_addr);
+            command.Parameters.AddWithValue("@evt_city", evt_city);
+            command.Parameters.AddWithValue("@evt_state", evt_state);
+            command.Parameters.AddWithValue("@evt_zip", evt_zip);
+            command.Parameters.AddWithValue("@eventID", eventID);
+
+            command.ExecuteNonQuery();
+        }
+    }
+
+    [WebMethod]
+    public static void newTeamEvents(int teamID, string eventName, DateTime startDate, DateTime startTime, int eventType, string address, string city, string state, string zip, string styleID, string levelID)
     {
 
         //Establish a connection with the sql connection string declared in the web.config file.
@@ -534,7 +844,7 @@ public partial class team_tmStatbook : System.Web.UI.Page
 
         //Create SQL paragraph and parameters
         //Insert info into events table
-        string commandInsert = "Insert INTO events (eventName, startDate, startTime, eventType, address, city, state, styleID, levelID) VALUES (@eventName, @startDate, @startTime, @eventType, @address, @city, @state, @styleID, @levelID); Select SCOPE_IDENTITY();";
+        string commandInsert = "Insert INTO events (evt_name, startDate, startTime, evt_type, evt_addr, evt_city, evt_state, evt_zip, styleID, levelID) VALUES (@eventName, @startDate, @startTime, @eventType, @address, @city, @state, @zip, @styleID, @levelID); Select SCOPE_IDENTITY();";
         SqlCommand myCommand = new SqlCommand(commandInsert, sqlConn);
         myCommand.Parameters.AddWithValue("@eventName", eventName);
         myCommand.Parameters.AddWithValue("@startDate", startDate);
@@ -543,6 +853,7 @@ public partial class team_tmStatbook : System.Web.UI.Page
         myCommand.Parameters.AddWithValue("@address", address);
         myCommand.Parameters.AddWithValue("@city", city);
         myCommand.Parameters.AddWithValue("@state", state);
+        myCommand.Parameters.AddWithValue("@zip", zip);
         myCommand.Parameters.AddWithValue("@styleID", styleID);
         myCommand.Parameters.AddWithValue("@levelID", levelID);
 
@@ -569,111 +880,11 @@ public partial class team_tmStatbook : System.Web.UI.Page
         myComd.ExecuteNonQuery();
     }
 
-    //<<<<<<<<<< Team Dates >>>>>>>>>>
-
-    public class eventDate
-    {
-        public string edt_date { get; set; }
-        public string edt_type { get; set; }
-        public string eventDatesID { get; set; }
-        public string edt_time { get; set; }
-        public string edt_title { get; set; }
-        public string eventID { get; set; }
-    }
-
-    [WebMethod]
-    public static eventDate[] getEventDates(int eventID)
-    {
-        string connectionString = ConfigurationManager.ConnectionStrings["statbookConnectionString"].ConnectionString;
-        using (SqlConnection connection = new SqlConnection(connectionString))
-        {
-            string sql = "SELECT edt_date, edt_type, edt_time, eventDatesID, edt_title eventID FROM dbo.events WHERE eventID = @eventID;";
-
-            connection.Open();
-
-            SqlCommand command = new SqlCommand(sql, connection);
-            command.Parameters.AddWithValue("@eventID", eventID);
-            SqlDataReader reader = command.ExecuteReader();
-
-            var _events = new List<eventDate>();
-            while (reader.Read())
-            {
-                var evt = new eventDate();
-                evt.edt_date = reader["edt_date"].ToString();
-                evt.edt_type = reader["edt_type"].ToString();
-                evt.edt_time = reader["edt_time"].ToString();
-                evt.eventDatesID = reader["eventDatesID"].ToString();
-                evt.edt_title = reader["edt_title"].ToString();
-                _events.Add(evt);
-            }
-
-
-            //Close connections
-            reader.Close();
-            connection.Close();
-
-            return _events.ToArray();
-        }
-    }
-
 
 
     //<<<<<<<< Event Athletes >>>>>>>>>
     
-    //Event Details
-    public class events
-    {
-
-        public string eventName { get; set; }
-        public string address { get; set; }
-        public string city { get; set; }
-        public string state { get; set; }
-        public string startDate { get; set; }
-        public string startTime { get; set; }
-        public string eventID { get; set; }
-        public string styleID { get; set; }
-        public string levelID { get; set; }
-    }
-
-    [WebMethod]
-    public static events[] getEventDetails(int eventID)
-    {
-
-        string connectionString = ConfigurationManager.ConnectionStrings["statbookConnectionString"].ConnectionString;
-        using (SqlConnection connection = new SqlConnection(connectionString))
-        {
-            string sql = "SELECT eventName, startDate, startTime, eventType, address, city, state, levelID, styleID, eventID FROM dbo.events WHERE eventID = @eventID;";
-
-            connection.Open();
-
-            SqlCommand command = new SqlCommand(sql, connection);
-            command.Parameters.AddWithValue("@eventID", eventID);
-            SqlDataReader reader = command.ExecuteReader();
-
-            var _events = new List<events>();
-            while (reader.Read())
-            {
-                var evt = new events();
-                evt.startDate = reader["startDate"].ToString();
-                evt.eventName = reader["eventName"].ToString();
-                evt.address = reader["address"].ToString();
-                evt.city = reader["city"].ToString();
-                evt.state = reader["state"].ToString();
-                evt.startTime = reader["startTime"].ToString();
-                evt.eventID = reader["eventID"].ToString();
-                evt.styleID = reader["styleID"].ToString();
-                evt.levelID = reader["levelID"].ToString();
-                _events.Add(evt);
-            }
-
-
-            //Close connections
-            reader.Close();
-            connection.Close();
-
-            return _events.ToArray();
-        }
-    }
+    
 
     //Event Teams
     public class eventTeam
@@ -739,7 +950,7 @@ public partial class team_tmStatbook : System.Web.UI.Page
         string connectionString = ConfigurationManager.ConnectionStrings["statbookConnectionString"].ConnectionString;
         using (SqlConnection connection = new SqlConnection(connectionString))
         {
-            string sql = "SELECT eventMembers.fName, eventMembers.lName, eventMembers.grade, eventTeams.teamName, eventGroups.amount, eventMembers.memberID FROM eventGroups INNER JOIN eventMembers ON eventGroups.eventGroupID = eventMembers.eventGroupID LEFT OUTER JOIN eventTeams ON eventMembers.eventTeamID = eventTeams.eventTeamID WHERE (eventGroups.eventID = @eventID)";
+            string sql = "SELECT eventMembers.fName, eventMembers.lName, eventMembers.grade, eventTeams.teamName, divisionClasses.amount, eventMembers.memberID FROM divisionClasses INNER JOIN eventMembers ON divisionClasses.eventGroupID = eventMembers.eventGroupID LEFT OUTER JOIN eventTeams ON eventMembers.eventTeamID = eventTeams.eventTeamID WHERE (divisionClasses.eventID = @eventID)";
 
             connection.Open();
 
@@ -771,35 +982,32 @@ public partial class team_tmStatbook : System.Web.UI.Page
     //Event Matches
     public class match
     {
-        public string weight { get; set; }
-        public string hfName { get; set; }
-        public string hlName { get; set; }
+        public string hfname { get; set; }
+        public string hlname { get; set; }
         public string hgrade { get; set; }
-        public string hwinner { get; set; }
-        public string hwinType { get; set; }
-        public string hfallTime { get; set; }
-
-        public string afName { get; set; }
-        public string alName { get; set; }
+        public string afname { get; set; }
+        public string alname { get; set; }
         public string agrade { get; set; }
-        public string awinner { get; set; }
-        public string awinType { get; set; }
-        public string afallTime { get; set; }
     }
 
     [WebMethod]
-    public static List<match> getEventMatches(int eventID)
+    public static List<match> getEventMatches(int bracketID)
     {
 
         string connectionString = ConfigurationManager.ConnectionStrings["statbookConnectionString"].ConnectionString;
         using (SqlConnection connection = new SqlConnection(connectionString))
         {
-            string sql = "SELECT matchHome.amount AS weight, matchHome.fName AS hfName, matchHome.lName AS hlName, matchHome.grade AS hgrade, matchHome.winner AS hwinner, matchHome.winType AS hwinType, matchHome.fallTime AS hfallTime, matchAway.fName AS afName, matchAway.lName AS alName, matchAway.grade AS agrade, matchAway.winner AS awinner, matchAway.winType AS awinType, matchAway.fallTime AS afallTime FROM matchHome INNER JOIN matchAway ON matchHome.boutID = matchAway.boutID WHERE (matchHome.boutID IN (SELECT bout.boutID FROM bouts AS bout INNER JOIN brackets AS brkt ON bout.bracketID = brkt.bracketID WHERE (brkt.eventID = @eventID)));";
+            string sql = "SELECT away.evta_fname AS afname, away.evta_lname AS alname, away.evta_grade AS agrade, home.evta_fname AS hfname, home.evta_lname AS hlname, " + 
+                                "home.evta_grade AS hgrade "+
+                            "FROM bouts INNER JOIN "+
+                                "homeBouts AS home ON bouts.boutID = home.boutID INNER JOIN "+
+                                "awayBouts AS away ON bouts.boutID = away.boutID "+
+                            "WHERE (bouts.bracketID = @bracketID);";
 
             connection.Open();
 
             SqlCommand command = new SqlCommand(sql, connection);
-            command.Parameters.AddWithValue("@eventID", eventID);
+            command.Parameters.AddWithValue("@bracketID", bracketID);
             SqlDataReader reader = command.ExecuteReader();
 
 
@@ -807,19 +1015,12 @@ public partial class team_tmStatbook : System.Web.UI.Page
             while (reader.Read())
             {
                 var mat = new match();
-                mat.weight = reader["weight"].ToString();
-                mat.hfName = reader["hfName"].ToString();
-                mat.hlName = reader["hlName"].ToString();
-                mat.hgrade = reader["hgrade"].ToString();
-                mat.hwinner = reader["hwinner"].ToString();
-                mat.hwinType = reader["hwinType"].ToString();
-                mat.hfallTime = reader["hfallTime"].ToString();
-                mat.afName = reader["afName"].ToString();
-                mat.alName = reader["alName"].ToString();
+                mat.afname = reader["afname"].ToString();
+                mat.alname = reader["alname"].ToString();
                 mat.agrade = reader["agrade"].ToString();
-                mat.awinner = reader["awinner"].ToString();
-                mat.awinType = reader["awinType"].ToString();
-                mat.afallTime = reader["afallTime"].ToString();
+                mat.hfname = reader["hfname"].ToString();
+                mat.hlname = reader["hlname"].ToString();
+                mat.hgrade = reader["hgrade"].ToString();
                 _matches.Add(mat);
             }
 
@@ -830,7 +1031,47 @@ public partial class team_tmStatbook : System.Web.UI.Page
             return _matches;
         }
     }
+    //<<<<<<<<< Get Team Seasons >>>>>>>>>
+    public class teamSeason
+    {
+        public string teamSeasonID { get; set; }
+        public string teamID { get; set; }
+        public string tms_name { get; set; }
+    }
 
+    //Event Divisions
+    [WebMethod]
+    public static teamSeason[] getTeamSeasons(int teamID)
+    {
+
+        string connectionString = ConfigurationManager.ConnectionStrings["statbookConnectionString"].ConnectionString;
+        using (SqlConnection connection = new SqlConnection(connectionString))
+        {
+            string sql = "SELECT teamSeasonID, tms_name FROM teamSeasons WHERE teamID = @teamID;";
+
+            connection.Open();
+
+            SqlCommand command = new SqlCommand(sql, connection);
+            command.Parameters.AddWithValue("@teamID", teamID);
+            SqlDataReader reader = command.ExecuteReader();
+
+            var _seasons = new List<teamSeason>();
+            while (reader.Read())
+            {
+                var div = new teamSeason();
+                div.tms_name = reader["tms_name"].ToString();
+                div.teamSeasonID = reader["teamSeasonID"].ToString();
+                _seasons.Add(div);
+            }
+
+
+            //Close connections
+            reader.Close();
+            connection.Close();
+
+            return _seasons.ToArray();
+        }
+    }
 
     //<<<<<<<<<< Get Schools >>>>>>>>>>
 

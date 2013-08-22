@@ -507,7 +507,7 @@ p, h1, h2, h3 {
     #evt_topContent h3 {
         padding: 12px 0px 2px 0px;
     }
-#evt_mainContent {
+.evt_mainContent {
     font-family: Arial, 'Liberation Sans', 'DejaVu Sans', sans-serif;
     width: 100%;
     margin: 2px 0px 26px 0px;
@@ -519,7 +519,7 @@ p, h1, h2, h3 {
     border-radius:6px;
 }
 
-    #evt_mainContent .listItem {
+    .evt_mainContent .listItem {
        margin: 0px 12px 0px 12px;
        padding:12px;
        float: left;
@@ -527,64 +527,269 @@ p, h1, h2, h3 {
        border-top: 1px solid #808080;
         border-bottom: 1px solid #808080;
     }
-        #evt_mainContent .listItem div {
+        .evt_mainContent .listItem div {
             float: left;
+
         }
-#evt_newContent {
+
+.matchTools {
+    width: 100%;
+    float: left;
+}
+    .matchTools .flip {
+        float: left;
+        width: 5%;
+    }
+    .matchTools .title {
+        border: 1px solid black;
+        width: 60%;
+        height: 50px;
+        float: left;
+        background-color: #fff;
+    }
+
+/*#evt_settings {
     float: left;
     background-color: #fff;
     width:100%;
     border:1px solid #808080;
     border-radius: 6px;
 }
-#evt_newContent .area {
+#evt_settings ul {
+       padding: 12px 0px 12px 0px;
+       
+    }
+#evt_settings li {
+     width:100%;
+     background-color: blue;
+     line-height:60px;
+     position: absolute;
+    }
+    #evt_settings li .lt{
+        width:30%;
+        
+        vertical-align: middle;
+    }
+    #evt_settings li .mid{
+        width:30%;
+        left:300px;
+        vertical-align: middle;
+    }
+    #evt_settings li .rt{
+        width:30%;
+        left:60%;
+        vertical-align: middle;
+    }
+    
+#evt_settings .area {
        margin: 0px 12px 0px 12px;
-       padding:12px;
-       float: left;
+       position:relative;
+       
        width:709px;
+       min-height: 60px;
        border-top: 1px solid #808080;
         border-bottom: 1px solid #808080;
         background-color: green;
     }
-    #evt_newContent .mi {
+    #evt_settings .title {
+        
+        
+        
+        width: 100px;
+        margin: 0px 12px 0px 12px;
+    }
+    #evt_settings .mi {
         width: 85%;
         float:left;
         padding-left: 15%;
         margin-top: 3px;
     }
-    #evt_newContent .ls {
+    #evt_settings .ls {
         width: 30%;
         float:left;
         padding-left: 20%;
     }
-    #evt_newContent .rs {
+    #evt_settings .rs {
         width: 50%;
         float:left;
     }
-    #evt_newContent .lt {
+    #evt_settings .lt {
+        float:left;
+    }*/
+
+/*<<<<EVENT SETTING>>>>>*/
+#evt_settings {
+    float: left;
+    background-color: #fff;
+    width:100%;
+    border:1px solid #808080;
+    border-radius: 6px;
+}
+#evt_settings p, input, label{
+    padding: 0; margin:0;
+}
+#evt_settings ul {
+       position: relative;
+	   padding: 12px 0px 12px 0px;
+       
+    }
+    #evt_settings ul li:first-of-type {
+        border-top: 2px solid #808080;
+    }
+#evt_settings ul li {
+     width:100%;
+     padding:3% 0% 3% 0%;
+     display: inline-block;
+     vertical-align: middle;
+     border-bottom: 1px solid #808080;
+     clear: both;
+    }
+    #evt_settings .area .areaTitle{
+        width:23%;
+	    float:left;
+        padding-left:2%;
+    }
+    #evt_settings .area .content{
+		width: 60%;
         float:left;
     }
-.input {
-    height:20px;
+    #evt_settings .area .editBu {
+        width: 15%;
+	    float:left;
+    }
+    #evt_settings .areaEdit {
+        background-color: #f2f2f2;
+        border-top:1px solid #808080;
+    }
+       #evt_settings .areaEdit .areaTitle{
+        width:23%;
+	    float:left;
+        padding-left:2%;
+        color: blue;
+    }
+    #evt_settings .areaEdit .content{
+		width: 60%;
+        float:left;
+        display:none;
+    }
+    #evt_settings .areaEdit .editBu {
+        width: 15%;
+	    float:left;
+        display:none;
+    }
+ 
+    #evt_settings .area .hide {
+        display:none;float:left;
+    }
+    #evt_settings .areaEdit .show {
+        float:left;
+        width: 50%;
+    }
+    #evt_settings .areaEdit .footer{
+        padding-top:8px;
+        clear: both;
+        float:left;
+        width: 100%;
+    }
+
+/*Event Settings - Location*/
+#evtVenue .addr {
+    height:24px; width: 96%;
     border: 1px solid #808080;
     border-radius: 3px;
+    padding:0% 2% 0% 2%;
 }
-.addr {
-    height:20px; width: 520px;
+#evtVenue .input {
+    height:24px; width: 170px;
     border: 1px solid #808080;
     border-radius: 3px;
+    padding:0px 4px 0px 4px;
 }
-.select {
-    height:24px;
+
+#evtVenue .select {
+    height:26px; width:123px;
     border: 1px solid #808080;
-    margin-right:3px;
     border-radius: 3px;
+    padding:0px 0px 0px 4px;
 }
-.dateTime {
+#evtVenue .zip {
+    height:24px; width: 67px;
+    border: 1px solid #808080;
+    border-radius: 3px;
+    padding:0px 4px 0px 4px;
+}
+#evtVenue .dateTime {
     height:20px; width: 100px;
     border: 1px solid #808080;
     border-radius: 3px;
 }
+
+/*Event Settings - Sessions*/
+#evt_set_sessions ul li {
+    padding: 0;
+    margin: 0;
+    border: none;
+}
+#evt_set_sessions .type {
+    height: 27px;
+    padding: 0% 2% 0% 2%;
+
+}
+#evt_set_sessions .date {
+    
+    height: 24px; width:60px;
+    padding: 0% 2% 0% 2%;
+    margin-right: 4px;
+}
+#evt_set_sessions .time {
+    width:60px;
+    height: 24px;
+    padding: 0% 2% 0% 2%;
+    margin-right: 4px;
+}
+#evt_set_sessions .title {
+    height: 24px; width:130px;
+    padding: 0% 2% 0% 2%;
+    margin-right: 4px;
+}
+#evt_set_sessions .delete {
+    height: 24px; width:12px;
+    padding: 0% 2% 0% 2%;
+}
+/*Event Settings - Divsions & Groups*/
+.evtDivision {
+    float: left;
+    clear:both;
+}
+.evtGroups {
+    float: left;
+    width: 100%;
+}
+.group{
+    float:left;
+    padding: 2px;
+    margin-right: 3px;
+    width: 50px;
+    border: 1px solid black;
+    border-radius:2px;
+}
+    .group .delete {
+        margin-left:4px;
+        float: right;
+    }
+    .grpAddTB {
+        float:left;
+        border: 1px solid black;
+        width: 50px; height: 23px;
+        border-radius:2px 0px 0px 2px;
+    }
+    .grpAddBu {
+        padding:2px;
+        border-radius:0px 2px 2px 0px;
+        float: left;
+        width: 14px; height: 20px;
+        border: 1px solid black;
+    }
 
 /*<<< TSB: Member Tab  >>>*/
 #memAthleteView {
@@ -779,6 +984,14 @@ p, h1, h2, h3 {
     float:left;
 }
 
+/*TSB: Archive Tab*/
+#tsb_arch_top {
+    float:left;
+    width: 100%;
+    clear: both;
+    border-bottom: 1px solid #808080;
+    margin: 5px 0px 12px 0px;
+}
 
 /*<<<<<<<<<< Utilites >>>>>>>>>>>>>*/
 

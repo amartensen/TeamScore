@@ -36,8 +36,8 @@
                         <script id="tsb_evt_listViewTmpl" type="text/x-jquery-tmpl">
                             <div class="evt_listItem">
                                 <span class="sect">${date}</span>
-                                <div class="sect"><h4>${eventName}<a href="${eventID}" /></h4>
-                                    ${city}, ${state}</div>
+                                <div class="sect"><h4>${evt_name}<a href="${eventID}" /></h4>
+                                    ${evt_city}, ${evt_state}</div>
                                 <div class="sect">${styleID}
                                     ${levelID}
                                 <span>${startTime}</span></div>
@@ -53,8 +53,8 @@
                             <article id="evt_topContent">
                                 <span id="evt_date"></span><br />
                                 <section>
-                                <h3>${eventName}</h3>
-                                <p>${address}, ${city}, ${state}</p>
+                                <h3>${evt_name}</h3>
+                                <p>${evt_addr}, ${evt_city}, ${evt_state}</p>
                                 
                                 <div id="evt_details">
                                 ${styleID}<br />
@@ -79,15 +79,438 @@
                                 </ul>
                             </article>
 
-                            <article id="evt_mainContent"></article>
+                            
+                                <div id="evt_matches_tmpl">
+                                    <div class="matchTools" >
+                                        <div class="flip"><</div>
+                                        <div class="title">
+                                            <select id="evt_brackets"></select></div>
+                                        <div class="flip">></div>
+                                        <select id="evt_division">
+
+                                        </select>
+                                    </div>
+                                    <article class="evt_mainContent">
+                                    <div id="match_content"></div>
+
+                                    </article>
+                                </div>
+                                <div id="evt_teams_tmpl">
+                                    <article class="evt_mainContent">
+                                        <div id="team_content"></div>
+                                    </article>
+                                </div>
+                                <div id="evt_athletes_tmpl">
+                                    <article class="evt_mainContent">
+                                        <div id="athlete_content"></div>
+                                    </article>
+                                </div>
+
+                            
                         </script>
 
-
+                        <script id="evt_matchTmpl" type="text/x-jquery-tmpl">
+                            <div class="listItem">
+                                <div class="sect">${eventGroupID}</div>
+                                <div class="sect">${hfname} ${hlname}${hgrade}</div><br />
+                                <div class="sect">${afname} ${alname} ${agrade}</div>
+                            </div>
+                        </script>
+                        
                     </div>
 
-                    <!--New Event -->
+                    <!--Event Settings -->
                     <script id="tsb_evt_settingsTmpl" type="text/x-jquery-tmpl">
-                        <article id="evt_newContent">
+                        <article id="evt_settings">
+                            <h3>General Event Settings</h3>
+                            <ul>
+                                <li id="evt_set_name" class="area">
+                                    <h4 class="areaTitle">Event Name</h4>
+                                    <div class="content">${evt_name}</div>
+                                    <div class="editBu">(Edit)</div>
+                                    <div class="hide">
+                                        <p>Give this event a name that athletes and fans can see. </p>
+                                        <label>Event Name:</label><input id="evtName_TB" type="text" value="${evt_name}" />
+                                        <hr />
+                                        <input id="saveNameBu" class="button" type="button" value="Save" /> or
+                                            <span class="cancel spanLink">Cancel</span>
+                                    </div>
+                                </li>
+
+                                <!--Event Settings - Location Section -->
+                                <li id="evt_set_loc" class="area">
+
+                                    <h4 class="areaTitle">Location</h4>
+                                    <p class="content">
+                                        ${evt_ven_name}, ${evt_addr} ${evt_city}, ${evt_state} ${evt_zip}
+                                            
+                                    </p>
+                                    <div class="editBu">(Edit)</div>
+                                    <div class="hide">
+                                        <div id="locSchool">
+
+                                            <div class="ls">
+                                                <label for="schoolName">School Name: </label>
+                                            </div>
+                                            <div class="rs">
+                                                <input id="schoolName" type="text"/>
+                                            </div>
+
+                                            <div class="ls">
+                                                <label for="selState">State:</label>
+                                            </div>
+                                            <div class="rs">
+                                                <select id="selState">
+                                                    <option />
+                                                    <option value="AL">Alabama</option>
+                                                    <option value="AK">Alaska</option>
+                                                    <option value="AS">American Samoa</option>
+                                                    <option value="AZ">Arizona</option>
+                                                    <option value="AR">Arkansas</option>
+                                                    <option value="AE">Armed Forces</option>
+                                                    <option value="AA">Armed Forces Americas</option>
+                                                    <option value="AP">Armed Forces Pacific</option>
+                                                    <option value="CA">California</option>
+                                                    <option value="CZ">Canal Zone</option>
+                                                    <option value="CO">Colorado</option>
+                                                    <option value="CT">Connecticut</option>
+                                                    <option value="DE">Delaware</option>
+                                                    <option value="DC">District Of Columbia</option>
+                                                    <option value="FM">Federated States of Micronesia</option>
+                                                    <option value="FL">Florida</option>
+                                                    <option value="GA">Georgia</option>
+                                                    <option value="GU">Guam</option>
+                                                    <option value="HI">Hawaii</option>
+                                                    <option value="ID">Idaho</option>
+                                                    <option value="IL">Illinois</option>
+                                                    <option value="IN">Indiana</option>
+                                                    <option value="IA">Iowa</option>
+                                                    <option value="KS">Kansas</option>
+                                                    <option value="KY">Kentucky</option>
+                                                    <option value="LA">Louisiana</option>
+                                                    <option value="ME">Maine</option>
+                                                    <option value="MH">Marshall Islands</option>
+                                                    <option value="MD">Maryland</option>
+                                                    <option value="MA">Massachusetts</option>
+                                                    <option value="MI">Michigan</option>
+                                                    <option value="MN">Minnesota</option>
+                                                    <option value="MS">Mississippi</option>
+                                                    <option value="MO">Missouri</option>
+                                                    <option value="MT">Montana</option>
+                                                    <option value="NE">Nebraska</option>
+                                                    <option value="NV">Nevada</option>
+                                                    <option value="NH">New Hampshire</option>
+                                                    <option value="NJ">New Jersey</option>
+                                                    <option value="NM">New Mexico</option>
+                                                    <option value="NY">New York</option>
+                                                    <option value="NC">North Carolina</option>
+                                                    <option value="ND">North Dakota</option>
+                                                    <option value="MP">Northern Mariana Islands</option>
+                                                    <option value="OH">Ohio</option>
+                                                    <option value="OK">Oklahoma</option>
+                                                    <option value="OR">Oregon</option>
+                                                    <option value="PW">Palau</option>
+                                                    <option value="PA">Pennsylvania</option>
+                                                    <option value="QC">Province of Quebec</option>
+                                                    <option value="PR">Puerto Rico</option>
+                                                    <option value="RI">Rhode Island</option>
+                                                    <option value="SC">South Carolina</option>
+                                                    <option value="SD">South Dakota</option>
+                                                    <option value="TN">Tennessee</option>
+                                                    <option value="TX">Texas</option>
+                                                    <option value="UT">Utah</option>
+                                                    <option value="VT">Vermont</option>
+                                                    <option value="VI">Virgin Islands</option>
+                                                    <option value="VA">Virginia</option>
+                                                    <option value="WA">Washington</option>
+                                                    <option value="WV">West Virginia</option>
+                                                    <option value="WI">Wisconsin</option>
+                                                    <option value="WY">Wyoming</option>
+
+                                                </select>
+                                            </div>
+                                            <div class="ls">
+                                                <input id="findSchool" type="button" value="Find It" />
+                                            </div>
+
+                                            <div id="pickSchool">
+                                                <div class="mi">
+                                                    <label for="selSchool">Please select a school from the drop-down below. </label>
+                                                </div>
+                                                <br />
+                                                <div class="ls">
+                                                    <select id="selSchool"></select>
+                                                </div>
+                                                <div class="rs">
+                                                    <input id="acceptSchool" type="button" value="Accept" />
+                                                </div>
+                                                <div id="schAddressCont"></div>
+
+                                            </div>
+                                        </div>
+                                        <div id="evtVenue">
+                                            <p>Enter the Venue name and address where this event will take place or <span id="schLookupBu" class="spanLink">Lookup a School?</span></p>
+
+                                            <div class="item">
+                                                <label for="venName">Venue Name:</label><br />
+                                                <input id="venName" class="addr" type="text" value="${evt_ven_name}" />
+                                            </div>
+
+                                            <div class="item">
+                                                <label for="venAddress">Address:</label><br />
+                                                <input id="venAddress" class="addr" type="text" value="${evt_addr}" />
+                                            </div>
+
+
+                                            <div>
+                                                <div class="floatLT">
+                                                    <label for="venCity">City:</label><br />
+                                                    <input id="venCity" class="input" type="text" value="${evt_city}" />
+                                                </div>
+                                                <div class="floatLT">
+                                                    <label for="venState">State:</label><br />
+                                                    <select id="venState" class="select">
+                                                        <option />
+                                                        <option value="AL">Alabama</option>
+                                                        <option value="AK">Alaska</option>
+                                                        <option value="AS">American Samoa</option>
+                                                        <option value="AZ">Arizona</option>
+                                                        <option value="AR">Arkansas</option>
+                                                        <option value="AE">Armed Forces</option>
+                                                        <option value="AA">Armed Forces Americas</option>
+                                                        <option value="AP">Armed Forces Pacific</option>
+                                                        <option value="CA">California</option>
+                                                        <option value="CZ">Canal Zone</option>
+                                                        <option value="CO">Colorado</option>
+                                                        <option value="CT">Connecticut</option>
+                                                        <option value="DE">Delaware</option>
+                                                        <option value="DC">District Of Columbia</option>
+                                                        <option value="FM">Federated States of Micronesia</option>
+                                                        <option value="FL">Florida</option>
+                                                        <option value="GA">Georgia</option>
+                                                        <option value="GU">Guam</option>
+                                                        <option value="HI">Hawaii</option>
+                                                        <option value="ID">Idaho</option>
+                                                        <option value="IL">Illinois</option>
+                                                        <option value="IN">Indiana</option>
+                                                        <option value="IA">Iowa</option>
+                                                        <option value="KS">Kansas</option>
+                                                        <option value="KY">Kentucky</option>
+                                                        <option value="LA">Louisiana</option>
+                                                        <option value="ME">Maine</option>
+                                                        <option value="MH">Marshall Islands</option>
+                                                        <option value="MD">Maryland</option>
+                                                        <option value="MA">Massachusetts</option>
+                                                        <option value="MI">Michigan</option>
+                                                        <option value="MN">Minnesota</option>
+                                                        <option value="MS">Mississippi</option>
+                                                        <option value="MO">Missouri</option>
+                                                        <option value="MT">Montana</option>
+                                                        <option value="NE">Nebraska</option>
+                                                        <option value="NV">Nevada</option>
+                                                        <option value="NH">New Hampshire</option>
+                                                        <option value="NJ">New Jersey</option>
+                                                        <option value="NM">New Mexico</option>
+                                                        <option value="NY">New York</option>
+                                                        <option value="NC">North Carolina</option>
+                                                        <option value="ND">North Dakota</option>
+                                                        <option value="MP">Northern Mariana Islands</option>
+                                                        <option value="OH">Ohio</option>
+                                                        <option value="OK">Oklahoma</option>
+                                                        <option value="OR">Oregon</option>
+                                                        <option value="PW">Palau</option>
+                                                        <option value="PA">Pennsylvania</option>
+                                                        <option value="QC">Province of Quebec</option>
+                                                        <option value="PR">Puerto Rico</option>
+                                                        <option value="RI">Rhode Island</option>
+                                                        <option value="SC">South Carolina</option>
+                                                        <option value="SD">South Dakota</option>
+                                                        <option value="TN">Tennessee</option>
+                                                        <option value="TX">Texas</option>
+                                                        <option value="UT">Utah</option>
+                                                        <option value="VT">Vermont</option>
+                                                        <option value="VI">Virgin Islands</option>
+                                                        <option value="VA">Virginia</option>
+                                                        <option value="WA">Washington</option>
+                                                        <option value="WV">West Virginia</option>
+                                                        <option value="WI">Wisconsin</option>
+                                                        <option value="WY">Wyoming</option>
+
+                                                    </select>
+                                                </div>
+                                                <div class="floatLT">
+                                                    <label for="venZip">Zip:</label><br />
+                                                    <input id="venZip" class="zip" type="text" value="${evt_zip}" />
+                                                </div>
+                                            </div>
+
+                                            <div class="footer">
+                                                <hr />
+                                                <input id="saveVenueBu" class="button" type="button" value="Save" /> or
+                                            <span class="cancel spanLink">Cancel</span>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <!--Event Settings - Date and Time Section -->
+                                <li id="evt_set_sessions" class="area">
+                                    <h4 class="areaTitle">Sessions</h4>
+                                    <div class="content"></div>
+                                    <div class="editBu">(Edit)</div>
+                                    <div class="hide">
+                                        <p>Sessions are used to indicate significant time points throughout the event.</p>
+                                        <label>Type:</label><label>Date:</label><label>Time:</label><label>Title:</label><br />
+                                        <ul id="evtSessions">
+
+                                        </ul>
+                                        <span id="addSession" class="spanLink">Add Session?</span>
+                                        <div id="newSession">
+                                            
+                                            <div class="floatLT">
+                                                <select id="sessType" class="type">
+                                                    <option>Session</option>
+                                                    <option>Weigh-In</option>
+                                                </select>
+
+                                            </div>
+                                            <div class="floatLT">
+
+                                                <input id="sessDate" class="date" type="text" />
+                                            </div>
+                                            <div class="floatLT">
+                                                <input id="sessTime" class="time" type="text" />
+                                            </div>
+                                            <div class="floatLT">
+                                                <input id="sessTitle" class="title" type="text" />
+                                            </div>
+                                            <div class="floatLT">
+                                                <span id="sessDelete" class="delete">X</span>
+
+                                            </div>
+
+                                        </div>
+
+
+
+                                        <div class="footer">
+                                            <hr />
+                                            <input id="saveSessionBu" class="button" type="button" value="Save" />
+                                            or
+                                            <span class="cancel spanLink">Cancel</span>
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li id="evt_set_division" class="area">
+                                    <h4 class="areaTitle">Divisions & Weights</h4>
+                                    <div class="content"></div>
+                                    <div class="editBu">(Edit)</div>
+                                    <div class="hide">
+                                        <p><span id="customGroups" class="spanLink">Use Custom Divisions & Weights?</span></p><br />
+                                        <div id="evt_league" class="lt">
+                                                                                        
+                                        </div>
+                                        <div id="evt_daw_container" class="floatLT">
+                                            
+                                        </div>
+                                        
+
+                                        <div class="footer">
+                                            <hr />
+                                            <input id="Button1" class="button" type="button" value="Save" /> or
+                                            <span class="cancel spanLink">Cancel</span>
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li id="evt_set_clevel" class="area">
+                                    <h4 class="areaTitle">Competition Level</h4>
+
+                                    <div class="content">${levelID}</div>
+                                    <div class="editBu">(Edit)</div>
+                                    <div class="hide">
+                                        <label for="selCompLvl">Competition Level:</label>
+                                        <select id="selCompLvl">
+                                            <option>Select One</option>
+                                            <option value="hs">High School</option>
+                                            <option value="col">College</option>
+                                            <option value="open">Youth/Open</option>
+                                        </select>
+
+                                    
+                                    <div class="item">
+                                        <hr />
+                                        <input id="Button3" class="button" type="button" value="Save" /> or
+                                            <span class="cancel spanLink">Cancel</span>
+                                    </div>
+
+                                    </div>
+                                </li>
+                                <li id="evt_set_style" class="area">
+                                    <h4 class="areaTitle">Wrestling Style</h4>
+
+                                    <div class="content">${styleID}</div>
+                                    <div class="editBu">(Edit)</div>
+                                    <div class="hide">
+                                        <label for="selStyle">Wrestling Style:</label>
+                                        <select id="selStyle">
+                                            <option>Select One</option>
+                                            <option value="folk">Folstyle</option>
+                                            <option value="free">Freestyle</option>
+                                            <option value="greco">Greco</option>
+                                        </select>
+                                    
+                                    <div class="footer">
+                                        <hr />
+                                        <input id="Button4" class="button" type="button" value="Save" /> or
+                                            <span class="cancel spanLink">Cancel</span>
+                                    </div>
+
+                                    </div>
+                                </li>
+                                <li id="evt_set_type" class="area">
+                                    <h4 class="areaTitle">Event Type</h4>
+
+                                    <div class="content">${evt_type}</div>
+                                    <div class="editBu">(Edit)</div>
+                                    <div class="hide">
+                                        <label for="selType">Event Type:</label>
+                                        <select id="selType">
+                                            <option>Select One</option>
+                                            <option>Individual Tournament</option>
+                                            <option>Dual Meet</option>
+                                            <option>Dual Tournament</option>
+                                        </select>
+                                        <input id="BackStep1" type="button" value="Back" />
+                                        <input id="ToStep3" type="button" value="Continue" />
+                                    
+                                    <div class="footer">
+                                        <hr />
+                                        <input id="Button5" class="button" type="button" value="Save" /> or
+                                            <span class="cancel spanLink">Cancel</span>
+                                    </div></div>
+                                </li>
+
+                            </ul>
+                            <div id="newEvtStep3">
+                                <input id="BackStep2" type="button" value="Back" />
+                                <input id="addEvent" type="button" value="Create Event" />
+                            </div>
+                        </article>
+                    </script>
+                    <script id="Script1" type="text/x-jquery-tmpl">
+                        <p>
+                            Event Location:
+                    ${venName}<br />
+                            ${venAddr}<br />
+                            ${venCity}, ${venState} ${venZip}
+                        </p>
+                    </script>
+        
+                    <%--<script id="tsb_evt_settingsTmpl" type="text/x-jquery-tmpl">
+                        <article id="evt_settings">
                             <div class="floatLT"><h4>New Event</h4>
 
                             </div>
@@ -101,108 +524,137 @@
                                 
                                 <br />
                                 <div class="area">
-                                    <h4>Location</h4>
                                     
-                                <div id="locSchool">
-                                    
-                                    <br />
-                                    <div class="ls"><label for="schoolName">School Name: </label></div>  
-                                    <div class="rs"><input id="schoolName" type="text" /></div>
-                                          
-                                    <div class="ls"><label for="selState">State:</label></div>
-                                    <div class="rs"><select id="selState">
-                                                    <option />
-                                                    <option value="AL">Alabama</option>
-                                                    <option value="AK">Alaska</option>
-                                                    <option value="AS">American Samoa</option>
-                                                    <option value="AZ">Arizona</option>
-                                                    <option value="AR">Arkansas</option>
-                                                    <option value="AE">Armed Forces</option>
-                                                    <option value="AA">Armed Forces Americas</option>
-                                                    <option value="AP">Armed Forces Pacific</option>
-                                                    <option value="CA">California</option>
-                                                    <option value="CZ">Canal Zone</option>
-                                                    <option value="CO">Colorado</option>
-                                                    <option value="CT">Connecticut</option>
-                                                    <option value="DE">Delaware</option>
-                                                    <option value="DC">District Of Columbia</option>
-                                                    <option value="FM">Federated States of Micronesia</option>
-                                                    <option value="FL">Florida</option>
-                                                    <option value="GA">Georgia</option>
-                                                    <option value="GU">Guam</option>
-                                                    <option value="HI">Hawaii</option>
-                                                    <option value="ID">Idaho</option>
-                                                    <option value="IL">Illinois</option>
-                                                    <option value="IN">Indiana</option>
-                                                    <option value="IA">Iowa</option>
-                                                    <option value="KS">Kansas</option>
-                                                    <option value="KY">Kentucky</option>
-                                                    <option value="LA">Louisiana</option>
-                                                    <option value="ME">Maine</option>
-                                                    <option value="MH">Marshall Islands</option>
-                                                    <option value="MD">Maryland</option>
-                                                    <option value="MA">Massachusetts</option>
-                                                    <option value="MI">Michigan</option>
-                                                    <option value="MN">Minnesota</option>
-                                                    <option value="MS">Mississippi</option>
-                                                    <option value="MO">Missouri</option>
-                                                    <option value="MT">Montana</option>
-                                                    <option value="NE">Nebraska</option>
-                                                    <option value="NV">Nevada</option>
-                                                    <option value="NH">New Hampshire</option>
-                                                    <option value="NJ">New Jersey</option>
-                                                    <option value="NM">New Mexico</option>
-                                                    <option value="NY">New York</option>
-                                                    <option value="NC">North Carolina</option>
-                                                    <option value="ND">North Dakota</option>
-                                                    <option value="MP">Northern Mariana Islands</option>
-                                                    <option value="OH">Ohio</option>
-                                                    <option value="OK">Oklahoma</option>
-                                                    <option value="OR">Oregon</option>
-                                                    <option value="PW">Palau</option>
-                                                    <option value="PA">Pennsylvania</option>
-                                                    <option value="QC">Province of Quebec</option>
-                                                    <option value="PR">Puerto Rico</option>
-                                                    <option value="RI">Rhode Island</option>
-                                                    <option value="SC">South Carolina</option>
-                                                    <option value="SD">South Dakota</option>
-                                                    <option value="TN">Tennessee</option>
-                                                    <option value="TX">Texas</option>
-                                                    <option value="UT">Utah</option>
-                                                    <option value="VT">Vermont</option>
-                                                    <option value="VI">Virgin Islands</option>
-                                                    <option value="VA">Virginia</option>
-                                                    <option value="WA">Washington</option>
-                                                    <option value="WV">West Virginia</option>
-                                                    <option value="WI">Wisconsin</option>
-                                                    <option value="WY">Wyoming</option>
+                                    <div id="evt_loc_rest">
+                                        <h4>Location</h4>
+                                        <p>
+                                            ${evt_ven_name}<br />
+                                            ${evt_addr}<br />
+                                            ${evt_city}, ${evt_state} ${evt_zip}
 
-                                                </select></div>
-                                    <div class="ls"><input id="findSchool" type="button" value="Find It" /></div>
-                                            
-                                                
-                                            
-
-                                    <div id="pickSchool">
-                                        <div class="mi"><label  for="selSchool">Please select a school from the drop-down below. </label></div>
-                                        <br />
-                                        <div class="ls"><select id="selSchool" ></select></div>
-                                        <div class="rs"><input id="acceptSchool" type="button" value="Accept" /></div>
-                                        <div id="schAddressCont"></div>
+                                        </p>
 
                                     </div>
-                                </div>
+
+                                    <div id="locSchool">
+
+                                        <br />
+                                        <div class="ls">
+                                            <label for="schoolName">School Name: </label>
+                                        </div>
+                                        <div class="rs">
+                                            <input id="schoolName" type="text" /></div>
+
+                                        <div class="ls">
+                                            <label for="selState">State:</label></div>
+                                        <div class="rs">
+                                            <select id="selState">
+                                                <option />
+                                                <option value="AL">Alabama</option>
+                                                <option value="AK">Alaska</option>
+                                                <option value="AS">American Samoa</option>
+                                                <option value="AZ">Arizona</option>
+                                                <option value="AR">Arkansas</option>
+                                                <option value="AE">Armed Forces</option>
+                                                <option value="AA">Armed Forces Americas</option>
+                                                <option value="AP">Armed Forces Pacific</option>
+                                                <option value="CA">California</option>
+                                                <option value="CZ">Canal Zone</option>
+                                                <option value="CO">Colorado</option>
+                                                <option value="CT">Connecticut</option>
+                                                <option value="DE">Delaware</option>
+                                                <option value="DC">District Of Columbia</option>
+                                                <option value="FM">Federated States of Micronesia</option>
+                                                <option value="FL">Florida</option>
+                                                <option value="GA">Georgia</option>
+                                                <option value="GU">Guam</option>
+                                                <option value="HI">Hawaii</option>
+                                                <option value="ID">Idaho</option>
+                                                <option value="IL">Illinois</option>
+                                                <option value="IN">Indiana</option>
+                                                <option value="IA">Iowa</option>
+                                                <option value="KS">Kansas</option>
+                                                <option value="KY">Kentucky</option>
+                                                <option value="LA">Louisiana</option>
+                                                <option value="ME">Maine</option>
+                                                <option value="MH">Marshall Islands</option>
+                                                <option value="MD">Maryland</option>
+                                                <option value="MA">Massachusetts</option>
+                                                <option value="MI">Michigan</option>
+                                                <option value="MN">Minnesota</option>
+                                                <option value="MS">Mississippi</option>
+                                                <option value="MO">Missouri</option>
+                                                <option value="MT">Montana</option>
+                                                <option value="NE">Nebraska</option>
+                                                <option value="NV">Nevada</option>
+                                                <option value="NH">New Hampshire</option>
+                                                <option value="NJ">New Jersey</option>
+                                                <option value="NM">New Mexico</option>
+                                                <option value="NY">New York</option>
+                                                <option value="NC">North Carolina</option>
+                                                <option value="ND">North Dakota</option>
+                                                <option value="MP">Northern Mariana Islands</option>
+                                                <option value="OH">Ohio</option>
+                                                <option value="OK">Oklahoma</option>
+                                                <option value="OR">Oregon</option>
+                                                <option value="PW">Palau</option>
+                                                <option value="PA">Pennsylvania</option>
+                                                <option value="QC">Province of Quebec</option>
+                                                <option value="PR">Puerto Rico</option>
+                                                <option value="RI">Rhode Island</option>
+                                                <option value="SC">South Carolina</option>
+                                                <option value="SD">South Dakota</option>
+                                                <option value="TN">Tennessee</option>
+                                                <option value="TX">Texas</option>
+                                                <option value="UT">Utah</option>
+                                                <option value="VT">Vermont</option>
+                                                <option value="VI">Virgin Islands</option>
+                                                <option value="VA">Virginia</option>
+                                                <option value="WA">Washington</option>
+                                                <option value="WV">West Virginia</option>
+                                                <option value="WI">Wisconsin</option>
+                                                <option value="WY">Wyoming</option>
+
+                                            </select>
+                                        </div>
+                                        <div class="ls">
+                                            <input id="findSchool" type="button" value="Find It" /></div>
+
+
+
+
+                                        <div id="pickSchool">
+                                            <div class="mi">
+                                                <label for="selSchool">Please select a school from the drop-down below. </label>
+                                            </div>
+                                            <br />
+                                            <div class="ls">
+                                                <select id="selSchool"></select></div>
+                                            <div class="rs">
+                                                <input id="acceptSchool" type="button" value="Accept" /></div>
+                                            <div id="schAddressCont"></div>
+
+                                        </div>
+                                    </div>
                                     <div id="evtVenue">
                                         <div id="schLookupBu">Lookup a School?</div>
                                         <br />
-                                            <div class="mi"><label  for="venName">Venue Name:</label><br /><input id="venName" class="addr" type="text" /></div>
-                                            
-                                                <div class="mi"><label for="venAddress">Address:</label><br /><input id="venAddress" class="addr" type="text" /></div>
-                                                
-                                            
-                                                <div class="mi">
-                                                    <div class="lt"><label for="venCity">City:</label><br /><input id="venCity" class="input" type="text" /></div>
-                                                    <div class="lt"><label for="venState">State:</label><br /><select id="venState" class="select" >
+                                        <div class="mi">
+                                            <label for="venName">Venue Name:</label><br />
+                                            <input id="venName" class="addr" type="text" /></div>
+
+                                        <div class="mi">
+                                            <label for="venAddress">Address:</label><br />
+                                            <input id="venAddress" class="addr" type="text" /></div>
+
+
+                                        <div class="mi">
+                                            <div class="lt">
+                                                <label for="venCity">City:</label><br />
+                                                <input id="venCity" class="input" type="text" /></div>
+                                            <div class="lt">
+                                                <label for="venState">State:</label><br />
+                                                <select id="venState" class="select">
                                                     <option />
                                                     <option value="AL">Alabama</option>
                                                     <option value="AK">Alaska</option>
@@ -269,11 +721,16 @@
                                                     <option value="WI">Wisconsin</option>
                                                     <option value="WY">Wyoming</option>
 
-                                                </select></div>
-                                                    <div class="lt"><label for="venZip">Zip:</label><br /><input id="venZip" class="input" type="text" /></div>
-                                                </div>
-                                            
+                                                </select>
+                                            </div>
+                                            <div class="lt">
+                                                <label for="venZip">Zip:</label><br />
+                                                <input id="venZip" class="input" type="text" /></div>
+                                        </div>
+
                                     </div>
+                                    <input id="venueSaveBu" class="button" type="button" value="Save" />or
+                                    <span id="cancel" class="spanLink">Cancel</span>
                                 </div>
                                 <br />
                                 <h4>Date and Time</h4>
@@ -344,9 +801,7 @@
                             ${venAddr}<br />
                             ${venCity}, ${venState} ${venZip}
                         </p>
-                    </script>
-        
-                        
+                    </script>--%>    
 
                     <!--<<< MEMBER TAB >>> -->
                     <div id="tab-3" class="center">
@@ -374,7 +829,6 @@
                                     <a href="${tmMemberID}"></a>
                                     <img src="" alt="" /><h4>${fName} ${lName}</h4>
                                     <br />
-                                    ' + linked + "
                                 </div>
                             </div>
                         </script>
@@ -456,7 +910,13 @@
 
                     <!--<<< ARCHIVES TAB >>>-->
                     <div id="tab-4" class="center">
+                        hi
+                        <article id="tsb_arch_top">
+                            <select id="arch_season">
 
+                            </select>
+                        </article>
+                        
                     </div>
                 
                 </div> <!--tabs - ending tag-->
@@ -758,14 +1218,14 @@
             });
 
             var tmMemberID = ""
-            var teamID = "{'teamID':'" + localStorage.team_id + "'}"
+            var teamID = localStorage.team_id
 
 
             // Load team
             $.ajax({
                 type: "POST",
                 url: "tmStatbook.aspx/getTeam",
-                data: teamID,
+                data: "{'teamID':'" + localStorage.team_id + "'}",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (data) {
@@ -792,6 +1252,7 @@
                 } else if (currentTab == "#tab-3") {
                     getAthletes()
                 } else if (currentTab == "#tab-4") {
+                    getSeasons()
                 }
                 $('#tabs div').hide();
                 $(currentTab).show();
@@ -835,7 +1296,7 @@
                 $.ajax({
                     type: "POST",
                     url: "tmStatbook.aspx/getTeamAthletes",
-                    data: teamID,
+                    data: "{'teamID':'" + teamID + "'}",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     success: function (data) {
@@ -870,7 +1331,7 @@
                                 tmMemberID = $(this).find('a').attr('href');
 
                                 //ORIGINAL
-                                var teamMember = "{'tmMemberID':'" + tmMemberID + "', 'teamID':'" + localStorage.team_id + "'}"
+                                var teamMember = "{'tmMemberID':'" + tmMemberID + "', 'teamID':'" + teamID + "'}"
                                 $.ajax({
                                     type: "POST",
                                     url: "tmStatbook.aspx/getTeamMember",
@@ -934,7 +1395,7 @@
                 $.ajax({
                     type: "POST",
                     url: "tmStatbook.aspx/getTeamMembers",
-                    data: teamID,
+                    data: "{'teamID':'" + teamID + "'}",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     success: function (data) {
@@ -1006,7 +1467,7 @@
 
                 } else {
                     tmMemberID = _tmbid
-                    var teamMember = "{'tmMemberID':'" + tmMemberID + "', 'teamID':'" + localStorage.team_id + "'}"
+                    var teamMember = "{'tmMemberID':'" + tmMemberID + "', 'teamID':'" + teamID + "'}"
                     $.ajax({
                         type: "POST",
                         url: "tmStatbook.aspx/getTeamMember",
@@ -1063,7 +1524,7 @@
                             $.ajax({
                                 type: "POST",
                                 url: "tmStatbook.aspx/newTeamMember",
-                                data: "{'teamID':'" + localStorage.team_id + "', 'tmm_fName':'" + name[0] + "', 'tmm_lName':'" + name[1] + "'}",
+                                data: "{'teamID':'" + teamID + "', 'tmm_fName':'" + name[0] + "', 'tmm_lName':'" + name[1] + "'}",
                                 contentType: "application/json; charset=utf-8",
                                 dataType: "json",
                                 success: function (data) {
@@ -1145,7 +1606,7 @@
                                         ' </div>');
                         memLinkFunct()
                     } else {
-                        var teamMember = "{'tmMemberID':'" + tmMemberID + "', 'teamID':'" + localStorage.team_id + "'}"
+                        var teamMember = "{'tmMemberID':'" + tmMemberID + "', 'teamID':'" + teamID + "'}"
                         $.ajax({
                             type: "POST",
                             url: "tmStatbook.aspx/getTMConnection",
@@ -1316,20 +1777,20 @@
                 getEventSettings('new')
                 );
 
-            function getTeamEvents() { 
+            function getTeamEvents() {
                 $.ajax({
                     type: "POST",
                     url: "tmStatbook.aspx/getTeamEvents",
-                    data: teamID,
+                    data: "{'teamID':'" + teamID + "'}",
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     success: function (data, status) {
                         //alert(data.d);
                         evt_container.empty();
                         $("#tsb_evt_listViewTmpl").tmpl(data.d).appendTo(evt_container);
-                
+
                         //Get the selected event
-                        
+
                         var div = evt_container.find('.evt_listItem');
                         div.bind('mouseover', function (event) {
                             div.removeClass('row-highlight');
@@ -1342,350 +1803,668 @@
                             evt_container.empty();
                             //alert(eventID);
                             loadEventDetails(eventID)
-                            
+
                         });
 
-                        
+
                     }
                 });
 
-                
+                var match_tmpl = ""
+                var team_tmpl = ""
+                var athlete_tmpl = ""
+            }
 
-                function loadEventDetails(_eventid) {
-                    
-                    //Load the event details tells for the selected event
-                    var EventDetails = "{'eventID':'" + _eventid + "'}"
+                //Load all events for the Event Detail page
+            function loadEventDetails(_eventid) {
+
+                //Load the event details
+                $.ajax({
+                    type: "POST",
+                    url: "tmStatbook.aspx/getEventDetails",
+                    data: "{'eventID':'" + _eventid + "'}",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (data) {
+                        $("#tsb_evt_detailTmpl").tmpl(data.d).appendTo(evt_container);
+
+                        //Set tmpl variables
+                        match_tmpl = $('#evt_matches_tmpl')
+                        team_tmpl = $('#evt_teams_tmpl')
+                        team_tmpl.hide();
+                        athlete_tmpl = $('#evt_athletes_tmpl')
+                        athlete_tmpl.hide();
+
+
+                        $(data.d).each(function (i, mem) {
+                            $('#venState').val(mem.evt_state).attr('selected', 'selected')
+                        });
+
+
+                        
+
+                        //Event Content Nav 
+                        $('#evt_backBu').click(function () {
+                            evt_container.empty();
+                            getTeamEvents();
+                        });
+
+
+                        $(data.d).each(function (i, item) {
+                            $('#evt_date').text(Date.parse(item.startDate).toString("dddd, MMMM dd, yyyy"))
+                            $('#evt_stTime').text(Date.parse(item.startTime).toString("h:mm"))
+                        });
+
+                        //Initial State of Event Content Nav
+                        setupMatchTab(eventID);
+
+                        //Event Details SubNav Tab
+                        $('#evt_contentNav ul li').click(function () {
+                            var activeEvtNav = $(this).find('a').attr('href');
+
+                            if (activeEvtNav == "#evt_teams") {
+                                getEventTeams(eventID);
+                            } else if (activeEvtNav == "#evt_athletes") {
+                                getEventAthletes(eventID);
+                            } else if (activeEvtNav == "#evt_matches") {
+                                setupMatchTab(eventID)
+
+                            }
+
+                        });
+
+                        //Event Settings Button Click
+                        $('#evt_settingsBu').click(function () {
+                            evt_container.empty();
+
+                            $("#tsb_evt_settingsTmpl").tmpl(data.d).appendTo(evt_container);
+                            getEventSettings(_eventid)
+
+                            //Edit button of an event settings sections
+                            $('#evt_settings li .editBu').click(function () {
+                                var all_li = $('#evt_settings li')
+                                var li_area = $(this).parents('li')
+                                if (all_li.hasClass("areaEdit")) {
+
+                                    $('#evt_settings').find('li.areaEdit').attr('class', 'area');
+                                    $('.show', all_li.hasClass('areaEdit')).attr('class', 'hide');
+                                }
+                                $('.hide', li_area).attr('class', 'show');
+                                li_area.attr('class', 'areaEdit');
+
+                                li_area.find('.cancel').click(function () {
+                                    $('.show', li_area).attr('class', 'hide');
+                                    li_area.attr('class', 'area');
+
+                                });
+
+                                //Setting - Edit Section - Save Buttons
+                                $('#saveNameBu').click(function () {
+                                    $.ajax({
+                                        type: "POST",
+                                        url: "tmStatbook.aspx/saveEventName",
+                                        data: "{'eventID':'" + _eventid + "', 'evt_name':'" + $('#evtName_TB').val() + "'}",
+                                        contentType: "application/json; charset=utf-8",
+                                        dataType: "json",
+                                        success: function (data) {
+                                            $('.content', li_area).html($('#evtName_TB').val());
+                                            $('.show', li_area).attr('class', 'hide');
+                                            li_area.attr('class', 'area');
+                                        }
+                                    });
+                                });
+                                $('#saveVenueBu').click(function () {
+                                    $.ajax({
+                                        type: "POST",
+                                        url: "tmStatbook.aspx/saveEventVenue",
+                                        data: "{'eventID':'" + _eventid + "', 'evt_ven_name':'" + $('#venName').val() + "', 'evt_addr':'" + $('#venAddress').val() + "', " +
+                                        "'evt_city':'" + $('#venCity').val() + "', 'evt_state':'" + $('#venState option:selected').val() + "', 'evt_zip':'" + $('#venZip').val() + "'}",
+                                        contentType: "application/json; charset=utf-8",
+                                        dataType: "json",
+                                        success: function (data) {
+                                            $('.content', li_area).html($('#venName').val(), $('#venAddress').val(), $('#venCity').val(), $('#venState option:selected').val(), $('#venZip').val());
+                                            $('.show', li_area).attr('class', 'hide');
+                                            li_area.attr('class', 'area');
+                                        }
+                                    });
+                                });
+                                
+
+                            });
+
+
+
+                        }); //settingsBU click - end tag
+                    }
+                });
+
+                //Event Details - Event Match tab               
+                function setupMatchTab(_eventID) {
+
+                    //load the divisions of an event
                     $.ajax({
                         type: "POST",
-                        url: "tmStatbook.aspx/getEventDetails",
-                        data: EventDetails,
+                        url: "tmStatbook.aspx/getEventDivisions",
+                        data: "{'eventID':'" + eventID + "'}",
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (data, status) {
+                            $(data.d).each(function (i, item) {
+                                $('#evt_division').append(
+
+                                    $('<option/>', {
+                                        value: item.eventDivisionID,
+                                        text: item.evtd_name
+                                    })
+                                    );
+
+                            });
+
+                            //load the brackets of a division
+                            getEventBrackets(_eventid)
+                            function getEventBrackets(eventid) {
+                                evt_brackets = $('#evt_brackets')
+                                evt_brackets.empty();
+                                $.ajax({
+                                    type: "POST",
+                                    url: "tmStatbook.aspx/getEventBrackets",
+                                    data: "{'eventID':'" + eventid + "', 'divisionID':'" + $('#evt_division').val() + "'}",
+                                    contentType: "application/json; charset=utf-8",
+                                    dataType: "json",
+                                    success: function (data, status) {
+                                        $(data.d).each(function (i, item) {
+                                            evt_brackets.append(
+                                                $('<option/>', {
+                                                    value: item.bracketID,
+                                                    text: item.bracketName
+                                                })
+                                            );
+                                        });
+                                        getEventMatches()
+
+                                    }
+                                })
+
+                            }
+
+                            //load the matches of a bracket
+                            function getEventMatches() {
+
+                                team_tmpl.hide()
+                                athlete_tmpl.hide()
+                                match_tmpl.show()
+
+                                //Load all matches for the selected event
+                                $.ajax({
+                                    type: "POST",
+                                    url: "tmStatbook.aspx/getEventMatches",
+                                    data: "{'bracketID':'" + evt_brackets.val() + "'}",
+                                    contentType: "application/json; charset=utf-8",
+                                    dataType: "json",
+                                    success: function (data, status) {
+                                        var match_content = $('#match_content')
+                                        match_content.empty()
+                                        $("#evt_matchTmpl").tmpl(data.d).appendTo(match_content);
+                                        $(data.d).each(function (i, item) {
+                                            //evt_mainContent.append(
+
+                                            //        '<div class="listItem">'+
+                                            //            '<div class="sect">'+ item.weight+'</div><div class="sect">'+ item.hfName+' '+ item.hlName+', '+ item.hgrade+'<br />'+ item.afName+' '+ item.alName+', '+ item.agrade+'</div>'+
+                                            //                                                    '<div class="sect">'+ item.hwinner+' '+ item.hwinType+' '+ item.hfallTime+'<br />'+ item.awinner+ ' '+ item.awinType+' '+ item.afallTime+'</div>'+
+                                            //        '</div>')
+                                        });
+                                    }
+                                });
+                            }
+
+                            $('#evt_division').change(function () { getEventBrackets(_eventid) });
+                            evt_brackets.change(function () { getEventMatches() });
+   
+                        }
+                    })
+                }
+
+                //Event Details - Event Teams tab 
+                function getEventTeams(eventID) {
+
+                    athlete_tmpl.hide()
+                    match_tmpl.hide()
+                    team_tmpl.show()
+
+                    //Load all the Teams participating in the selected event
+                    $.ajax({
+                        type: "POST",
+                        url: "tmStatbook.aspx/getEventTeams",
+                        data: "{'eventID':'" + eventID + "'}",
                         contentType: "application/json; charset=utf-8",
                         dataType: "json",
                         success: function (data) {
-                            $("#tsb_evt_detailTmpl").tmpl(data.d).appendTo(evt_container);
-
-                            //Event Content Nav 
-                            $('#evt_backBu').click(function () {
-                                evt_container.empty();
-                                getTeamEvents();
-                            });
-                            $('#evt_settingsBu').click(function () {
-                                getEventSettings(_eventid)
-                            });
-
-
                             $(data.d).each(function (i, item) {
-                                $('#evt_date').text(Date.parse(item.startDate).toString("dddd, MMMM dd, yyyy"))
-                                $('#evt_stTime').text(Date.parse(item.startTime).toString("h:mm"))
-                            });
 
-                            $('#evt_contentNav ul li').click(function () {
-                                var activeEvtNav = $(this).find('a').attr('href');
-
-                                if (activeEvtNav == "#evt_matches") {
-                                    getEventMatches(eventID);
-                                } else if (activeEvtNav == "#evt_teams") {
-                                    getEventTeams(eventID);
-                                } else if (activeEvtNav == "#evt_athletes") {
-                                    getEventAthletes(eventID);
-                                }
-
-                            });
-                        }
-                    });
-
-                    
-                    function getEventMatches(eventID) {
-                        //Load all matches for the selected event
-                        $.ajax({
-                            type: "POST",
-                            url: "tmStatbook.aspx/getEventMatches",
-                            data: "{'eventID':'" + eventID + "'}",
-                            contentType: "application/json; charset=utf-8",
-                            dataType: "json",
-                            success: function (data, status) {
-                                var evt_mainContent = $('#evt_mainContent')
-                                evt_mainContent.empty()
+                                var team_content = $('#team_content')
+                                team_content.empty()
                                 $(data.d).each(function (i, item) {
-                                evt_mainContent.append(
-                                    
-                                        '<div class="listItem">'+
-                                            '<div class="sect">'+ item.weight+'</div><div class="sect">'+ item.hfName+' '+ item.hlName+', '+ item.hgrade+'<br />'+ item.afName+' '+ item.alName+', '+ item.agrade+'</div>'+
-                                                                                    '<div class="sect">'+ item.hwinner+' '+ item.hwinType+' '+ item.hfallTime+'<br />'+ item.awinner+ ' '+ item.awinType+' '+ item.afallTime+'</div>'+
-                                        '</div>')
-                                    });
-                            }
-                        });
-                    }
-
-                    function getEventTeams(eventID) {
-                        //Load all the Teams participating in the selected event
-                        $.ajax({
-                            type: "POST",
-                            url: "tmStatbook.aspx/getEventTeams",
-                            data: "{'eventID':'" + eventID + "'}",
-                            contentType: "application/json; charset=utf-8",
-                            dataType: "json",
-                            success: function (data) {
-                                evt_mainContent.empty()
-                                alert(evt_container)
-                                $(data.d).each(function (i, item) {
-                                    evt_mainContent.append(
+                                    team_content.append(
                                         '<table id="evtTeamTemp">' +
                                             '<tr>' +
                                                 '<td><input type="checkbox" /></td>' +
                                                 '<td>' + item.tm_name + '</td>' +
-                                                '<td>'+ item.tm_name_abrv +'</td>' +
-                                                '<td>' + item.tm_city+'</td>' +
-                                                '<td>' + item.tm_state +'</td>' +
-                                                '<td>' +item.eventTeamID+ '</td>' +
+                                                '<td>' + item.tm_name_abrv + '</td>' +
+                                                '<td>' + item.tm_city + '</td>' +
+                                                '<td>' + item.tm_state + '</td>' +
+                                                '<td>' + item.eventTeamID + '</td>' +
                                             '</tr>' +
                                         '</table>')
                                 });
-                            }
-                        });
+                            });
+                        }
+                    });
+                }
+
+                //Event Details - Event Athlete tab 
+                function getEventAthletes(eventID) {
+
+
+                    match_tmpl.hide()
+                    team_tmpl.hide()
+
+                    athlete_tmpl.show()
+
+                    //Load all the Teams participating in the selected event
+                    $.ajax({
+                        type: "POST",
+                        url: "tmStatbook.aspx/getEventAthletes",
+                        data: "{'eventID':'" + eventID + "'}",
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (data) {
+
+                            var athlete_content = $('#athlete_content')
+                            athlete_content.empty()
+
+                            $(data.d).each(function (i, mem) {
+                                athlete_content.append(
+                                    '<article><input type="checkbox" />' + mem.fName + ' ' + mem.lName + mem.grade + mem.amount + mem.teamName + '</article>')
+                            });
+                        }
+                    });
+                }
+
+                //Event Settings - Button Click
+                function getEventSettings(_eventid) {
+
+                    if (_eventid == 'new') {
+                    } else {
+
                     }
 
-                    function getEventAthletes(eventID) {
-                        //Load all the Teams participating in the selected event
+                    //Set Global Variables
+                    var pickSchool = $('#pickSchool')
+                    pickSchool.hide();
+                    var evtVenue = $('#evtVenue')
+                    evtVenue.show();
+                    var schLookupForm = $('#locSchool')
+                    schLookupForm.hide()
+                    var evtDay = $('#evtDay')
+                    evtDay.datepicker();
+
+
+                    //Save new team event
+                    evt_container.find('#addEvent').bind('click', function () {
+
+                        var newEvent = "{'teamID':'" + teamID + "', 'eventName':'" + $('#evtName_TB').val() + "', 'startDate':'" + $('#evtStDate_TB').val() + "', 'startTime':'" + $('#evtStTime_TB').val() + "', 'eventType':'1'," +
+                                         "'address':'" + $('#evtAddr_TB').val() + "', 'city':'" + $('#evtCity_TB').val() + "', 'state':'" + $('#evtState_TB').val() + "', 'styleID':'folk', 'levelID':'hs'}"
                         $.ajax({
                             type: "POST",
-                            url: "tmStatbook.aspx/getEventAthletes",
+                            url: "tmStatbook.aspx/newTeamMembers",
+                            data: newEvent,
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            success: function (data) {
+                                //alert(data.d);
+                                alert("added!")
+
+                                getMembers();
+                                $("#dialog-overlay, #dialog-box").hide();
+                            }
+                        });
+                    });
+                                        
+
+                    //Event Settings - Location - Lookup School
+                    $('#schLookupBu').bind('click', function () {
+                        schLookupForm.toggle();
+                        evtVenue.toggle();
+                    });
+
+                    var findSchool = evt_container.find('#findSchool')
+                    findSchool.bind('click', function () {
+
+                        var findSchool = "{'sch_name':'" + $('#schoolName').val() + "', 'sch_loc_state':'" + $('#selState option:selected').val() + "'}"
+                        $.ajax({
+                            type: "POST",
+                            url: "tmStatbook.aspx/getSchools",
+                            data: findSchool,
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            success: function (data) {
+                                $('#selSchool').empty();
+                                $(data.d).each(function (i, item) {
+                                    $('#selSchool').append(
+
+                                        $('<option/>', {
+                                            value: item.schoolID,
+                                            text: item.sch_name + " (" + item.sch_loc_city + ")"
+                                        })
+                                        );
+                                    $("#tmMemberContainer").empty().append().html(
+                                        item.sch_loc_addr
+                                   );
+
+                                    //var tmpIdx = $("#selSchool").selectedIndex;
+                                    //$('#dialog-message').find('#seloption').append(data.d).selectedIndex = tmpIdx;
+
+                                });
+                            }
+                        });
+
+                        pickSchool.show();
+                    });
+
+                    var acceptSchool = $('#acceptSchool')
+                    acceptSchool.bind('click', function () {
+
+                        var acceptSchool = "{'schoolID':'" + $('#selSchool option:selected').val() + "'}"
+                        $.ajax({
+                            type: "POST",
+                            url: "tmStatbook.aspx/getSchool",
+                            data: acceptSchool,
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            success: function (data) {
+
+                                $(data.d).each(function (i, item) {
+
+
+                                    // tmAddrCont.html(
+                                    //     '<label id="schname">' + item.sch_name + '</label><br />' +
+                                    //     '<label id="tmlocaddr">' + item.sch_loc_addr + '</label><br />' +
+                                    //     '<label id="tmloccity">' + item.sch_loc_city + '</label>' + ", " + '<label id="tmlocstate">' + item.sch_loc_state + '</label><br />' +
+                                    //     '<label id="tmloczip">' + item.sch_loc_zip + '</label><br /><br /> ' +
+
+                                    //     '<h3>Team Name and League Association</h3>' +
+                                    //     'Team Name: <label id="tmname">' + item.sch_tm_name + '</label> <label> (' + item.sch_tm_abrv + ') </label><br />' +
+                                    //     'League: <label id="tmLeague">' + item.sch_lge_name + '</label> ' +
+                                    //     '<a id="selSchoolID" href="' + item.schoolID + '"></a>'
+                                    //);
+                                    evtVenue.find('#venName').val(item.sch_name);
+                                    evtVenue.find('#venAddress').val(item.sch_loc_addr);
+                                    evtVenue.find('#venCity').val(item.sch_loc_city);
+                                    evtVenue.find('#venState').val(mem.sch_loc_state).attr('selected', 'selected');
+                                    evtVenue.find('#venZip').val(item.sch_loc_zip);
+
+                                    //newTmStep3.find('#ovtmname').text(item.sch_tm_name);
+                                    //newTmStep3.find('#ovtmabrv').text(item.sch_tm_abrv);
+                                    //newTmStep3.find('#ovlocname').text(item.sch_name);
+                                    //newTmStep3.find('#ovlocaddr').text(item.sch_loc_addr);
+                                    //newTmStep3.find('#ovloccity').text(item.sch_loc_city);
+                                    //newTmStep3.find('#ovlocstate').text(" " + item.sch_loc_state);
+                                    //newTmStep3.find('#ovloczip').text(item.sch_loc_zip);
+                                    //newTmStep3.find('#ovschoolID').text(item.schoolID);
+                                    //newTmStep3.find('#ovlgename').text(item.sch_lge_name);
+                                    //newTmStep3.find('#ovlgeorg').text(item.sch_lge_org);
+                                    schLookupForm.hide()
+                                    evtVenue.show();
+                                });
+                            }
+                        });
+                    }); //acceptSchool click - end tag
+
+
+
+
+                    
+                    getSessions(_eventid)
+                    
+
+                    //Event Settings - Get Event Divisions
+                    getDivisions();
+                    function getDivisions() {
+                        $.ajax({
+                            type: "POST",
+                            url: "tmStatbook.aspx/getEventDivisions",
                             data: "{'eventID':'" + eventID + "'}",
                             contentType: "application/json; charset=utf-8",
                             dataType: "json",
-                            success: function (data) {var evt_mainContent = $('#evt_mainContent')
-                                evt_mainContent.empty()
+                            success: function (data, status) {
+                                var divisionIDs = [];
+                                $(data.d).each(function (i, item) {
+                                    divisionIDs.push(item.eventDivisionID);
 
-                                $(data.d).each(function (i, mem) {
-                                    evt_mainContent.append(
-                                        '<article><input type="checkbox" />'+ mem.fName+' '+ mem.lName+ mem.grade+ mem.amount+ mem.teamName+'</article>')
-                                });
-                                }
+
+
+                                    $.ajax({
+                                        type: "POST",
+                                        url: "tmStatbook.aspx/getEventClasses",
+                                        data: "{'divisionID':'" + item.eventDivisionID + "'}",
+                                        contentType: "application/json; charset=utf-8",
+                                        dataType: "json",
+                                        success: function (grp, status) {
+
+                                            var groupNames = '';
+                                            var groupContent = '';
+                                            $(grp.d).each(function (i, grps) {
+                                                groupNames += '<div class="group">' + grps.evtg_name + '<div class="delete">X</div></div>'
+                                                groupContent += grps.evtg_name + '|'
+                                            })
+                                            $('#evt_set_division .content').append('<div class="evtDivision">' + item.evtd_name + '</div><span>' + groupContent + '</span><br />')
+                                            $('#evt_daw_container').append(
+                                                '<div class="edw">' +
+                                                    '<div class="evtDivision"><h4 class="edit_dname">' + item.evtd_name + '</h4></div>' +
+                                                    '<div class="evtGroups"><input type="hidden" id="divID" value="' + item.eventDivisionID + '" />' +
+                                                        groupNames + '<input class="grpAddTB" type="text" /><div class="grpAddBu">+</div></div>' +
+                                                '</div><br />')
+
+                                            $('.edit_dname').editable(function (value, settings) {
+                                                console.log(this);
+                                                var name = value.split(' ')
+                                                $.ajax({
+                                                    type: "POST",
+                                                    url: "tmStatbook.aspx/saveTMBName",
+                                                    data: "{'tmMemberID':'" + tmMemberID + "', 'tmm_fName':'" + name[0] + "', 'tmm_lName':'" + name[1] + "'}",
+                                                    contentType: "application/json; charset=utf-8",
+                                                    dataType: "json",
+                                                    success: function (data) { }
+                                                });
+                                                return (value);
+                                            }, {
+                                                onblur: 'submit',
+                                                type: 'text',
+                                            });
+
+
+                                        }
+                                    });
+                                    $('.grpAddBu').click(function () {
+                                        alert($(this).parent().find($('input#divID').val()))
+                                    })
+
+
+
+                                })
+
+                            }
+
                         });
                     }
-                }
-
-
-            }
-
-            function getEventSettings(_eventid) {
-                evt_container.empty();
-                alert(_eventid)
-                if (_eventid == 'new') {
-                } else {
-                    $("#tsb_evt_settingsTmpl").tmpl().appendTo(evt_container);
-                }
-
-                
-                
-                
-                //declare variables that configures the inital new event popup
-                var newEvtStep1 = evt_container.find('#newEvtStep1')
-                var newEvtStep2 = $('#newEvtStep2')
-                newEvtStep2.hide();
-                var newEvtStep3 = $('#newEvtStep3')
-                newEvtStep3.hide();
-                var pickSchool = $('#pickSchool')
-                pickSchool.hide();
-                var evtVenue = $('#evtVenue')
-                evtVenue.show();
-                var schLookupForm = $('#locSchool')
-                    schLookupForm.hide()
-                var evtDay = $('#evtDay')
-                evtDay.datepicker();
 
 
 
+                } //geteventSettings - end tag
 
-                //Save new team event
-                evt_container.find('#addEvent').bind('click', function () {
+                //Event Settings- Main Functions
 
-                    var newEvent = "{'teamID':'" + localStorage.team_id + "', 'eventName':'" + $('#evtName_TB').val() + "', 'startDate':'" + $('#evtStDate_TB').val() + "', 'startTime':'" + $('#evtStTime_TB').val() + "', 'eventType':'1'," +
-                                     "'address':'" + $('#evtAddr_TB').val() + "', 'city':'" + $('#evtCity_TB').val() + "', 'state':'" + $('#evtState_TB').val() + "', 'styleID':'folk', 'levelID':'hs'}"
-                    $.ajax({
-                        type: "POST",
-                        url: "tmStatbook.aspx/newTeamMembers",
-                        data: newEvent,
-                        contentType: "application/json; charset=utf-8",
-                        dataType: "json",
-                        success: function (data) {
-                            //alert(data.d);
-                            alert("added!")
+                //Event Settings - Get Event Sessions
+                function getSessions(eventid) {
+                    var evtSessions = $('#evtSessions')
 
-                            getMembers();
-                            $("#dialog-overlay, #dialog-box").hide();
-                        }
-                    });
-                });
-
-                //location school
-                var findSchool = evt_container.find('#findSchool')
-                findSchool.bind('click', function () {
-
-                    var findSchool = "{'sch_name':'" + $('#schoolName').val() + "', 'sch_loc_state':'" + $('#selState option:selected').val() + "'}"
-                    $.ajax({
-                        type: "POST",
-                        url: "tmStatbook.aspx/getSchools",
-                        data: findSchool,
-                        contentType: "application/json; charset=utf-8",
-                        dataType: "json",
-                        success: function (data) {
-                            $('#selSchool').empty();
-                            $(data.d).each(function (i, item) {
-                                $('#selSchool').append(
-
-                                    $('<option/>', {
-                                        value: item.schoolID,
-                                        text: item.sch_name + " (" + item.sch_loc_city + ")"
-                                    })
-                                    );
-                                $("#tmMemberContainer").empty().append().html(
-                                    item.sch_loc_addr
-                               );
-
-                                //var tmpIdx = $("#selSchool").selectedIndex;
-                                //$('#dialog-message').find('#seloption').append(data.d).selectedIndex = tmpIdx;
-
-                            });
-                        }
-                    });
-
-                    pickSchool.show();
-                });
-
-                var acceptSchool = $('#acceptSchool')
-                acceptSchool.bind('click', function () {
-
-                    var acceptSchool = "{'schoolID':'" + $('#selSchool option:selected').val() + "'}"
-                    $.ajax({
-                        type: "POST",
-                        url: "tmStatbook.aspx/getSchool",
-                        data: acceptSchool,
-                        contentType: "application/json; charset=utf-8",
-                        dataType: "json",
-                        success: function (data) {
-
-                            $(data.d).each(function (i, item) {
-                                
-
-                               // tmAddrCont.html(
-                               //     '<label id="schname">' + item.sch_name + '</label><br />' +
-                               //     '<label id="tmlocaddr">' + item.sch_loc_addr + '</label><br />' +
-                               //     '<label id="tmloccity">' + item.sch_loc_city + '</label>' + ", " + '<label id="tmlocstate">' + item.sch_loc_state + '</label><br />' +
-                               //     '<label id="tmloczip">' + item.sch_loc_zip + '</label><br /><br /> ' +
-
-                               //     '<h3>Team Name and League Association</h3>' +
-                               //     'Team Name: <label id="tmname">' + item.sch_tm_name + '</label> <label> (' + item.sch_tm_abrv + ') </label><br />' +
-                               //     'League: <label id="tmLeague">' + item.sch_lge_name + '</label> ' +
-                               //     '<a id="selSchoolID" href="' + item.schoolID + '"></a>'
-                               //);
-                                evtVenue.find('#venName').val(item.sch_name);
-                                evtVenue.find('#venAddress').val(item.sch_loc_addr);
-                                evtVenue.find('#venCity').val(item.sch_loc_city);
-                                evtVenue.find('#venState').val(item.sch_loc_state);
-                                evtVenue.find('#venZip').val(item.sch_loc_zip);
-
-                                //newTmStep3.find('#ovtmname').text(item.sch_tm_name);
-                                //newTmStep3.find('#ovtmabrv').text(item.sch_tm_abrv);
-                                //newTmStep3.find('#ovlocname').text(item.sch_name);
-                                //newTmStep3.find('#ovlocaddr').text(item.sch_loc_addr);
-                                //newTmStep3.find('#ovloccity').text(item.sch_loc_city);
-                                //newTmStep3.find('#ovlocstate').text(" " + item.sch_loc_state);
-                                //newTmStep3.find('#ovloczip').text(item.sch_loc_zip);
-                                //newTmStep3.find('#ovschoolID').text(item.schoolID);
-                                //newTmStep3.find('#ovlgename').text(item.sch_lge_name);
-                                //newTmStep3.find('#ovlgeorg').text(item.sch_lge_org);
-                                schLookupForm.hide()
-                                evtVenue.show();
-                            });
-                        }
-                    });
-                }); //acceptSchool click - end tag
-                //custom location checkbox click
-               var noSchoolCB = $('#schLookupBu') 
-                noSchoolCB.bind('click', function () {
-                        schLookupForm.toggle();
-                        evtVenue.toggle();
-                        //$(evtVenue).find('#venAddress').empty();
                     
-                });
 
-                $('#dialog-message').find('#ToStep2').bind('click', function () {
-                    newEvtStep1.hide();
-                    newEvtStep2.show();
-                });
-                $('#dialog-message').find('#ToStep3').bind('click', function () {
-                    newEvtStep2.hide();
-                    newEvtStep3.show();
-                });
-                $('#dialog-message').find('#BackStep1').bind('click', function () {
-                    newEvtStep2.hide();
-                    newEvtStep1.show();
-                });
-                $('#dialog-message').find('#BackStep2').bind('click', function () {
-                    newEvtStep3.hide();
-                    newEvtStep2.show();
-                });
-
-
-                function getEventDates() {
-                    var addDate = evt_container.find('#addDate')
-                    var dateTime = evt_container.find('#dateTime')
                     $.ajax({
                         type: "POST",
-                        url: "tmStatbook.aspx/getEventDates",
-                        data: eventID,
+                        url: "tmStatbook.aspx/getEventSessions",
+                        data: "{'eventID':'" + eventid + "'}",
                         contentType: "application/json; charset=utf-8",
                         dataType: "json",
-                        success: function (data, status) {
-                            if (data.d == '') {
-                                
-                            } else {
-                                $(data.d).each(function (i, item) {
-                                    dateTime.append(
-                                        '<li class="mi">' +
-                                            '<div class="lt"><select id="Select1" class="select">' +
-                                                    '<option>Session</option>' +
-                                                    '<option>Weigh-In</option>' +
-                                                '</select>' +
+                        success: function (ses, status) {
+                            $('#newSession').hide()
 
-                                            '</div>' +
-                                            '<div class="lt"><input class="dateTime" type="text" />'+item.evt_date+'</div>' +
-                                            '<div class="lt"><input class="dateTime" type="text" />' + item.evt_time + '</div>' +
-                                            '<div class="lt"><input class="input" type="text" />' + item.evt_title + '</div>' +
-                                            '<div class="lt">X</div>' +
-                                        '</li>')
+                            evtSessions.empty();
+                            $('#evt_set_sessions .content').empty();
+
+                            $(ses.d).each(function (i, sess) {
+
+                                //alert($(ses.d).length)
+                                var date = ""
+                                if (sess.edt_date == "") {
+                                    date = ""
+                                } else {
+                                    date = Date.parse(sess.edt_date).toString("MM/dd/yy")
+                                }
+
+
+                                $('#evt_set_sessions .content').append('<div class="">' + sess.edt_type + ' ' + date + ' ' + sess.edt_time + ' ' + sess.edt_title + '</div>')
+
+                                //$('#evt_stTime').text(Date.parse(item.startTime).toString("h:mm"))
+                                var type = ""
+                                if (sess.edt_type == "session") {
+
+                                    type = '<option value="session" selected="selected">Session</option> <option value="weighin">Weigh-In</option>'
+                                } else if (sess.edt_type == "weighin") {
+
+                                    type = '<option value="session">Session</option> <option value="weighin" selected="selected">Weigh-In</option>'
+                                } else { type = '<option value="session">Session</option> <option value="weighin">Weigh-In</option>' }
+
+                                evtSessions.append(
+
+                                '<li class="es">' +
+                                '<input class="id" value="' + sess.eventDateID + '" type="hidden" />' +
+                                '<div class="floatLT">' +
+                                    '<select class="type">' +
+                                        type +
+                                    '</select>' +
+
+                                '</div>' +
+                                '<div class="floatLT">' +
+                                    '<input class="date" type="text" value="' + date + '"/>' +
+                                '</div>' +
+                                '<div class="floatLT">' +
+                                    '<input class="time" type="text" value="' + sess.edt_time + '"/>' +
+                                '</div>' +
+                                '<div class="floatLT">' +
+                                    '<input class="title" type="text" value="' + sess.edt_title + '"/>' +
+                                '</div>' +
+                                '<div class="floatLT">' +
+                                    '<span class="delete">X</span>' +
+                                '</div></li>'
+                                )
+                                //$('.type option[value="'+sess.edt_type+'"]').attr("selected", "selected");
+
+                            })
+
+                            $('#evt_set_sessions ul li .delete').click(function () {
+
+                                $(this).closest('li').hide()
+                            })
+                        }
+                    });
+
+                    $('#addSession').click(function () {
+
+                        $.ajax({
+                            type: "POST",
+                            url: "tmStatbook.aspx/addNewSession",
+                            data: "{'eventID':'" + eventID + "'}",
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            success: function (data, status) {
+                                
+                                getSessions(eventid)
+                            }
+                        })
+                    })
+
+                    $('#saveSessionBu').click(function () {
+                        $("#evtSessions li").each(function () {
+                            var li = $(this)
+                            var sessionID = li.find('.id').val()
+                            if ($(this).css('display') == 'none') {
+                                alert('no')
+
+                            } else {
+                                $.ajax({
+                                    type: "POST",
+                                    url: "tmStatbook.aspx/saveEventSession",
+                                    data: "{'eventDateID':'" + sessionID + "', 'edt_type':'" + li.find('.type option:selected').val() + "', 'edt_date':'" + li.find('.date').val() + "', " +
+                                    "'edt_time':'" + li.find('.time').val() + "', 'edt_title':'" + li.find('.title').val() + "'}",
+                                    contentType: "application/json; charset=utf-8",
+                                    dataType: "json",
+                                    success: function (data) {
+
+
+                                    }
                                 });
                             }
-                        }
+
+
+                        })
+                        getSessions(eventid)
+                        var li_area = $(this).parents('li')
+                        $('.show', li_area).attr('class', 'hide');
+                        li_area.attr('class', 'area');
+
                     });
 
-                    
-                    addDate.click(function () {
-                        dateTime.append(
-                        '<li class="mi">' +
-                            '<div class="lt"><select id="Select1" class="select">' +
-                                    '<option>Session</option>' +
-                                    '<option>Weigh-In</option>' +
-                                '</select>' +
-
-                            '</div>' +
-                            '<div class="lt"><input class="dateTime" type="text" /></div>' +
-                            '<div class="lt"><input class="dateTime" type="text" /></div>' +
-                            '<div class="lt"><input class="input" type="text" /></div>' +
-                            '<div class="lt">X</div>' +
-                        '</li>')
-                    });
                 }
-        } //newEventBU click - end tag
 
-            //Load team statbook events
+                
+
+                
+            }//loadEventDetails - end tag
+
+
+            //Loads all settings for an event
             
 
-            <%--
+            //Load team seasons
+            function getSeasons() {
+                $.ajax({
+                    type: "POST",
+                    url: "tmStatbook.aspx/getTeamSeasons",
+                    data: "{'teamID':'" + teamID + "'}",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (data, status) {
+                        $('#arch_season').empty();
+                        $(data.d).each(function (i, item) {
+                            
+                            $('#arch_season').append(
+
+                                $('<option/>', {
+                                    value: item.teamSeasonID,
+                                    text: item.tms_name
+                                })
+                                );
+
+                        });
+                    }
+                })
+            };
+            
+
+            
          
-            //Handles the new member button
+           <%-- //Handles the new member button
             //$("#newMemberBu").click(function(e) {
                 
                
@@ -1810,11 +2589,11 @@
 //                $("#dialog-overlay, #dialog-box").hide();
 //            });
             
-//            });
+//            });--%>
             
 
 
---%>
+
 
 
 
