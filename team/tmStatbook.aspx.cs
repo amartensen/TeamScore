@@ -642,8 +642,9 @@ public partial class team_tmStatbook : System.Web.UI.Page
         string connectionString = ConfigurationManager.ConnectionStrings["statbookConnectionString"].ConnectionString;
         using (SqlConnection connection = new SqlConnection(connectionString))
         {
-            string sql = "SELECT div_name, divisionsID FROM divisions WHERE eventID = @eventID;";
-
+            string sql = "SELECT div.evtd_name, div.divisionsID FROM eventDivisions AS evtd INNER JOIN "+
+			"divisions AS div ON div.divisionsID = evtd.divisionsID WHERE evtd.eventID = @eventID;"
+			
             connection.Open();
 
             SqlCommand command = new SqlCommand(sql, connection);
@@ -654,8 +655,8 @@ public partial class team_tmStatbook : System.Web.UI.Page
             while (reader.Read())
             {
                 var div = new divisions();
-                div.div_name = reader["div_name"].ToString();
-                div.divisionsID = reader["divisionID"].ToString();
+                div.div_name = reader["evtd_name"].ToString();
+                div.divisionsID = reader["divisionsID"].ToString();
                 _divisions.Add(div);
             }
 
