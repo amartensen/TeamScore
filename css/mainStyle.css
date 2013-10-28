@@ -144,8 +144,19 @@ p, h1, h2, h3 {
     margin-left: -200px; /*Set left marginto -(RightColumnWidth)*/
     background: #FDE95E;
 }
-/*<<<<Scorebook Page Navigation>>>>*/
-
+/*<<<<Account Pages>>>>*/
+.login {
+    height: 350px;
+    width:400px;
+    padding: 25px;
+    border: 1px solid rgba(0,0,0,0.25);
+    background-color: #f2f2f2;
+    margin: 40px auto;
+    border-radius: 5px;
+}
+.loginWrap {
+    width:100%;
+}
 
 /*<<<<Atributes>>>>*/
 .floatLT {
@@ -309,25 +320,41 @@ p, h1, h2, h3 {
 }
 .ppg_left {
     float: left;
-    width: 250px; /*Width of left column*/
+    width: 330px; /*Width of left column*/
     margin-left: -100%;
     height: 100%;
-    border-right: 1px solid black;
 }
 
 .ppg_center {
-    margin: 0 0px 0 250px;
+    margin: 0 0px 0 330px;
     padding: 0;
 }
-
-.userDetails {
-    width: 250px;
-    height: 200px;
-    border-bottom: 1px solid #808080;
-    
+#ppg_sideBox {
+    margin-top: 26px;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 5px;
+    width: 315px;
 }
 
-    .userDetails img {
+    #ppg_sideBox .sect {
+        border: 1px solid black;
+        border-radius: 5px;
+        width: 306px;
+        margin-top:6px;
+        padding:2px 0px 2px 0px;
+    }
+.sect_expand {
+    display:none;
+}
+.personPic {
+    width: 312px;
+    height: 205px;
+    border: 1px solid black;
+    border-radius: 6px;
+}
+
+    .personPic img {
         margin: 5px;
         background-color: navy;
         height: 100px;
@@ -355,24 +382,22 @@ p, h1, h2, h3 {
         height: 30px; width: 30px;
         border: 1px solid black;
     }
-.teamSmDisplay {
+.personTeams {
     background-color: #fff;
-    height: 57px;
-    width: 430px;
-    padding: 3px;
-    margin: 6px 0px 6px 0px;
-    border: 1px solid black;
-    border-radius: 4px;
+    height: 45px;
+    border-top: 1px solid black;
 }
-    .teamSmDisplay img {
-        width:50px;
-        height: 50px;
+    .personTeams img {
+        width:40px;
+        height: 40px;
         border: 1px solid black;
-        margin-right: 30px;
+        margin: 3px 30px 3px 3px;
+        float: left;
     }
-    .teamSmDisplay h4, h3, h5 {
+    .personTeams h4, h3, h5 {
         padding: 0px;
         margin: 0px;
+        float: left;
     }
 #ppg_nav {
     float:left;
@@ -408,6 +433,14 @@ p, h1, h2, h3 {
     background-color:#fff;
     border: 1px solid #808080;
     border-radius: 5px;
+
+}
+.button:hover{
+    padding: 6px;
+    background-color:#c33100;
+    border: 1px solid #808080;
+    border-radius: 5px;
+    
 
 }
 .spanLink {
@@ -792,45 +825,65 @@ p, h1, h2, h3 {
     }
 
 /*<<< TSB: Member Tab  >>>*/
-#memAthleteView {
-    margin:5px;
+.memViewTitle {
+    margin: 12px 0 0px 0;
+    clear:both;
+    
 }
-#memAthleteView div{
-    width: 220px;
-    height: 80px;
+
+.memAthleteView {
+}
+.memAthleteView div{
+    width: 160px;
+    height: 245px;
     float: left;
     display: block;
-    border: 1px solid black;
-    padding: 5px;
-    margin: 5px 5px 5px 10px;
-    background: #fff;border-radius: 2px;
+    border: 1px solid gray;
+    
+    margin: 5px 10px 5px 0px;
+    background:#fff; border-radius: 2px;
 }
-    #memAthleteView div h4 {
+    .memAthleteView div h4 {
             padding: 0px;
             margin: 0px;
             float:left;
         }
-    #memAthleteView div img{
-        height:80px;
-        width: 70px;
+    .memAthleteView div img{
+        height:160px;
+        width: 160px;
         padding-right: 5px;
         float: left;
     }
-
-#memAdminView div {
-    height: 52px; width: 500px;
+#newMemberBu {
+    display: none;
+    float: right;
+}
+tsb_tool_event {
+    
+}
+.ndisplay {
+    display: none;
+}
+.memAdminView div {
+    height: 52px; width: 100%;
+    margin-top:5px;
     float: left;
     display: block;
     background-color: #fff;
-    border-top: 1px solid #808080;
+    border: 1px solid #c4c4c4;
     
 }
-    #memAdminView div h4 {
+ .memAdminView div span4 {
             padding: 0px;
             margin: 0px;
             float:left;
         }
-    #memAdminView div h4:hover {
+    .memAdminView div h4 {
+            padding: 0px;
+            margin: 0px;
+            float:left;
+        }
+    .memAdminView div h4:hover {
             padding: 0px;
             margin: 0px;
             float:left;

@@ -1,9 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using System.Web.Security;
 using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -88,6 +89,7 @@ public partial class team_tmStatbook : System.Web.UI.Page
         }
     }
 
+
     //<<<<<<<<<GET TEAM>>>>>>>>>>>>>>>
     public class team
     {
@@ -96,6 +98,52 @@ public partial class team_tmStatbook : System.Web.UI.Page
         public string tm_city { get; set; }
         public string tm_state { get; set; }
         public string con_name { get; set; }
+    }
+
+    public class admin
+    {
+        public string adm_status { get; set; }
+        public string teamID { get; set; }
+        public string personID { get; set; }
+    }
+
+    [WebMethod]
+    public static admin[] getAdminStatus(int teamID)
+    {
+        MembershipUser user = Membership.GetUser();
+        string user_ID = user.ProviderUserKey.ToString();
+
+        string connectionString = ConfigurationManager.ConnectionStrings["statbookConnectionString"].ConnectionString;
+        using (SqlConnection connection = new SqlConnection(connectionString))
+        {
+
+
+            string sql = "SELECT tmb_adminRole, teamID FROM teamMembers WHERE (personID = @personID) AND (teamID = @teamID)";
+
+            connection.Open();
+
+            SqlCommand command = new SqlCommand(sql, connection);
+
+            command.Parameters.AddWithValue("@teamID", teamID);
+            command.Parameters.AddWithValue("@personID", user_ID);
+            SqlDataReader reader = command.ExecuteReader();
+
+            var _admin = new List<admin>();
+            while (reader.Read())
+            {
+                var tm = new admin();
+                tm.teamID = reader["teamID"].ToString();
+                tm.adm_status = reader["tmb_adminRole"].ToString();    
+                _admin.Add(tm);
+            }
+
+
+            //Close connections
+            reader.Close();
+            connection.Close();
+
+            return _admin.ToArray();
+        }
     }
 
     [WebMethod]
@@ -168,7 +216,7 @@ public partial class team_tmStatbook : System.Web.UI.Page
                          "FROM teamMembers AS tmMem INNER JOIN " +
                                 "tmMemSeasons AS tmMemSea ON tmMem.teamMemberID = tmMemSea.teamMemberID INNER JOIN " +
                                 "teamSeasons AS tmSeas ON tmMemSea.teamSeasonID = tmSeas.teamSeasonID " +
-                         "WHERE (tmSeas.tms_name = 'CUR') AND (tmSeas.teamID = 1);";
+                         "WHERE (tmSeas.tms_name = 'CUR') AND (tmSeas.teamID = @teamID)";
 
             connection.Open();
 
@@ -214,7 +262,7 @@ public partial class team_tmStatbook : System.Web.UI.Page
                          "FROM teamMembers AS tmMem INNER JOIN " +
                                 "tmMemSeasons AS tmMemSea ON tmMem.teamMemberID = tmMemSea.teamMemberID INNER JOIN " +
                                 "teamSeasons AS tmSeas ON tmMemSea.teamSeasonID = tmSeas.teamSeasonID " +
-                         "WHERE (tmSeas.tms_name = 'CUR') AND (tmSeas.teamID = 1) AND (tmMem.tmb_isAthlete = 'Y');";
+                         "WHERE (tmSeas.tms_name = 'CUR') AND (tmSeas.teamID = @teamID) AND (tmMem.tmb_isAthlete = 'Y');";
 
             connection.Open();
 
@@ -380,7 +428,7 @@ public partial class team_tmStatbook : System.Web.UI.Page
         string connectionString = ConfigurationManager.ConnectionStrings["statbookConnectionString"].ConnectionString;
         using (SqlConnection connection = new SqlConnection(connectionString))
         {
-            string sql = "INTO teamMembers (fName, lName, teamID, tmb_adminRole, tmb_isAthlete, personID) VALUES (@fName, @lName, @teamID, @adminRole, @athlete, @userID);";
+            string sql = "Insert INTO teamMembers (fName, lName, teamID, tmb_adminRole, tmb_isAthlete, personID) VALUES (@fName, @lName, @teamID, @adminRole, @athlete, @userID); Select SCOPE_IDENTITY();";
 
             connection.Open();
 
@@ -391,11 +439,15 @@ public partial class team_tmStatbook : System.Web.UI.Page
             command.Parameters.AddWithValue("@athlete", isAthlete);
             command.Parameters.AddWithValue("@adminRole", adminRole);
             command.Parameters.AddWithValue("@userID", userID);
-
-            command.ExecuteNonQuery();
+            string teamMemberID = command.ExecuteScalar().ToString();
+            
+            
         }
+
+
+
     }
-    
+
     [WebMethod]
     public static void addTmbAdminRole(int tmMemberID, string roleID)
     {
@@ -454,6 +506,21 @@ public partial class team_tmStatbook : System.Web.UI.Page
             command.Parameters.AddWithValue("@teamID", teamID);
 
             string teamMemberID = command.ExecuteScalar().ToString();
+            
+
+            string season = "1";
+
+            string sqlseason = "Insert INTO tmMemSeasons (teamMemberID, teamSeasonID) VALUES (@tmMemberID, @season);";
+
+
+
+            SqlCommand cmd = new SqlCommand(sqlseason, connection);
+            cmd.Parameters.AddWithValue("@tmMemberID", teamMemberID);
+            cmd.Parameters.AddWithValue("@season", season);
+            cmd.ExecuteNonQuery();
+
+
+            connection.Close();
             return teamMemberID;
         }
     }
@@ -643,8 +710,7 @@ public partial class team_tmStatbook : System.Web.UI.Page
         using (SqlConnection connection = new SqlConnection(connectionString))
         {
             string sql = "SELECT div.evtd_name, div.divisionsID FROM eventDivisions AS evtd INNER JOIN "+
-			"divisions AS div ON div.divisionsID = evtd.divisionsID WHERE evtd.eventID = @eventID;"
-			
+                    "divisions AS div ON div.divisionsID = evtd.divisionsID WHERE evtd.eventID = @eventID;";
             connection.Open();
 
             SqlCommand command = new SqlCommand(sql, connection);

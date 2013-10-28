@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/master/main_master.master" AutoEventWireup="true" CodeFile="tmStatbook.aspx.cs" Inherits="team_tmStatbook" %>
+<%@ Page Title="" Language="C#" MasterPageFile="~/master/main_master.master" AutoEventWireup="true" CodeFile="tmStatbook.aspx.cs" Inherits="team_tmStatbook" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 </asp:Content>
@@ -7,28 +7,42 @@
     <article class="pageHead">
         <div class="headWrap">
             <h3 id="team" class="floatLT"></h3>
-            <input id="backBu" class="floatLT" type="button" value="back" />
+            <%--<input id="backBu" class="floatLT" type="button" value="back" />--%>
+            <section id ="tsb_tool_container"></section>
+            <div id="tsb_tool_mem">
+                <input id="memBackBu" class="button ndisplay" type="button" value="Back" />
+                <input id="athSetBu" class="button ndisplay" type="button" value="Settings" />
+                <input id="memAthBu" class="button ndisplay" type="button" value="Matches" />
+                <input id="newMemberBu" class="button" type="button" value="New Member" />
+            </div>
+            <div id="tsb_tool_event">
+                <input id="evtBackBu" class="button ndisplay" type="button" value="Back" />
+                <input id="newEventBu" class="button ndisplay" type="button" value="New Event" /> 
+            </div>
         </div>
     </article>
+
     
+
     <div class="scroll">
         <div class="pageWrap">
             
             <div class="content">
                 <div id="tabs">
 
-                    <!--<<< DASHBOARD TAB >>>-->
+                    <!--<<< DASHBOARD TAB >>>
+
                     <div id="tab-1" class="center">
                         hey
-                    </div>
+                    </div>-->
 
                     <!--<<< EVENT TAB >>>-->
                     <div id="tab-2" class="center">
                         <article class="sbpg_adminPanel">
-                            <input id="newEventBu" type="button" value="New Event" />
+                            
                             
                         </article>
-
+                        
                         <!--Event Tab Main Content Container-->
                         <article id="tmb_evt_container"> </article>
                         
@@ -47,7 +61,7 @@
                         <!-- Event detailed -->
                         <script id="tsb_evt_detailTmpl" type="text/x-jquery-tmpl">
                             <article class="tsb_mem_toolbar">
-                                <input id="evt_backBu" class="button" type="button" value="Back" />
+                                
                                 <input id="evt_settingsBu" class="button" type="button" value="Settings" />
                             </article>
                             <article id="evt_topContent">
@@ -806,7 +820,8 @@
                     <!--<<< MEMBER TAB >>> -->
                     <div id="tab-3" class="center">
 
-                        <!--Member/Admin View Toggle-->
+
+                        <!--Member/Admin View Toggle
                         <article id="tsb_mem_topNav">
                             <ul>
                                 <li><a href="#mem_athlete">
@@ -816,15 +831,14 @@
                                     <h2>Admin Panel</h2>
                                 </a></li>
                             </ul>
-                            <input id="newMemberBu" class="floatRt button" type="button" value="New Member" />
-                        </article>
+                        </article>-->
 
                         <!--Member Tab Main Content Container-->
                         <article id="tsb_mem_container"></article>
 
                         <!--Athlete List-->
                         <script id="tsb_mem_athleteViewTmpl" type="text/x-jquery-tmpl">
-                            <div id="memAthleteView">
+                            <div class="memAthleteView">
                                 <div>
                                     <a href="${tmMemberID}"></a>
                                     <img src="" alt="" /><h4>${fName} ${lName}</h4>
@@ -836,15 +850,16 @@
                         <!--Athlete Detailed-->
                         <script id="tsb_mem_athleteTmpl" type="text/x-jquery-tmpl">
                             <article class="tsb_mem_toolbar">
-                                <input id="memBackBu" class="button" type="button" value="Back" />
-
+                                
                             </article>
                             <div class="mem_topContent">
                                 <img src="#" alt="" />
                                 <div>
                                     <h2>${fName} ${lName}</h2>
                                     <label>${isAthlete}</label><label> ${isCoachCB}</label>
+                                   
                                 </div>
+                                
                             </div>
                             <div class="mem_mainContent">
                                 Matches
@@ -853,22 +868,24 @@
 
                         <!--Admin Member Detailed-->
                         <script id="tsb_mem_adminTmpl" type="text/x-jquery-tmpl">
-                            <article class="tsb_mem_toolbar">
-                                <input id="memAdminBack" class="button" type="button" value="Back" />
+                            <%--<article class="tsb_mem_toolbar">
 
                             </article>
                             <div class="mem_topContent">
                                 <img src="#" alt="" />
+                                
+
+                            </div>--%>
+
+                            <!--Admin content-->
+                            <div class="mem_mainContent">
+                                <div class="area">
                                 <div id="basicInfo">
                                     <h2 id="notNewName" class="editableTB">${fName} ${lName}</h2>
                                     <input id="newMemName" type="text" />
                                     <input id="isAthleteCB" type="checkbox" title="athlete" /><label for="isAthleteCB">Athlete</label><input id="isCoachCB" type="checkbox" /><label for="isCoachCB">Coach</label>
                                 </div>
-
-                            </div>
-
-                            <!--Admin content-->
-                            <div class="mem_mainContent">
+                                    </div>
                                 <div class="area">
                                     <h4>Connection</h4>
                                     <div id="tsb_mem_linkCont" class="fieldCont"></div>
@@ -897,7 +914,7 @@
 
                         <!--Admin List-->
                         <script id="tsb_mem_adminViewTmpl" type="text/x-jquery-tmpl">
-                            <div id="memAdminView">
+                            <div class="memAdminView">
                                 <div>
                                     <a href="${tmMemberID}"></a>
                                     <img src="" alt="" /><h4>${fName} ${lName}</h4>
@@ -908,7 +925,7 @@
                         </script>
                     </div>
 
-                    <!--<<< ARCHIVES TAB >>>-->
+                    <!--<<< ARCHIVES TAB >>>
                     <div id="tab-4" class="center">
                         hi
                         <article id="tsb_arch_top">
@@ -917,7 +934,7 @@
                             </select>
                         </article>
                         
-                    </div>
+                    </div>-->
                 
                 </div> <!--tabs - ending tag-->
             </div> <!-- content div - ending tag-->
@@ -926,10 +943,10 @@
             <div id="tabNav" class="left">
                 <nav>
                     <ul>
-                        <li><a href="#tab-1">Dashboard</a></li>
+                        <!--<li><a href="#tab-1">Dashboard</a></li>-->
                         <li><a href="#tab-2">Events</a></li>
                         <li><a href="#tab-3">Members</a></li>
-                        <li><a href="#tab-4">Archives</a></li>
+                        <!--<li><a href="#tab-4">Archives</a></li>-->
                     </ul>
                 </nav>
             </div>
@@ -1219,7 +1236,7 @@
 
             var tmMemberID = ""
             var teamID = localStorage.team_id
-
+            var adm_status = ""
 
             // Load team
             $.ajax({
@@ -1236,6 +1253,19 @@
                 }
             });
 
+            $.ajax({
+                type: "POST",
+                url: "tmStatbook.aspx/getAdminStatus",
+                data: "{'teamID':'" + teamID + "'}",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    $(data.d).each(function (i, item) {
+                        adm_status = item.adm_status
+                    });
+
+                }
+            });
 
             //Tab Navigation
             $('#tabs div').hide();
@@ -1251,6 +1281,7 @@
                     getTeamEvents()
                 } else if (currentTab == "#tab-3") {
                     getAthletes()
+
                 } else if (currentTab == "#tab-4") {
                     getSeasons()
                 }
@@ -1273,19 +1304,21 @@
 
             //Declare Global Page Variables
             var mem_container = $('#tsb_mem_container')
-            
+            var tool_container = $('#tsb_tool_container')
+
             //Member-Admin View Toggle 
-            $('#tsb_mem_topNav ul li').click(function () {
-                var memView = $(this).find('a').attr('href');
-
-                if (memView == "#mem_athlete") {
-                    getAthletes();
-
-                } else if (memView == "#mem_admin") {
-                    getAdminMembers();
-                }
-            });
+            //$('#tsb_mem_topNav ul li').click(function () {
+            //    var memView = $(this).find('a').attr('href');
+                                
+            //    if (memView == "#mem_athlete") {
+            //        getAthletes
+                
+            //    } else if (memView == "#mem_admin") {
+            //        getAdminMembers();
+            //    }
+            //});
             
+
             $('#newMemberBu').click(function () {
                 mem_container.empty();
                 loadAdminView('new');
@@ -1293,6 +1326,12 @@
 
             //Load team members
             function getAthletes() {
+
+                tool_container.empty()
+                $("#tsb_tool_mem").tmpl().appendTo(tool_container);
+                if (adm_status == "A") {
+                        $('#newMemberBu').show();
+                    }
                 $.ajax({
                     type: "POST",
                     url: "tmStatbook.aspx/getTeamAthletes",
@@ -1302,6 +1341,8 @@
                     success: function (data) {
 
                         mem_container.empty();
+
+                        $(mem_container).append('<h2 class="memViewTitle">Athletes<h2>')
                         $("#tsb_mem_athleteViewTmpl").tmpl(data.d).appendTo(mem_container);
                         
                         $(data.d).each(function (i, item) {
@@ -1315,80 +1356,106 @@
                             }
                         });
 
+                        var div = $('.memAthleteView div');
+                        //highlight row on hover
+                        div.bind('mouseover', function (event) {
+                            div.removeClass('row-highlight');
+                            $(this).addClass('row-highlight');
+                        });
+                        div.bind('mouseout', function (event) {
+                            div.removeClass('row-highlight');
+                        });
 
-                        var div = $('#memAthleteView div');
-                            //highlight row on hover
-                            div.bind('mouseover', function (event) {
-                                div.removeClass('row-highlight');
-                                $(this).addClass('row-highlight');
-                            });
-                            div.bind('mouseout', function (event) {
-                                div.removeClass('row-highlight');
-                            });
+                        div.click(function () {
 
-                            div.click(function () {
-                                mem_container.empty();
-                                tmMemberID = $(this).find('a').attr('href');
+                            //Set team member id variable
+                            tmMemberID = $(this).find('a').attr('href');
+                            athleteDisplay(tmMemberID)
 
-                                //ORIGINAL
-                                var teamMember = "{'tmMemberID':'" + tmMemberID + "', 'teamID':'" + teamID + "'}"
-                                $.ajax({
-                                    type: "POST",
-                                    url: "tmStatbook.aspx/getTeamMember",
-                                    data: teamMember,
-                                    contentType: "application/json; charset=utf-8",
-                                    dataType: "json",
-                                    success: function (data) {
-
-                                        $("#tsb_mem_athleteTmpl").tmpl(data.d).appendTo(mem_container);
-                                        $(data.d).each(function (i, mem) {
-                                            //alert(currentTab);
-                                            //alert(item.fName + " " + item.lName);
-                                            var athlete
-                                            if (mem.tmb_isAthlete != "") {
-                                                athlete = "Athlete"
-                                            }
-                                            else {
-                                                athlete = ""
-                                            }
-
-                                            var coach
-                                            if (mem.tmb_isCoach != "") {
-                                                coach = "Coach"
-                                            }
-                                            else {
-                                                coach = ""
-                                            }
-                                        //    memDetCont.append(
-                                        //        '<li><article class="sbpg_adminPanel"><input id="memDetBack" class="button" type="button" value="Back" /></article>' +
-                                        //        ' <div class="member"><div class="sbpg_memDetTop"><img src="#" alt="" />' +
-                                        //        '<div><h2>' + mem.fName + " " + mem.lName + "</h2>" + athlete + ' ' + coach + "</div></div>" +
-                                        //        ' <div class="sbpg_memDetCenter">Matches' +
-                                        //        '</div></div></li>')
-
-                                        });
-
-                                        $('#memBackBu').click(function () {
-                                            mem_container.empty();
-                                            getAthletes();
-                                        });
-
-                                        $('memDetCont').find('#memName').editInPlace({
-                                            callback: function (unused, enteredText) { return enteredText; },
-                                            //url: "tmStatbook.aspx/getTeamMember",
-                                            //params: "name=david"
-                                            bg_over: "#080808"
-                                        });
-                                    }
-                                });
-
-
-                            });
-
-
+                        }
+                        );
+                        
                     }
+                    
                 });
+
+                if (adm_status == "A") {
+                    getAdminMembers();
+                }
+                
             };
+
+            function athleteDisplay(_tmMemberID) {
+                //Clear member container
+                mem_container.empty();
+
+                //Adjust Toolbar
+                $('#newMemberBu').hide();
+                $('#memAthBu').hide()
+
+                //Get selected team member info and display athlete page
+                var teamMember = "{'tmMemberID':'" + _tmMemberID + "', 'teamID':'" + teamID + "'}"
+                $.ajax({
+                    type: "POST",
+                    url: "tmStatbook.aspx/getTeamMember",
+                    data: teamMember,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (data) {
+
+
+                        $("#memBackBu").show();
+
+                        if (adm_status == "A") {
+                            $("#athSetBu").show();
+                        }
+                        
+                        $("#tsb_mem_athleteTmpl").tmpl(data.d).appendTo(mem_container);
+
+                        $(data.d).each(function (i, mem) {
+                            //alert(currentTab);
+                            //alert(item.fName + " " + item.lName);
+                            var athlete
+                            if (mem.tmb_isAthlete != "") {
+                                athlete = "Athlete"
+                            }
+                            else {
+                                athlete = ""
+                            }
+
+                            var coach
+                            if (mem.tmb_isCoach != "") {
+                                coach = "Coach"
+                            }
+                            else {
+                                coach = ""
+                            }
+
+                        });
+
+
+                        $('#memBackBu').click(function () {
+                            mem_container.empty();
+                            getAthletes();
+                        });
+
+                        
+
+                        $('memDetCont').find('#memName').editInPlace({
+                            callback: function (unused, enteredText) { return enteredText; },
+                            //url: "tmStatbook.aspx/getTeamMember",
+                            //params: "name=david"
+                            bg_over: "#080808"
+                        });
+                    }
+
+                });
+
+            $('#athSetBu').click(function () {
+                mem_container.empty();
+                loadAdminView(tmMemberID)
+            });
+            }
 
             //Load the Admin team members page
             function getAdminMembers() {
@@ -1399,10 +1466,12 @@
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     success: function (data) {
+                        $(mem_container).append('<h2 class="memViewTitle">Other Members<h2>')
+                        $("#tsb_mem_adminViewTmpl").tmpl(data.d).appendTo(mem_container);
 
                         $(data.d).each(function (i, item) {
-                            mem_container.empty();
-                            $("#tsb_mem_adminViewTmpl").tmpl(data.d).appendTo(mem_container);
+                            //mem_container.empty();
+                            
 
                             var athlete = $('#athlete')
                             if (item.tmb_isAthlete != "") {
@@ -1447,8 +1516,10 @@
 
                            });
 
-                           var div = $('#memAdminView div');
+                           var div = $('.memAdminView div');
                            div.click(function () {
+                               
+                               $('#memBackBu').show();
                                tmMemberID = $(this).find('a').attr('href');
                                loadAdminView(tmMemberID);
                            }); //memAdminView click - end tag
@@ -1459,7 +1530,15 @@
                 });
             }
 
+            //Load member settings page
             function loadAdminView(_tmbid) {
+                mem_container.empty();
+
+                //Adjust Toolbar
+                $('#newMemberBu').hide();
+                $("#athSetBu").hide();
+
+
                 if (_tmbid == 'new') {
                     $("#tsb_mem_adminTmpl").tmpl().appendTo(mem_container);
                     loadTmbNameForm('new');
@@ -1478,23 +1557,21 @@
                             mem_container.empty();
                             $("#tsb_mem_adminTmpl").tmpl(data.d).appendTo(mem_container);
 
-
-
-                            $('#memAdminBack').click(function () {
-                                mem_container.empty();
-                                getAdminMembers();
-                            });
-
+                            //$('#memAdminBack').click(function () {
+                            //    mem_container.empty();
+                            //    getAdminMembers();
+                            //});
+                            loadTmbNameForm(tmMemberID);
+                            loadPerLinkForm(tmMemberID);
+                            loadTmbRoleForm(tmMemberID);
 
                             $(data.d).each(function (i, mem) {
                                 //alert(item.fName + " " + item.lName);
 
-                                loadTmbNameForm(tmMemberID);
-                                
-                                
                                 var athlete
                                 if (mem.tmb_isAthlete != "") {
                                     $("#isAthleteCB").prop('checked', true);
+                                    $('#memAthBu').show();
                                 }
 
                                 var coach
@@ -1502,13 +1579,23 @@
                                     $("#isCoachCB").prop('checked', true);
                                 }
 
-                                loadTmbRoleForm(tmMemberID);
-                                loadPerLinkForm(tmMemberID);
                             });
+
+                            
 
                         }
                     });
 
+                            $('#memBackBu').click(function () {
+                                mem_container.empty();
+                                getAthletes();
+                            });
+
+                            $('#memAthBu').click(function () {
+                                mem_container.empty();
+                                athleteDisplay(tmMemberID)
+                            });
+                    
                 }
 
                 function loadTmbNameForm(_tmbid) {
@@ -1575,6 +1662,7 @@
                             var isAthlete
                             if ($("#isAthleteCB").is(':checked')) {
                                 isAthlete = "Y"
+                                $('#memAthBu').show();
                             } else {
                                 isAthlete = ""
                             }
@@ -1778,6 +1866,14 @@
                 );
 
             function getTeamEvents() {
+                tool_container.empty()
+
+                $("#tsb_tool_event").tmpl().appendTo(tool_container);
+                if (adm_status == "A") {
+                    $('#newEventBu').show();
+
+                }
+
                 $.ajax({
                     type: "POST",
                     url: "tmStatbook.aspx/getTeamEvents",
@@ -1826,6 +1922,8 @@
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     success: function (data) {
+                        $("#evtBackBu").show();
+
                         $("#tsb_evt_detailTmpl").tmpl(data.d).appendTo(evt_container);
 
                         //Set tmpl variables
@@ -1844,7 +1942,7 @@
                         
 
                         //Event Content Nav 
-                        $('#evt_backBu').click(function () {
+                        $('#evtBackBu').click(function () {
                             evt_container.empty();
                             getTeamEvents();
                         });
@@ -1953,8 +2051,8 @@
                                 $('#evt_division').append(
 
                                     $('<option/>', {
-                                        value: item.eventDivisionID,
-                                        text: item.evtd_name
+                                        value: item.divisionsID,
+                                        text: item.div_name
                                     })
                                     );
 
@@ -2239,7 +2337,7 @@
                             success: function (data, status) {
                                 var divisionIDs = [];
                                 $(data.d).each(function (i, item) {
-                                    divisionIDs.push(item.eventDivisionID);
+                                    divisionIDs.push(item.divisionsID);
 
 
 

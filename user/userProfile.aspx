@@ -30,18 +30,7 @@
                             </section>
                             
                             <section id="perTeamMesCont" ></section>
-                            <section id="perTeamsCont">
-                            </section>
-                            <script id="perTeamsTemp" type="text/x-jquery-tmpl">
-                                <div class="teamSmDisplay">
-                                    <img class="floatLT" alt="" src="#" />
-                                    <div>
-                                        <h4>${tm_name}</h4>
-                                        <h5>${tm_city}, ${tm_state}</h5>
-                                        <a href="${teamID}"></a>
-                                    </div>
-                                </div>
-                            </script>
+                            
 
                             <section>
                                 <h3 class="floatLT">Favorite Teams</h3>
@@ -61,16 +50,39 @@
                 
            
             <article class="ppg_left">
-                <section class="userDetails">
-                    <div id="perDetailsCont" ></div>
-                    <script id="perDetailsTemp" type="text/x-jquery-tmpl">
-                        <img alt="" src="" />
+                <section id="ppg_sideBox">
+                    <section class="personPic">
+                        
+                            <img alt="" src="" />
+                            
+                        
+                    </section>
+                    <section class="sect">
+                        <script id="perDetailsTemp" type="text/x-jquery-tmpl">
                         <h1>${per_fName} ${lName}</h1>
-                        ${per_state}
-                    ${DOB}
-                    </script>
+                            ${per_state}
+                            ${DOB}
+
+                        </script>
+                    </section>
+                    <section class="sect">
+                        <h4>Teams</h4>
+                        <div class="sect_expand">
+                            <section id="perTeamsCont">
+                            </section>
+                            <script id="perTeamsTemp" type="text/x-jquery-tmpl">
+                                <div class="personTeams">
+                                    <div>
+                                        <img alt="" src="#" />
+                                        <h4>${tm_name}</h4>
+                                        <h5>${tm_city}, ${tm_state}</h5>
+                                        <a href="${teamID}"></a>
+                                    </div>
+                                </div>
+                            </script>
+                        </div>
+                    </section>
                 </section>
-                
             </article>
         
         </div>
@@ -417,6 +429,12 @@
                     });
                 }
             });
+
+            $(".sect").click(function () {
+                $(this).find('.sect_expand').toggle("slow");
+
+            });
+
 
             // Load person team notifications
             $.ajax({
