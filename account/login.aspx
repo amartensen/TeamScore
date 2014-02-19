@@ -37,7 +37,7 @@
          </div>  
     </header>
     <div class="login">
-        <asp:Login ID="Login1" DestinationPageUrl="~/user/userProfile.aspx" runat="server"></asp:Login>
+        <asp:Login ID="Login1" DestinationPageUrl="~/video/video.aspx" runat="server"></asp:Login>
     
     </div>
 

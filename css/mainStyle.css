@@ -490,24 +490,59 @@ p, h1, h2, h3 {
     background-color:#808080;
 }
 /*<<< TSB: Events Tab >>>*/
-.evt_listItem {
-    height: 60px; width: 100%;
-    float: left;
-    display: block;
-    background-color: #fff;
-    border-top: 1px solid #808080;
-    
+#evt_list_container {
+    min-height: 600px;
+    background-color:black;
 }
-    .evt_listItem .sect {
-        height:59px;
+#tsb_event_list .evt_listItem:first-of-type {
+    height: 45px;
+    width: 100%;
+    float: left;
+    border-top: 1px solid #808080;
+    padding: 4px 0px 4px 0px;
+    
+    background-color:#fff;
+}
+#tsb_event_list .evt_listItem {
+    height: 45px;
+    width: 100%;
+    float: left;
+    border-bottom: 1px solid #808080;
+    padding: 4px 0px 4px 0px;
+    background-color:#fff;
+    font-size: 14px;
+}
+#tsb_event_list .evt_listItem div{
+        padding:0;
+        margin:0;
         float: left;
     }
-
+#tsb_event_list .evt_listItem .check {
+        width:5%;
+        padding: 15px 10px 15px 10px;
+    }
+#tsb_event_list .evt_listItem .title {
+        width: 25%
+    }
+#tsb_event_list .evt_listItem h4 {
+        clear:both;
+        float: left;
+        font-size: 13px;
+    }
+#tsb_event_list .evt_listItem .details {
+        width:15%;
+    }
+#tsb_event_list .evt_listItem .startDT {
+        
+    }
+#tsb_evt_detailTmpl{
+    display: none;
+}
 #evt_contentNav {
     float:left;
     width: 100%;
     clear: both;
-    border-bottom: 1px solid #808080;
+    
     margin: 5px 0px 12px 0px;
 }
     #evt_contentNav ul {
@@ -521,6 +556,12 @@ p, h1, h2, h3 {
         border-bottom: 1px solid #808080;
         margin-bottom:-1px;
     }
+#evt_contentToolbar {
+    float:right;
+}
+#evt_contentToolbar input {
+    display:none;
+}
 
 #evt_topContent {
     clear: both;
@@ -530,15 +571,28 @@ p, h1, h2, h3 {
     margin-top: 12px;
     background-color: #fff;
     border: 1px solid #808080;
-    padding: 4px 0px 12px 0px;
+    /*padding: 0px 0px 12px 0px;*/
 }
+    #evt_topContent #dateBar {
+        height:24px;
+        width:100%;
+        background-color:rgba(0,0,0,0.25);
+        
+         float:left;
+    }
     #evt_topContent section {
         float:left;
         height: 100%; width: 360px;
-        padding-left: 10px;
+        padding: 0px -10px 0px 10px;
     }
-    #evt_topContent h3 {
+    #evt_topContent section h3 {
         padding: 12px 0px 2px 0px;
+        float:left;
+        color: #e33100;
+    }
+    #evt_topContent section p {
+        float:left;
+        clear: both;
     }
 .evt_mainContent {
     font-family: Arial, 'Liberation Sans', 'DejaVu Sans', sans-serif;
@@ -548,7 +602,7 @@ p, h1, h2, h3 {
     padding: 12px 0px 12px 0px;
     clear: both;
     float: left;
-    background-color: #fff;
+    background-color:#fff;
     border-radius:6px;
 }
 
@@ -564,22 +618,187 @@ p, h1, h2, h3 {
             float: left;
 
         }
-
-.matchTools {
+#matchTools {
+    width: 100%;
+    float: right;
+    padding-bottom:5px;
+}
+#bkt_messege {
+    display:none;
+    background-color: #2b2b2b;
+    width: 100%;
+    min-height: 300px;
+    float:left;
+}
+#match_container {
+    background-color: #2b2b2b;
+    width: 100%;
+    min-height: 300px;
+    float:left;
+}
+#match_content .match:first-of-type {
+    height: 45px;
     width: 100%;
     float: left;
+    border-top: 1px solid #808080;
+    padding: 4px 0px 4px 0px;
+    
+    background-color:#fff;
 }
-    .matchTools .flip {
+#match_content .match {
+    height: 45px;
+    width: 100%;
+    float: left;
+    border-bottom: 1px solid #808080;
+    padding: 4px 0px 4px 0px;
+    background-color:#fff;
+    font-size: 14px;
+}
+    #match_content .match div{
+        padding:0;
+        margin:0;
         float: left;
-        width: 5%;
     }
-    .matchTools .title {
-        border: 1px solid black;
-        width: 60%;
-        height: 50px;
+    #match_content .match .check {
+        width:5%;
+        padding: 15px 10px 15px 10px;
+    }
+    #match_content .match .weight {
+        width:5%;
+        padding: 15px 10px 15px 10px;
+    }
+    #match_content .match .check input {
+        width:15px;
+        height: 15px;
+        
+    }
+    #match_content .match .seeds {
+        width: 40%;
+        padding: 3px 0px 3px 0px;
+    }
+    #match_content .match h3 {
+        clear:both;
         float: left;
-        background-color: #fff;
+        font-size: 13px;
     }
+    #match_content .match .winText {
+        width: 15%;
+    }
+    #match_content .match .time {
+        width: 8%;
+        min-width:8%;
+    }
+    #match_content .match .score {
+        width: 2%;
+        height: 100%;
+        border-right: 1px solid #808080;
+    }
+#team_content .team {
+    height: 36px;
+    width: 100%;
+    float: left;
+    border-bottom: 1px solid #808080;
+    padding: 0px;
+    background-color:#fff;
+    font-size: 14px;
+}
+#team_content .team:first-of-type {
+    height: 36px;
+    width: 100%;
+    float: left;
+    border-top: 1px solid #808080;
+    padding:0px;
+    
+    background-color:#fff;
+}
+#team_content .team span{
+        padding:10px 0px 10px 0px;
+        margin:0;
+        
+        width: 30%;
+        float: left;
+    }
+    #team_content .team .check input {
+        width:15px;
+        height: 15px;
+    }
+#team_content .team .check{
+        width:5%;
+        padding: 9.5px 10px 9.5px 10px;
+    }
+#team_content .team h4{
+        clear:both;
+        float: left;
+        font-size: 13px;
+    }
+#athlete_content .athlete {
+    height: 36px;
+    width: 100%;
+    float: left;
+    border-bottom: 1px solid #808080;
+    padding: 0px;
+    background-color:#fff;
+    font-size: 14px;
+}
+#athlete_content .athlete:first-of-type {
+    height: 36px;
+    width: 100%;
+    float: left;
+    border-top: 1px solid #808080;
+    padding:0px;
+    
+    background-color:#fff;
+}
+#athlete_content .athlete span{
+        padding:10px 0px 10px 0px;
+        margin:0;
+        
+        width: 30%;
+        float: left;
+    }
+    #athlete_content .athlete .check input {
+        width:15px;
+        height: 15px;
+    }
+#athlete_content .athlete .check{
+        width:5%;
+        padding: 9.5px 10px 9.5px 10px;
+    }
+#athlete_content .athlete h4{
+        clear:both;
+        float: left;
+        font-size: 13px;
+    }
+
+/*---EVENT Matches - bracket setup ---*/
+#bkts_bracketForm {
+    float:left;
+    width:50%;
+    font-size: 14px;
+}
+#bkts_detailBox label{
+    float:left;
+    width:94px;
+    
+}
+#bkts_detailBox span {
+    margin-left:20px;
+}
+
+#bkts_editDetails {
+    display:none;
+}
+
+#bkts_athleteSeeds {
+    float:left;
+    width:50%;
+}
+#bkts_athleteSeeds ul li {
+    padding:2px 0px 2px 0px;
+}
+#bkts_typeOptions {
+    display: none;
+}
 
 /*#evt_settings {
     float: left;
@@ -649,7 +868,128 @@ p, h1, h2, h3 {
     #evt_settings .lt {
         float:left;
     }*/
+/*<<<<NEW EVENT>>>>>*/
+#evt_new_tmpl {
+    float: left;
+    background-color: #fff;
+    width:100%;
+    border:1px solid #808080;
+    border-radius: 6px;
+}
+#evt_new_tmpl p, input, label{
+    padding: 0; margin:0;
+}
+#evt_new_tmpl ul {
+       position: relative;
+	   padding: 12px 0px 12px 0px;
+       
+    }
+    #evt_new_tmpl ul li:first-of-type {
+        border-top: 2px solid #808080;
+    }
+#evt_new_tmpl ul li {
+     width:100%;
+     padding:3% 0% 3% 0%;
+     display: inline-block;
+     vertical-align: middle;
+     border-bottom: 1px solid #808080;
+     clear: both;
+    }
+    #evt_new_tmpl .area .areaTitle{
+        width:23%;
+	    float:left;
+        padding-left:2%;
+    }
+    #evt_new_tmpl .area .hide {
+        float:left;
+        width: 60%;
+    }
+/*New Event - Location*/
+#nevt_venue .addr {
+    height:24px; width: 96%;
+    border: 1px solid #808080;
+    border-radius: 3px;
+    padding:0% 2% 0% 2%;
+}
+#nevt_venue .input {
+    height:24px; width: 170px;
+    border: 1px solid #808080;
+    border-radius: 3px;
+    padding:0px 4px 0px 4px;
+}
 
+#nevt_venue .select {
+    height:26px; width:123px;
+    border: 1px solid #808080;
+    border-radius: 3px;
+    padding:0px 0px 0px 4px;
+}
+#nevt_venue .zip {
+    height:24px; width: 67px;
+    border: 1px solid #808080;
+    border-radius: 3px;
+    padding:0px 4px 0px 4px;
+}
+#nevt_venue .dateTime {
+    height:20px; width: 100px;
+    border: 1px solid #808080;
+    border-radius: 3px;
+}
+/*New Event - Sessions*/
+#evt_new_sessions .dateTime {
+     height:20px; width: 100px;
+    border: 1px solid #808080;
+    border-radius: 3px;
+}
+#evt_new_sessions select {
+    height:22px; width:100px;
+    border: 1px solid #808080;
+    border-radius: 3px;
+    padding:0px 0px 0px 4px;
+}
+#evt_new_sessions .title {
+     height:20px; width: 115px;
+    border: 1px solid #808080;
+    border-radius: 3px;
+}
+#evt_new_sessions ul {
+    padding:0;
+
+}
+#evt_new_sessions ul li:first-of-type {
+    
+    border-top: none;
+}
+#evt_new_sessions ul li {
+    border:none;
+    padding: 2px 0px 2px 0px;
+    margin:0;
+}
+.nevt_ses_item input{
+    margin-left:4px;
+}
+#nevt_startDate {
+    margin-right: 25px;
+}
+/*New Event - Divisions*/
+#nevt_div_hold {
+    padding:0;
+    margin:0;
+}
+    #nevt_div_hold li {
+        border:1px solid black;
+        padding: 1%;
+        margin-bottom:4px;
+    }
+    #nevt_div_hold li .div{
+        float:left;
+        clear: right;
+        width:90%;
+    }
+    #nevt_div_hold li .class{
+        float:left;
+        width:90%;
+    }
 /*<<<<EVENT SETTING>>>>>*/
 #evt_settings {
     float: left;
@@ -833,7 +1173,7 @@ p, h1, h2, h3 {
 
 .memAthleteView {
 }
-.memAthleteView div{
+#tsb_mem_container .member{
     width: 160px;
     height: 245px;
     float: left;
@@ -843,12 +1183,12 @@ p, h1, h2, h3 {
     margin: 5px 10px 5px 0px;
     background:#fff; border-radius: 2px;
 }
-    .memAthleteView div h4 {
+    #tsb_mem_container .member h4 {
             padding: 0px;
             margin: 0px;
             float:left;
         }
-    .memAthleteView div img{
+    #tsb_mem_container .member img{
         height:160px;
         width: 160px;
         padding-right: 5px;
